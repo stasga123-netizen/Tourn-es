@@ -146,12 +146,36 @@ nav button.on{background:var(--ink);color:#fff}
 .verdict .v-row b{display:inline-block;min-width:86px;color:var(--grey);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
 .conf{display:inline-block;padding:2px 8px;border-radius:3px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
 .conf.haute{background:#E4F4E7;color:#1D5C39}.conf.moyenne{background:#FCF6D8;color:#6A5A12}.conf.basse{background:#FBE7E5;color:#8F1F18}
+/* Écran PIN */
+#lock{position:fixed;inset:0;background:var(--violet);z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px}
+#lock h2{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:30px;color:#fff;letter-spacing:.05em;text-transform:uppercase}
+#lock p{color:rgba(255,255,255,.75);font-size:13px;font-weight:500}
+.dots{display:flex;gap:14px;margin:6px 0}
+.dot{width:16px;height:16px;border-radius:50%;border:2px solid #fff;background:transparent}
+.dot.full{background:#fff}
+.pad{display:grid;grid-template-columns:repeat(3,72px);gap:12px}
+.pad button{height:72px;border-radius:50%;border:2px solid rgba(255,255,255,.5);background:rgba(255,255,255,.08);
+  color:#fff;font-size:26px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif}
+.pad button:active{background:rgba(255,255,255,.3)}
+#lock.shake .dots{animation:shk .35s}
+@keyframes shk{20%{transform:translateX(-10px)}40%{transform:translateX(10px)}60%{transform:translateX(-7px)}80%{transform:translateX(7px)}}
 .hintbar{background:#FCF6D8;border:1.5px solid #E4CF6A;border-radius:5px;padding:10px 12px;font-size:12.5px;color:#6A5A12;margin-bottom:14px;font-weight:500}
 h2.sec{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;letter-spacing:.05em;text-transform:uppercase;margin:4px 0 10px}
 @media (prefers-reduced-motion: reduce){.fcard{transition:none}}
 </style>
 </head>
 <body>
+<div id="lock">
+  <h2>Tournées Orléans</h2>
+  <p>Entre ton code</p>
+  <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+  <div class="pad">
+    <button onclick="pin(1)">1</button><button onclick="pin(2)">2</button><button onclick="pin(3)">3</button>
+    <button onclick="pin(4)">4</button><button onclick="pin(5)">5</button><button onclick="pin(6)">6</button>
+    <button onclick="pin(7)">7</button><button onclick="pin(8)">8</button><button onclick="pin(9)">9</button>
+    <span></span><button onclick="pin(0)">0</button><button onclick="pin(-1)">⌫</button>
+  </div>
+</div>
 <header><div class="hd-in">
   <h1>Tournées Orléans</h1>
   <div class="hd-sub">Dispatch colis · communes &amp; clients · 7 tournées</div>
@@ -161,6 +185,28 @@ h2.sec{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;
 <div class="wrap" id="app"></div>
 
 <script>
+/* ============ VERROU PIN ============ */
+const PIN_HASH="aa82088246685c17ebf16d48877686b831ed384ffdc42e76494283c271704d7a";
+let pinBuf="";
+async function sha(s){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s));
+  return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');}
+function unlockOK(){document.getElementById('lock').style.display='none';try{localStorage.setItem('unlocked','1');}catch(e){}}
+try{if(localStorage.getItem('unlocked')==='1')document.addEventListener('DOMContentLoaded',unlockOK);}catch(e){}
+window.pin=async n=>{
+  if(n===-1)pinBuf=pinBuf.slice(0,-1);
+  else if(pinBuf.length<4)pinBuf+=String(n);
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('full',i<pinBuf.length));
+  if(pinBuf.length===4){
+    if(await sha(pinBuf)===PIN_HASH){unlockOK();}
+    else{
+      const L=document.getElementById('lock');L.classList.add('shake');
+      if(navigator.vibrate)navigator.vibrate(120);
+      setTimeout(()=>{L.classList.remove('shake');pinBuf="";
+        document.querySelectorAll('.dot').forEach(d=>d.classList.remove('full'));},380);
+    }
+  }
+};
+
 /* ============ DONNÉES ============ */
 const T = [
 {id:"4501M",jours:"Lundi soir → Jeudi soir",c:"#D5342B",communes:[
