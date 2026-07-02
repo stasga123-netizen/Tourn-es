@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Tournées">
+<meta name="theme-color" content="#6C4FA1">
+<link rel="apple-touch-icon" href="icon.png">
+<title>Tournées Orléans — Révision dispatch</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --violet:#6C4FA1; --violet-dark:#574083; --paper:#FAFAF7; --ink:#221E2B;
+  --grey:#6E6879; --line:#E4E1DA; --red:#D5342B; --yellow:#F5D941;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Inter',system-ui,sans-serif;background:#EFEDE7;color:var(--ink);-webkit-font-smoothing:antialiased;
+  overscroll-behavior-y:none;touch-action:manipulation}
+button,label{touch-action:manipulation;user-select:none;-webkit-user-select:none}
+button:active,.scan-btn:active{transform:scale(.97);transition:transform .08s}
+header{padding-top:calc(18px + env(safe-area-inset-top))}
+nav{-webkit-overflow-scrolling:touch;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+.wrap{padding-bottom:calc(90px + env(safe-area-inset-bottom))}
+.wrap{max-width:760px;margin:0 auto;padding:0 14px 90px}
+
+/* Header */
+header{background:var(--violet);color:#fff;padding:18px 14px 14px;position:relative}
+header::after{content:"";display:block;position:absolute;left:0;right:0;bottom:-6px;height:6px;
+  background:repeating-linear-gradient(90deg,var(--violet) 0 26px,transparent 26px 34px);opacity:.35}
+.hd-in{max-width:760px;margin:0 auto}
+h1{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:30px;letter-spacing:.04em;text-transform:uppercase;line-height:1}
+.hd-sub{font-size:12.5px;opacity:.85;margin-top:4px;font-weight:500}
+
+/* Nav */
+nav{display:flex;gap:6px;max-width:760px;margin:16px auto 14px;padding:0 14px;overflow-x:auto}
+nav button{flex:0 0 auto;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:600;letter-spacing:.05em;
+  text-transform:uppercase;padding:9px 16px;border:1.5px solid var(--ink);background:var(--paper);color:var(--ink);
+  border-radius:4px;cursor:pointer}
+nav button.on{background:var(--ink);color:#fff}
+
+/* Pouch card = fiche tarifold */
+.pouch{background:var(--paper);border:3px solid var(--red);border-radius:5px;box-shadow:0 3px 10px rgba(30,20,50,.10);
+  position:relative;margin-bottom:16px;overflow:hidden}
+.pouch::before,.pouch::after{content:"";position:absolute;top:-3px;width:14px;height:9px;background:#2B2B2B;border-radius:0 0 4px 4px}
+.pouch::before{left:20%}.pouch::after{right:20%}
+
+.band{background:var(--violet);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:16px;
+  letter-spacing:.06em;text-transform:uppercase;padding:5px 12px}
+.tour-head{padding:16px 14px 10px;text-align:center;border-bottom:1px solid var(--line)}
+.tour-head .num{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:34px;color:var(--violet);letter-spacing:.05em}
+.tour-head .jours{font-size:11.5px;color:var(--grey);text-transform:uppercase;letter-spacing:.14em;margin-top:2px;font-weight:600}
+
+.clients{list-style:none}
+.clients li{padding:7px 14px 7px 26px;border-bottom:1px solid var(--line);font-size:14px;font-weight:500}
+.clients li:last-child{border-bottom:none}
+
+/* Tournée color chips */
+.chip{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13.5px;letter-spacing:.05em;
+  color:#fff;padding:2px 9px;border-radius:3px;vertical-align:middle}
+
+/* Tournée selector grid */
+.tsel{display:grid;grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:8px;margin-bottom:16px}
+.tsel button{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;letter-spacing:.04em;padding:12px 4px;
+  border-radius:5px;border:3px solid;background:var(--paper);cursor:pointer;color:var(--ink)}
+.tsel button small{display:block;font-family:'Inter',sans-serif;font-weight:500;font-size:9.5px;color:var(--grey);
+  letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
+.tsel button.on{color:#fff}
+.tsel button.on small{color:rgba(255,255,255,.85)}
+
+/* Flashcard */
+.fc-zone{perspective:1200px}
+.fcard{position:relative;min-height:300px;cursor:pointer;transform-style:preserve-3d;transition:transform .45s}
+.fcard.flip{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;background:var(--paper);border:3px solid var(--red);
+  border-radius:6px;box-shadow:0 4px 14px rgba(30,20,50,.12);display:flex;flex-direction:column}
+.face.back{transform:rotateY(180deg);overflow-y:auto}
+.face .center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:22px;text-align:center;gap:10px}
+.fc-commune{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:34px;letter-spacing:.03em;text-transform:uppercase;line-height:1.05}
+.fc-hint{font-size:11.5px;color:var(--grey);text-transform:uppercase;letter-spacing:.12em;font-weight:600}
+.fc-count{font-size:13px;color:var(--grey)}
+.fc-controls{display:flex;gap:8px;margin-top:12px}
+.fc-controls button{flex:1;padding:13px;border-radius:5px;border:1.5px solid var(--ink);font-weight:700;font-size:14px;cursor:pointer;font-family:'Inter',sans-serif}
+.b-ko{background:#fff;color:var(--red);border-color:var(--red)}
+.b-ok{background:var(--ink);color:#fff}
+.fc-meta{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--grey);margin:10px 2px;font-weight:600}
+.linkbtn{background:none;border:none;color:var(--violet);font-weight:700;font-size:12.5px;cursor:pointer;text-decoration:underline}
+
+/* Quiz */
+.q-card{background:var(--paper);border:3px solid var(--ink);border-radius:6px;padding:20px 16px;box-shadow:0 4px 14px rgba(30,20,50,.10)}
+.q-num{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey);font-weight:700;margin-bottom:8px}
+.q-text{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:24px;line-height:1.15;margin-bottom:16px}
+.q-text b{color:var(--violet)}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opts button{text-align:left;padding:13px 14px;border-radius:5px;border:1.5px solid var(--line);background:#fff;
+  font-size:14.5px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif}
+.opts button.good{background:#E4F4E7;border-color:#2F8F5B;color:#1D5C39}
+.opts button.bad{background:#FBE7E5;border-color:var(--red);color:#8F1F18}
+.q-next{margin-top:14px;width:100%;padding:13px;border-radius:5px;border:none;background:var(--violet);color:#fff;font-weight:700;font-size:15px;cursor:pointer}
+.score-line{font-size:13px;font-weight:700;color:var(--grey);margin-bottom:10px}
+.result{background:var(--paper);border:3px solid var(--violet);border-radius:6px;padding:28px 18px;text-align:center}
+.result .big{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:52px;color:var(--violet)}
+.result p{color:var(--grey);font-size:14px;margin:6px 0 16px;font-weight:500}
+
+/* Search */
+.search input{width:100%;padding:14px;border-radius:5px;border:2px solid var(--ink);font-size:16px;font-family:'Inter',sans-serif;background:var(--paper)}
+.hit{background:var(--paper);border:1.5px solid var(--line);border-left:5px solid var(--violet);border-radius:4px;
+  padding:10px 12px;margin-top:8px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.hit .cl{font-weight:700;font-size:14px}
+.hit .loc{font-size:12px;color:var(--grey);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.empty{color:var(--grey);font-size:14px;text-align:center;padding:24px 10px;font-weight:500}
+
+/* Boussole des secteurs */
+.compass{position:relative;width:min(340px,92vw);height:min(340px,92vw);margin:6px auto 18px}
+.ring{position:absolute;inset:8%;border:2px dashed #B8B2C4;border-radius:50%}
+.cnode{position:absolute;transform:translate(-50%,-50%);font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  font-size:15px;letter-spacing:.04em;color:#fff;padding:6px 10px;border-radius:4px;cursor:pointer;border:none;
+  box-shadow:0 2px 6px rgba(30,20,50,.25);text-align:center;line-height:1.05}
+.cnode small{display:block;font-family:'Inter',sans-serif;font-weight:600;font-size:8.5px;letter-spacing:.08em;opacity:.9}
+.axe{background:var(--paper);border:1.5px solid var(--line);border-radius:5px;padding:11px 12px;margin-bottom:8px;font-size:13.5px;line-height:1.45}
+.axe .dir{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:.06em;text-transform:uppercase}
+.reflex{background:var(--paper);border:1.5px solid var(--line);border-left:5px solid var(--yellow);border-radius:5px;
+  padding:12px;margin-bottom:8px;font-size:13.5px;line-height:1.5}
+.reflex b{color:var(--violet-dark)}
+/* Scan */
+.scan-btn{display:block;width:100%;padding:20px;border-radius:6px;border:3px dashed var(--violet);background:var(--paper);
+  color:var(--violet-dark);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;letter-spacing:.05em;
+  text-transform:uppercase;cursor:pointer;text-align:center}
+.scan-btn small{display:block;font-family:'Inter',sans-serif;font-weight:500;font-size:12px;text-transform:none;letter-spacing:0;color:var(--grey);margin-top:4px}
+.preview{width:100%;max-height:220px;object-fit:contain;border-radius:5px;border:1.5px solid var(--line);margin-top:12px;background:#fff}
+.loading{text-align:center;padding:26px 10px;color:var(--grey);font-weight:600;font-size:14px}
+.spin{display:inline-block;width:26px;height:26px;border:3px solid var(--line);border-top-color:var(--violet);border-radius:50%;
+  animation:sp .8s linear infinite;margin-bottom:8px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.verdict{margin-top:14px;background:var(--paper);border-radius:6px;overflow:hidden;border:3px solid var(--ink);box-shadow:0 4px 14px rgba(30,20,50,.12)}
+.verdict .v-tour{color:#fff;text-align:center;padding:18px 10px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:44px;letter-spacing:.05em;line-height:1}
+.verdict .v-tour small{display:block;font-size:15px;font-weight:600;letter-spacing:.12em;opacity:.9;margin-top:2px}
+.verdict .v-body{padding:14px}
+.verdict .v-row{font-size:14px;padding:5px 0;border-bottom:1px solid var(--line)}
+.verdict .v-row:last-child{border:none}
+.verdict .v-row b{display:inline-block;min-width:86px;color:var(--grey);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+.conf{display:inline-block;padding:2px 8px;border-radius:3px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.conf.haute{background:#E4F4E7;color:#1D5C39}.conf.moyenne{background:#FCF6D8;color:#6A5A12}.conf.basse{background:#FBE7E5;color:#8F1F18}
+.hintbar{background:#FCF6D8;border:1.5px solid #E4CF6A;border-radius:5px;padding:10px 12px;font-size:12.5px;color:#6A5A12;margin-bottom:14px;font-weight:500}
+h2.sec{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;letter-spacing:.05em;text-transform:uppercase;margin:4px 0 10px}
+@media (prefers-reduced-motion: reduce){.fcard{transition:none}}
+</style>
+</head>
+<body>
+<header><div class="hd-in">
+  <h1>Tournées Orléans</h1>
+  <div class="hd-sub">Dispatch colis · communes &amp; clients · 7 tournées</div>
+</div></header>
+
+<nav id="nav"></nav>
+<div class="wrap" id="app"></div>
+
+<script>
+/* ============ DONNÉES ============ */
+const T = [
+{id:"4501M",jours:"Lundi soir → Jeudi soir",c:"#D5342B",communes:[
+ {n:"FLEURY LES AUBRAIS",cl:["CW Leclerc","CW Intermarché","EDF","Honda","JC Decaux","Logilec (ACC / RES / CONS)","Nemo Leclerc","Orange","Poilane Leclerc","Pain Belledone Leclerc","SNCF"]},
+ {n:"ORLÉANS",cl:["CDC Hab Go","Labo Casgrens Lefort","MSA Beauce Cœur de Loire","PE Région Centre","SG DCR","SNCF"]},
+ {n:"ORMES",cl:["Biofarmo","Logilec Drive","Quadrilaser","SG Gras Savoye 10H"]},
+ {n:"SARAN",cl:["AI Accès Industrie","Carrefour","CW Intermarché","Ex Malakoff Humanis","Feu Vert Mag","Gen Opt","K Carrefour","Nemo Carrefour"]},
+ {n:"ST JEAN DE BRAYE",cl:["AMAP MH","Laboratoire Dental Côme"]}
+]},
+{id:"4502M",jours:"Lundi soir → Jeudi soir",c:"#E07020",communes:[
+ {n:"LA FERTÉ ST AUBIN",cl:["Dr Becquet","Sagitta Phie de Sologne","Votre Épicerie Bio","Urban Bellanger","Urban Guynand"]},
+ {n:"OLIVET",cl:["AG Palat","CHR Orléans","CIC","CW Leclerc","Darty Mag Int","Dr Dard","Enedis","Équip Jardin Stock","Groupama Siège","HD PP Équip Jardin","Honda Asphalte","Les Comptoirs de la Bio","Logilec (ACC / RES / CONS)","Malakoff Humanis","Nemo Leclerc","So Bio","Pap de Stock Pièce Auto","Poilane Leclerc","URSSAF"]},
+ {n:"ORLÉANS (La Source / Sud)",cl:["Biz Aublive Kenny","BRGM","Ctr Dent Ramsey La Source","CHR Orléans La Source","CW U Express","Gen Opt Orléans Sud","Hob Rakoto Pierre Yves","Jung Dusonchet B","SG Loomis","Nemo Décathlon","HD AT Dupont 13H"]},
+ {n:"ST CYR EN VAL",cl:["Dr Dias","ML St Cyr","Vitalaire"]},
+ {n:"ST HILAIRE ST MESMIN",cl:["AGCO Gge Alluard","Urban Chaline"]},
+ {n:"ST JEAN LE BLANC",cl:["CW Intermarché","Fenwick Pingot P","Poilane Intermarché","Jungheinrich Charbonnier","ELM Leblanc"]},
+ {n:"ST PRYVÉ ST MESMIN",cl:["CW Super U","Équip Jardin","Fenwick Blanche A","HD PP Équip Jardin","CM St Pryvé"]}
+]},
+{id:"4503M",jours:"Lundi soir → Jeudi soir",c:"#2F8F5B",communes:[
+ {n:"ARRABLOY",cl:["Fenwick Essity OP FR"]},
+ {n:"BONNÉE LES BORDES",cl:["CW Intermarché"]},
+ {n:"BRAY ST AIGNAN",cl:["Still Villard J Paul"]},
+ {n:"CHÂTEAUNEUF-SUR-LOIRE",cl:["BP","CE","CM","CW Super U","Dr Cerina / Hautefeuille","De Mary Olivier","Groupama","LCL","SG Les Halles","SG"]},
+ {n:"CHÉCY",cl:["Biocoop","BP","CE","CIC Belle Rives","CM","CW Leclerc","Dr Wagner","Équip Jardin","Gen Opt","Logilec 45 ACC / RES","LOM / Écouter Voir","Nemo 45 Leclerc","Nocibé","SG"]},
+ {n:"DAMPIERRE EN BURLY",cl:["Dr Mos Dampierre"]},
+ {n:"FLEURY LES AUBRAIS",cl:["CIC"]},
+ {n:"GIEN",cl:["BP","CE","CIC","LCL","CM","SG","Dr Benisti","Dr Mos Gien","Dr Villejean","Dr Pagbe Ndobo Pauline","Groupama","LOM / Écouter Voir","SAV Darty Box","SCM Pralem et Fiocre","T Da Costa","TSG Antenne de Gien"]},
+ {n:"LORRIS",cl:["Intermarché","Nemo 45 Leclerc","Visual Optique"]},
+ {n:"OUZOUER-SUR-LOIRE",cl:["CW Intermarché"]},
+ {n:"ORLÉANS",cl:["Botanic"]},
+ {n:"SANDILLON",cl:["CW Super U"]},
+ {n:"ST BENOÎT-SUR-LOIRE",cl:["Centre Pièce Auto"]},
+ {n:"ST GONDON",cl:["AGCO Étam 45"]},
+ {n:"ST DENIS DE L'HÔTEL",cl:["DCW Avr Auto"]},
+ {n:"ST PÈRE-SUR-LOIRE",cl:["CW Super U","Nemo 45 Sup","Speedy"]},
+ {n:"VIENNE EN VAL",cl:["CW Intermarché"]}
+]},
+{id:"4504M",jours:"Lundi soir → Jeudi soir",c:"#B03060",communes:[
+ {n:"ARTENAY",cl:["AGCO Allezy 09H"]},
+ {n:"BAZOCHES EN DUNOIS (28)",cl:["AGCO 28"]},
+ {n:"BEAUCE LA ROMAINE (41)",cl:["AGCO 41"]},
+ {n:"BROU (28)",cl:["Cab Dent Dr Monaco","Dex Legaigneur F","SG Les Halles"]},
+ {n:"CERCOTTES",cl:["Still Bourgerolle J"]},
+ {n:"CLOYES-SUR-LE-LOIR (28)",cl:["CW Intermarché"]},
+ {n:"CHARTRES (28)",cl:["Labo Marais2A","Scael","Orange"]},
+ {n:"CHÂTEAUDUN (28)",cl:["AGCO Delavallée","Cab Dent Dr Bazgu","CIC","CW Intermarché","CW Leclerc","Dentego","HD PP Ets Lemoult","Nemo Décathlon","Nemo Intermarché","Nemo Leclerc","Nocibé","SG","Logilec Accueil","Logilec Réserve","SNCF Gare"]},
+ {n:"DROUÉ (41)",cl:["CL Depussay"]},
+ {n:"CHEVILLY",cl:["Cab Dent Dr Moulis"]},
+ {n:"INGRÉ",cl:["Miele Thomas"]},
+ {n:"JANVILLE (28)",cl:["AGCO Ets Allezy"]},
+ {n:"LA BAZOCHE GOUET (28)",cl:["CW Intermarché"]},
+ {n:"LES VILLAGES VOVÉENS (28)",cl:["AGCO Durety SA","CW Intermarché","Poilane Intermarché","Nemo Intermarché","SNCF Gare"]},
+ {n:"LA CHAPELLE DU NOYER (28)",cl:["CL Depussay"]},
+ {n:"MIGNIÈRES (28)",cl:["Iron Mountain France"]},
+ {n:"OUZOUER LE MARCHÉ",cl:["CW Intermarché"]},
+ {n:"ST DENIS LES PONTS (28)",cl:["Gen Opt","Nemo Leclerc"]},
+ {n:"ST PELLERIN (28)",cl:["SNCF Gare"]},
+ {n:"TOURY (28)",cl:["Sagitta Phie"]},
+ {n:"TERMINIERS",cl:["CL Depussay"]}
+]},
+{id:"4505M",jours:"Lundi soir → Jeudi soir",c:"#3E6FB5",communes:[
+ {n:"BACCON",cl:["Still Dubois Jordan"]},
+ {n:"BAULE",cl:["CW Hyper U"]},
+ {n:"BREVAINVILLE",cl:["Darty Falguier"]},
+ {n:"CLÉRY ST ANDRÉ",cl:["CW Intermarché"]},
+ {n:"COULMIERS",cl:["Still Dela Aurélien"]},
+ {n:"VIEVY LE RAYÉ",cl:["Jung Delbarre G / Ecoman"]},
+ {n:"ÉPIEDS EN BEAUCE",cl:["CSAV J Spirkovitch"]},
+ {n:"INGRÉ",cl:["CM","Fenwick Ferreira O","Labodent","Miel Thomas"]},
+ {n:"HUISSEAU SUR MAUVES",cl:["Jung Time N"]},
+ {n:"LA CHAPELLE ST MESMIN",cl:["AI Accès Industrie","CIC","CW Intermarché","Urban Rabier Charles","Fenwick Philippeau L","Fenwick Chancerel F","Fenwick Le Goff T","TDC"]},
+ {n:"MOISY",cl:["Still Kolacz D Coffre"]},
+ {n:"ORLÉANS",cl:["CM Madeleine","CM Siège"]},
+ {n:"ORMES",cl:["Kone 3367","Kone Boulard Cyril (dépôt Ormes)"]},
+ {n:"OUCQUES",cl:["AGCO Ghestem"]},
+ {n:"ST JEAN DE LA RUELLE",cl:["CE Siège","Gen Opt","LOM / Écouter Voir","Nemo 45 Auchan","Orkyn MJ","Somed","FCB Auchan Fujifilm"]},
+ {n:"ST JEAN FROIDMENTEL",cl:["Jung Hacher CE"]},
+ {n:"ST LAURENT NOUAN",cl:["CW Super U","La Folie en Vrac"]},
+ {n:"TAVERS",cl:["Biomonde","CW Leclerc","Gen Opt","Logilec","Nemo Leclerc"]}
+]},
+{id:"PITHIVIERS",jours:"Secteur Pithiviers (M + VM)",c:"#C29A00",communes:[
+ {n:"NEUVILLE AUX BOIS",cl:["CW Super U","Kleber Malecot","Fenwick Goueffon C Sanchez","Nemo 45 Super U","Still Esnault M","Pro Archives Système"]},
+ {n:"NIBELLE",cl:["Fenwick Santos C"]},
+ {n:"REBRÉCHIEN",cl:["Hob Ladune F Caisson"]},
+ {n:"SERMAISES",cl:["Kone Tanquerel Marc","Still Raffalli A"]},
+ {n:"ST LOUP DES VIGNES",cl:["Fenwick Deschamps J"]},
+ {n:"PITHIVIERS",cl:["CH","CIC","Claas Depussay","CPAM","CW Leclerc","Darty Mag Fra","FCB Hannequin Com","Fenwick Barre F","Gen Opt","Logilec (ACC / RES / CONS)","LOM / Écouter Voir","Nemo Décathlon","Nemo 45 Leclerc","ML Peter Chanu","So Bio","Dr Tudoran"]},
+ {n:"PITHIVIERS LE VIEIL",cl:["AGCO 45 (MS 9H)","CW Intermarché","HP DD Loisir Services"]},
+ {n:"PUISEAUX",cl:["T Da Costa"]},
+ {n:"SARAN (VM)",cl:["GMF Assurance","Man Cichy Manut 45","Gen Opt"]},
+ {n:"TERMINIERS (VM)",cl:["Claas Depussay"]}
+]},
+{id:"4507VM",jours:"Lundi soir → Vendredi soir",c:"#574083",communes:[
+ {n:"ORLÉANS (centre-ville)",cl:["BCP","Cab Dent Mut","Carpa","Docteur Malka Yonataine","CCF Martroi","CCF St Marceau","CIC Loiret Berry Entreprises","CIC Dauphine","CIC Martroi","Crystal Clinic","CMD Orléans","CW Intermarché Orléans","DCT Burg","Dentego","Dr Jamain Arnaud","Dr Nozerac","EO Dr Delavierre","Gen Opt Place d'Arc","Grand Op République","Groupama Ets","Harmonie Mutuelle (HM)","Images Photo","K Carrefour Place d'Arc","Laboratoire Thomas","LCL Martroi","Les Comptoirs de la Bio","LOM / Écouter Voir Bannier","LOM / Écouter Bourgogne","Macif Sud","Nocibé","PW Fnac MJS","SG Sogecap","Ramsey Centre"]}
+]}
+];
+
+/* ============ ÉTAT ============ */
+const app=document.getElementById('app'), nav=document.getElementById('nav');
+let mode='fiches', selT=0;
+let deck=[], deckIdx=0, deckOk=0, deckRedo=[], fcFilter='ALL', flipped=false;
+let quiz=[], qIdx=0, qScore=0, qAnswered=false;
+
+const MODES=[['scan','📷 Scan'],['fiches','Fiches'],['logic','Logique'],['flash','Flashcards'],['quiz','Quiz'],['search','Recherche']];
+function renderNav(){nav.innerHTML=MODES.map(([k,l])=>`<button class="${mode===k?'on':''}" onclick="setMode('${k}')">${l}</button>`).join('');}
+function setMode(m){mode=m;renderNav();render();}
+window.setMode=setMode;
+
+function chip(t){return `<span class="chip" style="background:${t.c}">${t.id}</span>`;}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+
+/* ============ FICHES ============ */
+function tselHTML(sel,cb,withAll){
+  let h='<div class="tsel">';
+  if(withAll)h+=`<button style="border-color:#221E2B;${sel==='ALL'?'background:#221E2B':''}" class="${sel==='ALL'?'on':''}" onclick="${cb}('ALL')">TOUTES<small>7 tournées</small></button>`;
+  h+=T.map((t,i)=>{const on=(sel===i||sel===t.id);
+    return `<button style="border-color:${t.c};${on?'background:'+t.c:''}" class="${on?'on':''}" onclick="${cb}(${withAll?`'${t.id}'`:i})">${t.id}<small>${t.communes.length} communes</small></button>`;}).join('');
+  return h+'</div>';
+}
+function renderFiches(){
+  const t=T[selT];
+  let h=tselHTML(selT,'pickT',false);
+  h+=`<div class="pouch" style="border-color:${t.c}">
+    <div class="tour-head"><div class="num">${t.id}</div><div class="jours">${t.jours}</div></div>`;
+  t.communes.forEach(c=>{
+    h+=`<div class="band">${esc(c.n)}</div><ul class="clients">${c.cl.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`;
+  });
+  h+='</div>';
+  app.innerHTML=h;
+}
+window.pickT=i=>{selT=i;render();window.scrollTo({top:0});};
+
+/* ============ FLASHCARDS ============ */
+function buildDeck(){
+  const pool=[];
+  T.forEach(t=>{if(fcFilter!=='ALL'&&t.id!==fcFilter)return;
+    t.communes.forEach(c=>pool.push({t,c}));});
+  for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
+  deck=pool;deckIdx=0;deckOk=0;deckRedo=[];flipped=false;
+}
+window.fcPick=id=>{fcFilter=id;buildDeck();render();};
+window.fcFlip=()=>{flipped=!flipped;document.getElementById('fcard').classList.toggle('flip',flipped);};
+window.fcMark=ok=>{if(ok)deckOk++;else deckRedo.push(deck[deckIdx]);deckIdx++;flipped=false;render();};
+window.fcRedo=()=>{deck=deckRedo;deckRedo=[];deckIdx=0;deckOk=0;flipped=false;render();};
+window.fcRestart=()=>{buildDeck();render();};
+
+function renderFlash(){
+  if(!deck.length&&deckIdx===0)buildDeck();
+  let h=tselHTML(fcFilter,'fcPick',true);
+  if(deckIdx>=deck.length){
+    h+=`<div class="result"><div class="big">${deckOk} / ${deck.length}</div>
+      <p>communes maîtrisées${deckRedo.length?` · ${deckRedo.length} à revoir`:' · série terminée 💪'}</p>
+      ${deckRedo.length?`<button class="q-next" onclick="fcRedo()">Revoir les ${deckRedo.length} ratées</button><div style="height:8px"></div>`:''}
+      <button class="q-next" style="background:#221E2B" onclick="fcRestart()">Nouvelle série</button></div>`;
+    app.innerHTML=h;return;
+  }
+  const {t,c}=deck[deckIdx];
+  h+=`<div class="fc-meta"><span>Carte ${deckIdx+1} / ${deck.length}</span><span>✔ ${deckOk} · à revoir ${deckRedo.length}</span></div>
+  <div class="fc-zone"><div class="fcard ${flipped?'flip':''}" id="fcard" onclick="fcFlip()">
+    <div class="face"><div class="center">
+      ${chip(t)}
+      <div class="fc-commune">${esc(c.n)}</div>
+      <div class="fc-count">${c.cl.length} client${c.cl.length>1?'s':''} à retrouver</div>
+      <div class="fc-hint">Touche la carte pour révéler</div>
+    </div></div>
+    <div class="face back">
+      <div class="band">${esc(c.n)} — ${t.id}</div>
+      <ul class="clients">${c.cl.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
+    </div>
+  </div></div>
+  <div class="fc-controls">
+    <button class="b-ko" onclick="fcMark(false)">✗ À revoir</button>
+    <button class="b-ok" onclick="fcMark(true)">✓ Je savais</button>
+  </div>`;
+  app.innerHTML=h;
+}
+
+/* ============ QUIZ ============ */
+function uniqueClients(){
+  const map={};
+  T.forEach(t=>t.communes.forEach(c=>c.cl.forEach(x=>{(map[x]=map[x]||[]).push({t,c});})));
+  return Object.entries(map).filter(([,v])=>v.length===1).map(([k,v])=>({cl:k,...v[0]}));
+}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function buildQuiz(){
+  const uc=uniqueClients(), allCommunes=[];T.forEach(t=>t.communes.forEach(c=>allCommunes.push({t,c})));
+  quiz=[];qIdx=0;qScore=0;qAnswered=false;
+  const pool1=shuffle([...uc]).slice(0,5);   // client -> commune
+  pool1.forEach(u=>{
+    const wrong=shuffle(allCommunes.filter(x=>x.c.n!==u.c.n)).slice(0,3).map(x=>x.c.n);
+    quiz.push({q:`Dans quelle commune livre-t-on <b>${esc(u.cl)}</b> ?`,opts:shuffle([u.c.n,...wrong]),ans:u.c.n});
+  });
+  const pool2=shuffle([...allCommunes]).slice(0,5); // commune -> tournée
+  pool2.forEach(x=>{
+    const wrong=shuffle(T.filter(t=>t.id!==x.t.id)).slice(0,3).map(t=>t.id);
+    quiz.push({q:`Sur quelle tournée se trouve <b>${esc(x.c.n)}</b> ?`,opts:shuffle([x.t.id,...wrong]),ans:x.t.id});
+  });
+  shuffle(quiz);
+}
+window.qAnswer=(el,opt)=>{
+  if(qAnswered)return;qAnswered=true;
+  const good=quiz[qIdx].ans;
+  if(opt===good)qScore++;
+  document.querySelectorAll('.opts button').forEach(b=>{
+    if(b.dataset.v===good)b.classList.add('good');
+    else if(b===el)b.classList.add('bad');
+  });
+  document.getElementById('qnext').style.display='block';
+};
+window.qNext=()=>{qIdx++;qAnswered=false;render();};
+window.qRestart=()=>{buildQuiz();render();};
+
+function renderQuiz(){
+  if(!quiz.length)buildQuiz();
+  if(qIdx>=quiz.length){
+    const pct=Math.round(qScore/quiz.length*100);
+    app.innerHTML=`<div class="result"><div class="big">${qScore} / ${quiz.length}</div>
+      <p>${pct>=80?'Solide, tu connais tes tournées 🔥':pct>=50?'Pas mal, encore un tour et c\'est acquis':'Repasse par les flashcards puis reviens'}</p>
+      <button class="q-next" onclick="qRestart()">Rejouer (10 nouvelles questions)</button></div>`;
+    return;
+  }
+  const q=quiz[qIdx];
+  app.innerHTML=`<div class="score-line">Score : ${qScore} ✔</div>
+  <div class="q-card">
+    <div class="q-num">Question ${qIdx+1} / ${quiz.length}</div>
+    <div class="q-text">${q.q}</div>
+    <div class="opts">${q.opts.map(o=>`<button data-v="${esc(o)}" onclick="qAnswer(this,'${o.replace(/'/g,"\\'")}')">${esc(o)}</button>`).join('')}</div>
+    <button class="q-next" id="qnext" style="display:none" onclick="qNext()">Question suivante →</button>
+  </div>`;
+}
+
+/* ============ RECHERCHE ============ */
+window.doSearch=v=>{
+  const box=document.getElementById('hits');
+  const s=v.trim().toLowerCase();
+  if(s.length<2){box.innerHTML='<div class="empty">Tape au moins 2 lettres (client ou commune).</div>';return;}
+  const hits=[];
+  T.forEach(t=>t.communes.forEach(c=>{
+    if(c.n.toLowerCase().includes(s))hits.push({t,c,cl:'— toute la commune —'});
+    c.cl.forEach(x=>{if(x.toLowerCase().includes(s))hits.push({t,c,cl:x});});
+  }));
+  box.innerHTML=hits.length?hits.slice(0,40).map(h=>`<div class="hit">
+    <div><div class="cl">${esc(h.cl)}</div><div class="loc">${esc(h.c.n)}</div></div>${chip(h.t)}
+  </div>`).join(''):'<div class="empty">Aucun résultat — vérifie l\'orthographe.</div>';
+};
+function renderSearch(){
+  app.innerHTML=`<h2 class="sec">Où va ce colis ?</h2>
+  <div class="hintbar">Ultra utile au taf : tape le nom du client sur l'étiquette → commune + tournée directement.</div>
+  <div class="search"><input type="text" placeholder="Ex : Fenwick, Logilec, Gien, Nocibé…" oninput="doSearch(this.value)" autocomplete="off"></div>
+  <div id="hits"><div class="empty">Tape au moins 2 lettres (client ou commune).</div></div>`;
+}
+
+/* ============ LOGIQUE (carte mentale) ============ */
+window.goFiche=i=>{selT=i;setMode('fiches');};
+function renderLogic(){
+  const N=(i,x,y,dir)=>`<button class="cnode" style="left:${x}%;top:${y}%;background:${T[i].c}" onclick="goFiche(${i})">${T[i].id}<small>${dir}</small></button>`;
+  app.innerHTML=`
+  <h2 class="sec">L'horloge des tournées</h2>
+  <div class="hintbar">Tout tourne autour d'Orléans : 1 tournée = 1 secteur / 1 axe routier. Touche un secteur pour ouvrir sa fiche.</div>
+  <div class="compass">
+    <div class="ring"></div>
+    ${N(0,50,10,'Nord proche')}
+    ${N(5,82,26,'NE · Gâtinais')}
+    ${N(2,90,52,'Est · Loire')}
+    ${N(1,50,90,'Sud proche')}
+    ${N(4,10,52,'Ouest · Beaugency')}
+    ${N(3,18,26,'NO · Beauce 28')}
+    ${N(6,50,50,'Centre-ville')}
+  </div>
+
+  <h2 class="sec">Les 7 axes</h2>
+  <div class="axe"><span class="dir" style="color:${T[0].c}">4501M · Nord proche —</span> la première couronne du dépôt : Fleury-les-Aubrais, Saran, Ormes, St Jean de Braye. Zones commerciales et industrielles.</div>
+  <div class="axe"><span class="dir" style="color:${T[1].c}">4502M · Sud proche —</span> rive sud de la Loire : Olivet, La Source, St Jean le Blanc, St Pryvé, St Cyr… et descend en Sologne jusqu'à La Ferté St Aubin.</div>
+  <div class="axe"><span class="dir" style="color:${T[2].c}">4503M · Est, vallée de la Loire —</span> un couloir le long du fleuve : Chécy → St Denis de l'Hôtel → Châteauneuf → Ouzouer → Gien. Repère : les packs bancaires de centre-bourg.</div>
+  <div class="axe"><span class="dir" style="color:${T[3].c}">4504M · Nord-Ouest, la Beauce —</span> la longue distance vers le 28 : Artenay, Toury, Janville, Chartres, Châteaudun, Brou. Repère : presque tout est en (28) ou (41).</div>
+  <div class="axe"><span class="dir" style="color:${T[4].c}">4505M · Ouest —</span> sortie ouest (St Jean de la Ruelle, Ingré, La Chapelle St Mesmin) puis l'axe Beaugency : Baule, Tavers, Cléry… et remonte dans le 41 (Oucques, Moisy).</div>
+  <div class="axe"><span class="dir" style="color:${T[5].c}">Pithiviers · Nord-Est, le Gâtinais —</span> Neuville-aux-Bois, Pithiviers, Puiseaux, Sermaises. Beaucoup de techniciens SAV en campagne.</div>
+  <div class="axe"><span class="dir" style="color:${T[6].c}">4507VM · Le centre de l'horloge —</span> hyper-centre d'Orléans uniquement. Seule tournée VM (jusqu'au vendredi soir) : banques, cabinets médicaux, opticiens — la zone la plus dense en pros.</div>
+
+  <h2 class="sec">Réflexes face à un colis</h2>
+  <div class="reflex"><b>Marque de machines + nom de personne</b> (Fenwick, Still, Jung, Kone, AGCO, Claas…) = <b>technicien SAV</b> livré à domicile. C'est pour ça que des petits villages (Moisy, Nibelle, Coulmiers…) sont sur les feuilles — 1 village = 1 technicien, souvent unique. Ces noms sont les meilleurs indices pour retrouver la tournée.</div>
+  <div class="reflex"><b>Pack bancaire</b> (BP, CE, CM, CIC, LCL, SG…) = <b>centre-bourg</b>. Gien, Châteauneuf, Chécy et Pithiviers ont quasiment le même pack. Si Martroi / Place d'Arc apparaît → 4507VM centre-ville.</div>
+  <div class="reflex"><b>CW / Nemo / Poilane + enseigne</b> (Leclerc, Intermarché, Super U, Carrefour…) = <b>grande surface</b> en zone commerciale. CW Intermarché existe presque partout : ce client seul ne suffit jamais, regarde la commune.</div>
+  <div class="reflex"><b>Suffixe des tournées</b> : M = du lundi soir au jeudi soir · VM = jusqu'au vendredi soir. Le numéro de département sur la feuille (28, 41, 45) te dit direct si on sort du Loiret.</div>`;
+}
+
+/* ============ SCAN ÉTIQUETTE ============ */
+function dbCompact(){
+  return T.map(t=>`${t.id} (${t.jours}) :\n`+t.communes.map(c=>`  - ${c.n} → ${c.cl.join(' ; ')}`).join('\n')).join('\n');
+}
+function renderScan(){
+  app.innerHTML=`<h2 class="sec">Scanner une étiquette</h2>
+  <div class="hintbar">Cadre bien le <b>nom du destinataire</b> (+ la ville si visible). L'IA lit l'étiquette, la matche avec ta base et te dit où poser le colis. Spécial piège « Orléans » : c'est le client qui décide la tournée.</div>
+  <label class="scan-btn">📷 Prendre l'étiquette en photo
+    <small>ou choisir une photo existante</small>
+    <input type="file" accept="image/*" capture="environment" style="display:none" onchange="scanImg(this)">
+  </label>
+  <div id="scan-out"></div>`;
+}
+window.scanImg=async inp=>{
+  const f=inp.files&&inp.files[0];if(!f)return;
+  const out=document.getElementById('scan-out');
+  const url=URL.createObjectURL(f);
+  out.innerHTML=`<img class="preview" src="${url}"><div class="loading"><span class="spin"></span><br>Lecture de l'étiquette…</div>`;
+  try{
+    const b64=await compress(f);
+    const res=await askClaude(b64);
+    showVerdict(res,url);
+  }catch(e){
+    out.innerHTML=`<img class="preview" src="${url}"><div class="hintbar" style="margin-top:12px;background:#FBE7E5;border-color:#D5342B;color:#8F1F18">
+      Échec de l'analyse (${esc(String(e.message||e))}). Réessaie avec une photo plus nette, ou tape le nom du client dans l'onglet Recherche.</div>`;
+  }
+  inp.value='';
+};
+function compress(file){
+  return new Promise((ok,ko)=>{
+    const img=new Image();
+    img.onload=()=>{
+      const M=1400,s=Math.min(1,M/Math.max(img.width,img.height));
+      const cv=document.createElement('canvas');cv.width=Math.round(img.width*s);cv.height=Math.round(img.height*s);
+      cv.getContext('2d').drawImage(img,0,0,cv.width,cv.height);
+      ok(cv.toDataURL('image/jpeg',0.85).split(',')[1]);
+    };
+    img.onerror=()=>ko(new Error('image illisible'));
+    img.src=URL.createObjectURL(file);
+  });
+}
+function getKey(){try{return localStorage.getItem('anthro_key')||'';}catch(e){return '';}}
+function setKey(k){try{localStorage.setItem('anthro_key',k);}catch(e){}}
+async function callAPI(b64,prompt,key){
+  const headers={"Content-Type":"application/json"};
+  if(key){headers["x-api-key"]=key;headers["anthropic-version"]="2023-06-01";headers["anthropic-dangerous-direct-browser-access"]="true";}
+  return fetch("https://api.anthropic.com/v1/messages",{
+    method:"POST",headers,
+    body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:1000,messages:[{role:"user",content:[
+      {type:"image",source:{type:"base64",media_type:"image/jpeg",data:b64}},
+      {type:"text",text:prompt}]}]})
+  });
+}
+async function askClaude(b64){
+  const prompt=`Tu es un assistant de dispatch colis dans un dépôt logistique à Orléans. Voici la photo d'une étiquette de colis. Lis le nom du destinataire (et la ville/commune si visible), puis trouve la correspondance dans cette base de tournées :
+
+${dbCompact()}
+
+Règles :
+- Le nom sur l'étiquette peut différer légèrement du nom en base (abréviations, ordre des mots, raison sociale complète vs nom court). Fais un rapprochement intelligent.
+- Si la ville est "Orléans", c'est le CLIENT qui détermine la tournée (Orléans apparaît sur plusieurs tournées).
+- Si plusieurs communes possibles pour un même client (ex : CW Intermarché existe partout), utilise la ville/le code postal de l'étiquette pour trancher. Si impossible, mets confiance "basse" et liste les alternatives.
+- Réponds UNIQUEMENT avec un objet JSON, sans backticks ni texte autour :
+{"lu":"texte du destinataire lu sur l'étiquette","client":"nom en base ou null","commune":"commune ou null","tournee":"id tournée ou null","confiance":"haute|moyenne|basse","alternatives":["tournée · commune", ...],"note":"explication en 1 phrase"}`;
+  let r=await callAPI(b64,prompt,getKey());
+  if(r.status===401||r.status===403){
+    const k=window.prompt("Version installée sur l'écran d'accueil : il faut une clé API Anthropic (console.anthropic.com → API Keys). Colle ta clé ici, elle restera enregistrée sur ton téléphone :");
+    if(!k)throw new Error("clé API requise hors de Claude");
+    setKey(k.trim());
+    r=await callAPI(b64,prompt,k.trim());
+  }
+  if(!r.ok)throw new Error("API "+r.status);
+  const data=await r.json();
+  const txt=(data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("\n");
+  return JSON.parse(txt.replace(/```json|```/g,'').trim());
+}
+function showVerdict(v,url){
+  const out=document.getElementById('scan-out');
+  const t=T.find(x=>x.id===v.tournee);
+  if(!t){
+    out.innerHTML=`<img class="preview" src="${url}">
+    <div class="verdict"><div class="v-tour" style="background:#6E6879">INTROUVABLE<small>pas de correspondance</small></div>
+    <div class="v-body">
+      <div class="v-row"><b>Lu</b> ${esc(v.lu||'—')}</div>
+      <div class="v-row"><b>Note</b> ${esc(v.note||'Vérifie manuellement dans Recherche.')}</div>
+    </div></div>`;
+    return;
+  }
+  out.innerHTML=`<img class="preview" src="${url}">
+  <div class="verdict" style="border-color:${t.c}">
+    <div class="v-tour" style="background:${t.c}">${t.id}<small>${esc(v.commune||'')}</small></div>
+    <div class="v-body">
+      <div class="v-row"><b>Client</b> ${esc(v.client||'—')}</div>
+      <div class="v-row"><b>Lu</b> ${esc(v.lu||'—')}</div>
+      <div class="v-row"><b>Confiance</b> <span class="conf ${v.confiance||'moyenne'}">${esc(v.confiance||'moyenne')}</span></div>
+      ${v.alternatives&&v.alternatives.length?`<div class="v-row"><b>Sinon</b> ${v.alternatives.map(esc).join(' · ')}</div>`:''}
+      ${v.note?`<div class="v-row"><b>Note</b> ${esc(v.note)}</div>`:''}
+    </div>
+  </div>`;
+}
+
+/* ============ RENDER ============ */
+function render(){
+  if(mode==='scan')renderScan();
+  else if(mode==='fiches')renderFiches();
+  else if(mode==='logic')renderLogic();
+  else if(mode==='flash')renderFlash();
+  else if(mode==='quiz')renderQuiz();
+  else renderSearch();
+}
+renderNav();render();
+</script>
+</body>
+</html>
