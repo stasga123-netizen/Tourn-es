@@ -160,6 +160,9 @@ nav button.on{background:var(--ink);color:#fff}
 #lock.shake .dots{animation:shk .35s}
 @keyframes shk{20%{transform:translateX(-10px)}40%{transform:translateX(10px)}60%{transform:translateX(-7px)}80%{transform:translateX(7px)}}
 .hintbar{background:#FCF6D8;border:1.5px solid #E4CF6A;border-radius:5px;padding:10px 12px;font-size:12.5px;color:#6A5A12;margin-bottom:14px;font-weight:500}
+.wkbar{background:#2B2438;color:#fff;border-radius:6px;padding:12px 14px;font-size:13px;line-height:1.5;margin-bottom:14px;border-left:5px solid var(--yellow)}
+.wkbar b{color:var(--yellow)}
+.tstat{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;padding:2px 7px;border-radius:3px;margin-left:8px;vertical-align:middle}
 h2.sec{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;letter-spacing:.05em;text-transform:uppercase;margin:4px 0 10px}
 @media (prefers-reduced-motion: reduce){.fcard{transition:none}}
 </style>
@@ -184,6 +187,7 @@ h2.sec{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;
 <nav id="nav"></nav>
 <div class="wrap" id="app"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script>
 /* ============ VERROU PIN ============ */
 const PIN_HASH="aa82088246685c17ebf16d48877686b831ed384ffdc42e76494283c271704d7a";
@@ -318,19 +322,50 @@ window.setMode=setMode;
 function chip(t){return `<span class="chip" style="background:${t.c}">${t.id}</span>`;}
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;');}
 
+/* ============ MODE WEEK-END (détection auto vendredi soir → samedi) ============ */
+function inWeekendWindow(){
+  const d=new Date(),day=d.getDay(),hour=d.getHours();
+  return (day===5&&hour>=18)||day===6;
+}
+function tourWeekendStatus(t){
+  if(t.jours.includes('M + VM'))return 'mixte';
+  if(t.jours.includes('Vendredi'))return 'actif';
+  return 'termine';
+}
+function weekendBannerHTML(){
+  if(!inWeekendWindow())return '';
+  const sat=new Date().getDay()===6;
+  const msg=sat
+    ?"Semaine clôturée : toutes les tournées (M et VM) sont terminées. Reprise et mise à jour des tournées lundi matin."
+    :"Les tournées <b>M</b> (4501M→4505M, Pithiviers) sont terminées depuis jeudi soir. Seule <b>4507VM</b> (centre-ville) roule encore ce soir.";
+  return `<div class="wkbar">🔄 <b>${sat?'Mode week-end':'Mode vendredi soir'}</b> — ${msg}</div>`;
+}
+function tourStatusBadge(t){
+  if(!inWeekendWindow())return '';
+  const st=tourWeekendStatus(t);
+  const map={actif:['EN COURS','#2F8F5B'],mixte:['PARTIELLE','#C29A00'],termine:['TERMINÉE JEUDI','#B03060']};
+  const [label,color]=map[st];
+  return `<span class="tstat" style="background:${color}">${label}</span>`;
+}
+
 /* ============ FICHES ============ */
 function tselHTML(sel,cb,withAll){
+  const wk=inWeekendWindow();
   let h='<div class="tsel">';
   if(withAll)h+=`<button style="border-color:#221E2B;${sel==='ALL'?'background:#221E2B':''}" class="${sel==='ALL'?'on':''}" onclick="${cb}('ALL')">TOUTES<small>7 tournées</small></button>`;
   h+=T.map((t,i)=>{const on=(sel===i||sel===t.id);
-    return `<button style="border-color:${t.c};${on?'background:'+t.c:''}" class="${on?'on':''}" onclick="${cb}(${withAll?`'${t.id}'`:i})">${t.id}<small>${t.communes.length} communes</small></button>`;}).join('');
+    const st=wk?tourWeekendStatus(t):null;
+    const dim=st==='termine'?'opacity:.55;':'';
+    const wkCol={actif:'#2F8F5B',mixte:'#C29A00',termine:'#B03060'};
+    const statusSmall=wk?`<small style="color:${on?'rgba(255,255,255,.9)':wkCol[st]}">${st==='actif'?'● active':st==='mixte'?'● partielle':'● terminée'}</small>`:'';
+    return `<button style="border-color:${t.c};${on?'background:'+t.c:''}${dim}" class="${on?'on':''}" onclick="${cb}(${withAll?`'${t.id}'`:i})">${t.id}<small>${t.communes.length} communes</small>${statusSmall}</button>`;}).join('');
   return h+'</div>';
 }
 function renderFiches(){
   const t=T[selT];
   let h=tselHTML(selT,'pickT',false);
   h+=`<div class="pouch" style="border-color:${t.c}">
-    <div class="tour-head"><div class="num">${t.id}</div><div class="jours">${t.jours}</div></div>`;
+    <div class="tour-head"><div class="num">${t.id}</div><div class="jours">${t.jours}${tourStatusBadge(t)}</div></div>`;
   t.communes.forEach(c=>{
     h+=`<div class="band">${esc(c.n)}</div><ul class="clients">${c.cl.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`;
   });
@@ -493,13 +528,10 @@ function renderLogic(){
   <div class="reflex"><b>Suffixe des tournées</b> : M = du lundi soir au jeudi soir · VM = jusqu'au vendredi soir. Le numéro de département sur la feuille (28, 41, 45) te dit direct si on sort du Loiret.</div>`;
 }
 
-/* ============ SCAN ÉTIQUETTE ============ */
-function dbCompact(){
-  return T.map(t=>`${t.id} (${t.jours}) :\n`+t.communes.map(c=>`  - ${c.n} → ${c.cl.join(' ; ')}`).join('\n')).join('\n');
-}
+/* ============ SCAN ÉTIQUETTE (OCR local, open-source Tesseract.js — pas de clé API, pas de photo envoyée à un serveur) ============ */
 function renderScan(){
   app.innerHTML=`<h2 class="sec">Scanner une étiquette</h2>
-  <div class="hintbar">Cadre bien le <b>nom du destinataire</b> (+ la ville si visible). L'IA lit l'étiquette, la matche avec ta base et te dit où poser le colis. Spécial piège « Orléans » : c'est le client qui décide la tournée.</div>
+  <div class="hintbar">Cadre bien le <b>nom du destinataire</b> (+ la ville si visible). La lecture se fait directement dans le téléphone (OCR gratuit, aucune clé API), puis elle est matchée avec ta base. Spécial piège « Orléans » : c'est le client qui décide la tournée.</div>
   <label class="scan-btn">📷 Prendre l'étiquette en photo
     <small>ou choisir une photo existante</small>
     <input type="file" accept="image/*" capture="environment" style="display:none" onchange="scanImg(this)">
@@ -510,64 +542,110 @@ window.scanImg=async inp=>{
   const f=inp.files&&inp.files[0];if(!f)return;
   const out=document.getElementById('scan-out');
   const url=URL.createObjectURL(f);
-  out.innerHTML=`<img class="preview" src="${url}"><div class="loading"><span class="spin"></span><br>Lecture de l'étiquette…</div>`;
+  out.innerHTML=`<img class="preview" src="${url}"><div class="loading"><span class="spin"></span><br><span id="scan-progress">Lecture de l'étiquette…</span></div>`;
   try{
-    const b64=await compress(f);
-    const res=await askClaude(b64);
+    const text=await runOCR(f);
+    const res=matchEntry(text);
     showVerdict(res,url);
   }catch(e){
     out.innerHTML=`<img class="preview" src="${url}"><div class="hintbar" style="margin-top:12px;background:#FBE7E5;border-color:#D5342B;color:#8F1F18">
-      Échec de l'analyse (${esc(String(e.message||e))}). Réessaie avec une photo plus nette, ou tape le nom du client dans l'onglet Recherche.</div>`;
+      Échec de la lecture (${esc(String(e.message||e))}). Réessaie avec une photo plus nette et bien cadrée, ou tape le nom du client dans l'onglet Recherche.</div>`;
   }
   inp.value='';
 };
-function compress(file){
-  return new Promise((ok,ko)=>{
-    const img=new Image();
-    img.onload=()=>{
-      const M=1400,s=Math.min(1,M/Math.max(img.width,img.height));
-      const cv=document.createElement('canvas');cv.width=Math.round(img.width*s);cv.height=Math.round(img.height*s);
-      cv.getContext('2d').drawImage(img,0,0,cv.width,cv.height);
-      ok(cv.toDataURL('image/jpeg',0.85).split(',')[1]);
-    };
-    img.onerror=()=>ko(new Error('image illisible'));
-    img.src=URL.createObjectURL(file);
+const OCR_STATUS_FR={'loading tesseract core':'Chargement du moteur OCR','initializing tesseract':'Initialisation',
+  'loading language traineddata':'Téléchargement du modèle FR','initializing api':'Préparation','recognizing text':'Lecture du texte'};
+async function runOCR(file){
+  if(typeof Tesseract==='undefined')throw new Error('moteur OCR indisponible (hors-ligne au premier lancement ?)');
+  const {data}=await Tesseract.recognize(file,'fra',{
+    logger:m=>{
+      const el=document.getElementById('scan-progress');
+      if(el&&m.status&&typeof m.progress==='number')
+        el.textContent=`${OCR_STATUS_FR[m.status]||'Analyse'}… ${Math.round(m.progress*100)}%`;
+    }
   });
+  return data.text||'';
 }
-function getKey(){try{return localStorage.getItem('anthro_key')||'';}catch(e){return '';}}
-function setKey(k){try{localStorage.setItem('anthro_key',k);}catch(e){}}
-async function callAPI(b64,prompt,key){
-  const headers={"Content-Type":"application/json"};
-  if(key){headers["x-api-key"]=key;headers["anthropic-version"]="2023-06-01";headers["anthropic-dangerous-direct-browser-access"]="true";}
-  return fetch("https://api.anthropic.com/v1/messages",{
-    method:"POST",headers,
-    body:JSON.stringify({model:"claude-sonnet-4-6",max_tokens:1000,messages:[{role:"user",content:[
-      {type:"image",source:{type:"base64",media_type:"image/jpeg",data:b64}},
-      {type:"text",text:prompt}]}]})
+function normTxt(s){
+  return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/[^A-Z0-9]+/g,' ').trim();
+}
+function stripParens(s){return (s||'').replace(/\([^)]*\)/g,' ');}
+function levenshtein(a,b){
+  const m=a.length,n=b.length,dp=Array.from({length:m+1},()=>new Array(n+1).fill(0));
+  for(let i=0;i<=m;i++)dp[i][0]=i;
+  for(let j=0;j<=n;j++)dp[0][j]=j;
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)
+    dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j-1],dp[i-1][j],dp[i][j-1]);
+  return dp[m][n];
+}
+function wordSim(a,b){if(!a.length||!b.length)return 0;return 1-levenshtein(a,b)/Math.max(a.length,b.length);}
+function flatEntries(){
+  const arr=[];
+  T.forEach(t=>t.communes.forEach(c=>{
+    arr.push({label:c.n,type:'commune',t,c});
+    c.cl.forEach(cl=>arr.push({label:cl,type:'client',t,c}));
+  }));
+  return arr;
+}
+const ENTRIES=flatEntries();
+const COMMUNE_TOURS={};
+T.forEach(t=>t.communes.forEach(c=>{(COMMUNE_TOURS[c.n]=COMMUNE_TOURS[c.n]||new Set()).add(t.id);}));
+function communeAmbiguous(name){return (COMMUNE_TOURS[name]&&COMMUNE_TOURS[name].size)>1;}
+function scoreLabel(labelWords,ocrWords){
+  let weightSum=0,matchSum=0;
+  labelWords.forEach(w=>{
+    if(w.length<2)return;
+    let best=0;
+    for(const ow of ocrWords){const s=wordSim(w,ow);if(s>best)best=s;}
+    weightSum+=w.length;matchSum+=w.length*best;
   });
+  return {score:weightSum?matchSum/weightSum:0,weight:weightSum};
 }
-async function askClaude(b64){
-  const prompt=`Tu es un assistant de dispatch colis dans un dépôt logistique à Orléans. Voici la photo d'une étiquette de colis. Lis le nom du destinataire (et la ville/commune si visible), puis trouve la correspondance dans cette base de tournées :
+function scoreEntries(list,ocrWords){
+  // en cas de score identique, on privilégie l'étiquette la plus longue/spécifique (plus d'évidence qu'un simple sigle générique)
+  // les suffixes entre parenthèses ("(28)", "(centre-ville)"...) sont des repères internes à la base,
+  // pas du texte qui apparaît tel quel sur une étiquette réelle : on les ignore pour le score.
+  return list.map(e=>{const {score,weight}=scoreLabel(normTxt(stripParens(e.label)).split(' '),ocrWords);return {e,score,weight};})
+    .sort((a,b)=>(b.score-a.score)||(b.weight-a.weight));
+}
+function matchEntry(rawText){
+  const lu=rawText.replace(/\s+/g,' ').trim().slice(0,140);
+  const ocrWords=normTxt(rawText).split(' ').filter(w=>w.length>1);
+  if(!ocrWords.length)
+    return {lu,client:null,commune:null,tournee:null,confiance:'basse',alternatives:[],note:"Aucun texte détecté, reprends la photo bien cadrée sur l'étiquette."};
+  const communes=scoreEntries(ENTRIES.filter(e=>e.type==='commune'),ocrWords);
+  const clients=scoreEntries(ENTRIES.filter(e=>e.type==='client'),ocrWords);
+  const bestCommune=communes[0], bestClient=clients[0];
+  if((!bestCommune||bestCommune.score<0.45)&&(!bestClient||bestClient.score<0.45))
+    return {lu,client:null,commune:null,tournee:null,confiance:'basse',alternatives:[],note:"Aucune correspondance fiable trouvée dans la base."};
 
-${dbCompact()}
-
-Règles :
-- Le nom sur l'étiquette peut différer légèrement du nom en base (abréviations, ordre des mots, raison sociale complète vs nom court). Fais un rapprochement intelligent.
-- Si la ville est "Orléans", c'est le CLIENT qui détermine la tournée (Orléans apparaît sur plusieurs tournées).
-- Si plusieurs communes possibles pour un même client (ex : CW Intermarché existe partout), utilise la ville/le code postal de l'étiquette pour trancher. Si impossible, mets confiance "basse" et liste les alternatives.
-- Réponds UNIQUEMENT avec un objet JSON, sans backticks ni texte autour :
-{"lu":"texte du destinataire lu sur l'étiquette","client":"nom en base ou null","commune":"commune ou null","tournee":"id tournée ou null","confiance":"haute|moyenne|basse","alternatives":["tournée · commune", ...],"note":"explication en 1 phrase"}`;
-  let r=await callAPI(b64,prompt,getKey());
-  if(r.status===401||r.status===403){
-    const k=window.prompt("Version installée sur l'écran d'accueil : il faut une clé API Anthropic (console.anthropic.com → API Keys). Colle ta clé ici, elle restera enregistrée sur ton téléphone :");
-    if(!k)throw new Error("clé API requise hors de Claude");
-    setKey(k.trim());
-    r=await callAPI(b64,prompt,k.trim());
+  // Réflexe métier : une commune explicite et fiable (non ambiguë entre tournées) fait autorité,
+  // le client sert juste à préciser. Si la commune est un piège (ex: Orléans, présent sur plusieurs
+  // tournées) ou peu fiable, c'est le client qui tranche à la place.
+  const communeReliable=bestCommune&&bestCommune.score>0.72&&!communeAmbiguous(bestCommune.e.c.n);
+  let communeName,tournee,client,score,alt=[];
+  if(communeReliable){
+    communeName=bestCommune.e.c.n;tournee=bestCommune.e.t.id;score=bestCommune.score;
+    // pour retrouver le client, on ignore les mots déjà "consommés" par le nom de la commune
+    // (sinon un client du type "Dr Mos Gien" matcherait juste parce que "Gien" est déjà reconnu)
+    const communeWords=new Set(normTxt(stripParens(communeName)).split(' '));
+    const remaining=ocrWords.filter(w=>!communeWords.has(w));
+    const localCandidates=ENTRIES.filter(e=>e.type==='client'&&e.c.n===communeName);
+    const localScored=remaining.length?scoreEntries(localCandidates,remaining):[];
+    client=localScored[0]&&localScored[0].score>0.5?localScored[0].e.label:null;
+    alt=communes.slice(1).filter(s=>s.e.c.n!==communeName&&s.score>bestCommune.score-0.25).slice(0,3)
+      .map(s=>`${s.e.t.id} · ${s.e.c.n}`);
+  }else{
+    const pick=bestClient&&bestClient.score>=0.45?bestClient:bestCommune;
+    communeName=pick.e.c.n;tournee=pick.e.t.id;score=pick.score;
+    client=pick.e.type==='client'?pick.e.label:null;
+    alt=clients.concat(communes).filter(s=>s.e.c.n!==communeName&&s.score>=pick.score-0.2)
+      .sort((a,b)=>b.score-a.score).slice(0,3).map(s=>`${s.e.t.id} · ${s.e.c.n}`);
   }
-  if(!r.ok)throw new Error("API "+r.status);
-  const data=await r.json();
-  const txt=(data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("\n");
-  return JSON.parse(txt.replace(/```json|```/g,'').trim());
+  const confiance=score>0.82?'haute':score>0.6?'moyenne':'basse';
+  const note=communeName.startsWith('ORLÉANS')?"« Orléans » existe sur plusieurs tournées : vérifie le nom du client ci-dessus."
+    :alt.length?"Plusieurs correspondances possibles, vérifie la ville sur l'étiquette.":'';
+  return {lu,client,commune:communeName,tournee,confiance,alternatives:alt,note};
 }
 function showVerdict(v,url){
   const out=document.getElementById('scan-out');
@@ -602,6 +680,8 @@ function render(){
   else if(mode==='flash')renderFlash();
   else if(mode==='quiz')renderQuiz();
   else renderSearch();
+  const b=weekendBannerHTML();
+  if(b)app.insertAdjacentHTML('afterbegin',b);
 }
 renderNav();render();
 </script>
