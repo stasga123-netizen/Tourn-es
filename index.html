@@ -44,6 +44,17 @@ nav button{flex:0 0 auto;font-family:'Barlow Condensed',sans-serif;font-size:16p
   border-radius:4px;cursor:pointer}
 nav button.on{background:var(--ink);color:#fff}
 
+/* Depot bar */
+#depotNav{display:flex;gap:6px;max-width:760px;margin:14px auto 0;padding:0 14px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+#depotNav::-webkit-scrollbar{display:none}
+#depotNav button{flex:0 0 auto;font-family:'Barlow Condensed',sans-serif;font-size:14.5px;font-weight:700;letter-spacing:.04em;
+  text-transform:uppercase;padding:7px 14px;border:1.5px solid var(--violet);background:#fff;color:var(--violet-dark);
+  border-radius:4px 4px 0 0;cursor:pointer;text-align:center}
+#depotNav button small{display:block;font-family:'Inter',sans-serif;font-weight:500;font-size:9px;text-transform:none;
+  letter-spacing:0;color:var(--grey);margin-top:1px}
+#depotNav button.on{background:var(--violet);color:#fff}
+#depotNav button.on small{color:rgba(255,255,255,.85)}
+
 /* Pouch card = fiche tarifold */
 .pouch{background:var(--paper);border:3px solid var(--red);border-radius:5px;box-shadow:0 3px 10px rgba(30,20,50,.10);
   position:relative;margin-bottom:16px;overflow:hidden}
@@ -180,10 +191,11 @@ h2.sec{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;
   </div>
 </div>
 <header><div class="hd-in">
-  <h1>Tournées Orléans</h1>
-  <div class="hd-sub">Dispatch colis · communes &amp; clients · 7 tournées</div>
+  <h1>Tournées</h1>
+  <div class="hd-sub" id="hdSub">Dispatch colis · communes &amp; clients</div>
 </div></header>
 
+<div id="depotNav"></div>
 <nav id="nav"></nav>
 <div class="wrap" id="app"></div>
 
@@ -212,7 +224,7 @@ window.pin=async n=>{
 };
 
 /* ============ DONNÉES ============ */
-const T = [
+const T_ORLEANS = [
 {id:"4501M",jours:"Lundi soir → Jeudi soir",c:"#D5342B",communes:[
  {n:"FLEURY LES AUBRAIS",cl:["CW Leclerc","CW Intermarché","EDF","Honda","JC Decaux","Logilec (ACC / RES / CONS)","Nemo Leclerc","Orange","Poilane Leclerc","Pain Belledone Leclerc","SNCF"]},
  {n:"ORLÉANS",cl:["CDC Hab Go","Labo Casgrens Lefort","MSA Beauce Cœur de Loire","PE Région Centre","SG DCR","SNCF"]},
@@ -308,11 +320,527 @@ const T = [
 ]}
 ];
 
+const T_MONTARGIS = [
+{id:"TR174545",jours:"LUNDI SOIR au VENDREDI SOIR",c:"#D5342B",communes:[
+ {n:"BELLEGARDE",cl:["CE","HD PP LOISIR SERV","LABORATOIRE CHAVANEAU"]},
+ {n:"BOISCOMMUN",cl:["WL WALLERAND MANULOC"]},
+ {n:"CHAMPIGNELLES",cl:["DR BUISSON"]},
+ {n:"CHATILLON COLIGNY",cl:["CE","DR DEBEAUVAIS","GROUPAMA","SG"]},
+ {n:"LORRIS",cl:["CE","GROUPAMA","SG"]},
+ {n:"NOGENT SUR VERNISSON",cl:["CE","DR ISNARD","KONE GROS P NOGENT"]},
+ {n:"NOYERS",cl:["FENWICK AMAZZINI F PERE","FENWICK SEBASTIEN BRUN"]},
+ {n:"QUIERS SUR BEZONDE",cl:["J LOPES"]},
+ {n:"STE GENEVIEVE DES BOIS",cl:["JUNG DELHOUME T"]},
+ {n:"VIMORY",cl:["FENWICK HEBRARD O"]},
+ {n:"VILLEMOUTIERS",cl:["N ANDRE"]}
+]},
+{id:"COURTENAY1M",jours:"VENDREDI SOIR",c:"#E07020",communes:[
+ {n:"AMILLY",cl:["LECLERC","DARTY MAG","CEGEDIM AMILLY"]},
+ {n:"CHÂTEAU RENARD",cl:["AGCO BOUCHER"]},
+ {n:"CORBEILLES",cl:["AGCO"]},
+ {n:"MONTARGIS",cl:["DR DRESCA","MNH SIEGE"]},
+ {n:"LADON",cl:["AGCO HUGUENY"]},
+ {n:"PREFONTAINES",cl:["VADERSTAD"]},
+ {n:"PRESSIGNY LES PINS",cl:["AGCO"]},
+ {n:"ST HILAIRE SUR PUISEAUX",cl:["VADERSTAD"]},
+ {n:"VILLEMANDEUR",cl:["ORANGE"]}
+]},
+{id:"COURTENAY1S",jours:"VENDREDI SOIR",c:"#2F8F5B",communes:[
+ {n:"AMILLY",cl:["CEGEDIM AMILLY"]},
+ {n:"MONTARGIS",cl:["BNP","CPAM","CARPA","DR DRESCA","VYV DENTAIRE MONTARGIS","PALATINE NEXITY"]},
+ {n:"PITHIVIERS",cl:["MALT FRANCO BELGE"]},
+ {n:"VILLEMANDEUR",cl:["BNP"]}
+]},
+{id:"COURTENAY25M",jours:"LUNDI SOIR au JEUDI SOIR",c:"#B03060",communes:[
+ {n:"AMILLY",cl:["BP","CE","CEGEDIM","CM","COUVOIR","SAV DARTY + MAG","FEU VERT","GEN OPT","CW LECLERC","KODAK L LECLERC","LECLERC","LOM (VISAUDIO + VYV CARE)","NATUREO","NEMO DECATHLON","NOCIBE","SG"]},
+ {n:"CHALETTE SUR LOING",cl:["BP","CE","CE VESINES","CW SUPER U","HYPER CASINO","NEMO 45 SUPER U","OPTIQUE VISUAL"]},
+ {n:"CHÂTEAU LANDON",cl:["LE BIO PAYSAN"]},
+ {n:"CHÂTEAU RENARD",cl:["AGCO BOUCHER","CE","GROUPAMA","SG"]},
+ {n:"CHATILLON COLIGNY",cl:["NEMO 45 SUPER U"]},
+ {n:"COURTENAY",cl:["BP","CE","DR SAMAMA MAX","GROUPAMA","HD PP CHAPUS","SG"]},
+ {n:"CORBEILLES",cl:["AGCO"]},
+ {n:"DORDIVES",cl:["CE"]},
+ {n:"DOUCHY",cl:["STILL SROKA DAVID  DOUCHY"]},
+ {n:"FERRIERES EN GATINAIS",cl:["CE","KONE THORIS L","FENWICK PETROVSKI D"]},
+ {n:"MONTARGIS",cl:["BP","CE MONTARGIS CHAUSSEE","CE MONTARGIS DOREE","CENTRE DE SANTE DENTAIRE 3D","CIC","CAB DENT MUT","CPAM","CM","DR DRESCA","DR NICA","DR STANA","EPICERIE EFFERVESCENCE","GROUPAMA","LCL MONTARGIS DOREE","LOM","MNH SIEGE","NEMO 45 LECLERC","SG"]},
+ {n:"LADON",cl:["AGCO HUGUENY"]},
+ {n:"PREFONTAINES",cl:["VADERSTAD"]},
+ {n:"PRESSIGNY LES PINS",cl:["AGCO"]},
+ {n:"ST HILAIRE SUR PUISEAUX",cl:["VADERSTAD"]},
+ {n:"TRIGUERES",cl:["DR KIMPE"]},
+ {n:"VILLEMANDEUR",cl:["CE","CW INTERMARCHE","EQUIP JARDIN","ORANGE"]}
+]},
+{id:"COURTENAY25S",jours:"LUNDI SOIR au JEUDI SOIR",c:"#3E6FB5",communes:[
+ {n:"BEAUNE LA ROLANDE",cl:["CW SUPER U"]},
+ {n:"CHATILLON COLIGNY",cl:["CW SUPER U"]},
+ {n:"CORBEILLES",cl:["CW INTERMARCHE"]},
+ {n:"MONTARGIS",cl:["BNP","CARPA","CW FRANCE LOISIRS","DR DRESCA","NOCIBE","VYV DENTAIRE MONTARGIS","PALATINE NEXITY"]},
+ {n:"PITHIVIERS",cl:["MALT FRANCO BELGE"]},
+ {n:"PUISEAUX",cl:["CW INTERMARCHE"]},
+ {n:"VILLEMANDEUR",cl:["BNP"]}
+]},
+{id:"COURTENAY6M",jours:"VENDREDI SOIR",c:"#C29A00",communes:[
+ {n:"AMILLY",cl:["CM","DARTY","GEN OPT","LOM","NEMO DECATHLON","SG"]},
+ {n:"CHALETTE SUR LOING",cl:["OPTIQUE VISUAL"]},
+ {n:"CHÂTEAU LANDON",cl:["LE BIO PAYSAN"]},
+ {n:"CHÂTEAU RENARD",cl:["SG"]},
+ {n:"COURTENAY",cl:["DR SAMANA MAX","HD PP CHAPUS","SG"]},
+ {n:"DOUCHY",cl:["STILL SROKA DAVID DOUCHY"]},
+ {n:"FERRIERES EN GATINAIS",cl:["KONE THORIS L","FENWICK PETROVSKI D"]},
+ {n:"MONTARGIS",cl:["CABINET DENTAIRE MUTUALISTE","CENTRE DE SANTE DENTAIRE 3D","CIC","CM","DR NICA","DR STANA","EPICERIE EFFERVESCENCE","LOM (VISAUDIO + VYV CARE)","SG"]},
+ {n:"TRIGUERES",cl:["DR KIMPE"]},
+ {n:"VILLEMANDEUR",cl:["EQUIP JARDIN"]}
+]},
+{id:"COURTENAY6S",jours:"VENDREDI SOIR",c:"#574083",communes:[
+ {n:"BRIARE",cl:["GROUPAMA","LCL"]},
+ {n:"CHÂTEAU RENARD",cl:["GROUPAMA"]},
+ {n:"CHATILLON COLIGNY",cl:["GROUPAMA"]},
+ {n:"COURTENAY",cl:["GROUPAMA"]},
+ {n:"GIEN",cl:["GROUPAMA","LCL"]},
+ {n:"LORRIS",cl:["GROUPAMA"]},
+ {n:"MONTARGIS",cl:["GROUPAMA"]},
+ {n:"SULLY / LOIRE",cl:["GROUPAMA","LCL"]},
+ {n:"MONTARGIS DOREE",cl:["LCL"]}
+]}
+];
+
+const T_CHARTRES = [
+{id:"TR172845-2",jours:"LUNDI SOIR au VENDREDI SOIR",c:"#D5342B",communes:[
+ {n:"AUNEAU",cl:["ML ARCHAMBAULT AUNEAU","SG","KONE PIRES DA SILVA J"]},
+ {n:"BAILLEAU",cl:["FENWICK LE FERS C FL"]},
+ {n:"BONNEVAL",cl:["TSG BOX 24 TOKHEIM","TSG LECARPENTIER 28"]},
+ {n:"BOUGLAINVAL",cl:["FENWICK EGLOFF Q"]},
+ {n:"BULLAINVILLE",cl:["FENWICK CHAPRON S"]},
+ {n:"DANGEAU",cl:["FENWICK BLAZE FRANCOIS"]},
+ {n:"EPERNON",cl:["CIC"]},
+ {n:"GALLARDON",cl:["LABORATOIRE LECLET","FENWICK MARTIN JG","KONE GUILLET T"]},
+ {n:"GELLAINVILLE",cl:["FENWICK LINDE PARC INDUS"]},
+ {n:"GIDY",cl:["JUNG BUGE DANIEL GIDY"]},
+ {n:"SANCHEVILLE",cl:["AGCO"]},
+ {n:"HANCHES",cl:["POILANE HYPER U"]},
+ {n:"LUCE",cl:["STILL YILMAZ OKAN"]},
+ {n:"MAINTENON",cl:["POILANE INTERMARCHE"]},
+ {n:"MIGNIERES",cl:["FENWICK LE VAILLANT T FL"]},
+ {n:"NOGENT LE ROI",cl:["DARTY F DECAYEUX","POILANE CARREFOUR MARKET","SG"]},
+ {n:"SARAN",cl:["CSAV C BRUNEAU SARAN","FENWICK GALLIN FLORIAN SARAN","MIELE THOMAS 45","STILL SARAN 3","STILL BIDON CR BOULAY SARAN"]}
+]},
+{id:"TR172845",jours:"LUNDI SOIR au VENDREDI SOIR",c:"#E07020",communes:[
+ {n:"AUNEAU",cl:["BP","CA","CE","CM","GCM"]},
+ {n:"BAZOCHES EN DUNOIS",cl:["ML PONTHIEU"]},
+ {n:"CHATENAY",cl:["FENWICK MARTINET O CHATENAY"]},
+ {n:"FONTENAY SUR EURE",cl:["C LOPES"]},
+ {n:"FRANCOURVILLE",cl:["JUNG CHEVALIER B"]},
+ {n:"GELLAINVILLE",cl:["CM ACCUEIL"]},
+ {n:"MOUTIERS",cl:["JUNG BRUNO BRUNETTI"]},
+ {n:"ORGERES EN BEAUCE",cl:["CA","CM"]},
+ {n:"PATAY",cl:["CE","CM"]},
+ {n:"SAINVILLE",cl:["CA"]},
+ {n:"SOURS",cl:["CA"]},
+ {n:"ST PERAVY LA COLOMBE",cl:["HOB PAILLET"]},
+ {n:"TOURNOISIS",cl:["AGCO PRO CULTURE"]},
+ {n:"VOVES",cl:["CA","CE","CM","GCM"]}
+]},
+{id:"DREUX25M",jours:"MARDI MATIN au VENDREDI MATIN",c:"#2F8F5B",communes:[
+ {n:"ANET",cl:["CIC","CW ESPACE CULT LECLERC","CW LECLERC","ECHO NATURE","NEMO 28 LECLERC","LOGILEC ACCEUIL"]},
+ {n:"BOULLAY THIERRY",cl:["CSAV S SEVILLE"]},
+ {n:"BROUE",cl:["AGCO ETS GAUTIER"]},
+ {n:"CHAMPHOL",cl:["CW INTERMARHE"]},
+ {n:"CHARTRES",cl:["DARTY","EVERIAL","FLAGRANCE","S AUBERT 28 CHARTRES"]},
+ {n:"CHERISY",cl:["CW INTERMARCHE","HD TM ESP MTC"]},
+ {n:"CRECY COUVE",cl:["S SEVILLE 28"]},
+ {n:"DREUX",cl:["AB HOUD DJAMEL","AD","BIOCOOP LES CORALINES","CIC","CW LECLERC","DARTY","DENTEGO","GEN OPT","K CARREFOUR DREUX","KONE BOX DREUX","LABORATOIRE APEX","LOM (VISAUDIO + VYV CARE)","NEMO DECATHLON","NOCIBE","SG","GARE SNCF","LABORATOIRE SMILE DENTAIRE","DR AKTAS","LOGILEC RESERVE","LOGILEC PICK UP","LOGILEC ACCEUIL"]},
+ {n:"GALLARDON",cl:["POILANE CARREFOUR"]},
+ {n:"GELLAINVILLE",cl:["MERCER EDIX"]},
+ {n:"GOUSSAINVILLE",cl:["JUNG CORBEL PL"]},
+ {n:"HANCHES",cl:["CW SUPER U","NEMO SUPER U"]},
+ {n:"HOUDAN",cl:["BP","DR MARECHAL","ESCALE BIO"]},
+ {n:"LAONS",cl:["ML BINET LAONS"]},
+ {n:"LEVES",cl:["DR MONTOYA","DOC FOND DALIGRE M THERESE","JC DECAUX"]},
+ {n:"LURAY",cl:["FENWICK HADDAJI RAMSY LURAY"]},
+ {n:"MAINTENON",cl:["SNCF GARE","CW INTERMARCHE 28 MAINTENON"]},
+ {n:"MAINVILLIERS",cl:["STILL DUMEUR P"]},
+ {n:"MARVILLE LES BOIS",cl:["KONE DOUGLAS TRICA"]},
+ {n:"MORANCEZ",cl:["CW INTERMARCHE"]},
+ {n:"SOURS",cl:["CW COCCINELLE SOURS"]},
+ {n:"ST LUBIN LES JONCHERETS",cl:["CW LECLERC"]},
+ {n:"ST REMY SUR AVRE",cl:["ESPACE DENTAIRE DE L'AVRE"]},
+ {n:"TREMBLAY LES VILLAGES",cl:["DR ROMPIERRE","JUNG LEROY T"]},
+ {n:"VERNOUILLET",cl:["AD PIECES VALUES","CENTRE DES ARCHIVES","AGCO","CW HYPER U","DOY PARC AUTO PLUS","GEN OPT","NEMO 28 SUPER U","SAMA","SYMBIO Z"]}
+]},
+{id:"DREUX6M",jours:"VENDREDI SOIR",c:"#B03060",communes:[
+ {n:"ANET",cl:["CIC"]},
+ {n:"BROUE",cl:["AGCO ETS GAUTIER"]},
+ {n:"CRECY COUVE",cl:["S SEVILLE 28"]},
+ {n:"CHARTRES",cl:["S AUBERT 28 CHARTRES"]},
+ {n:"CHERISY",cl:["HD TM ESP MTC"]},
+ {n:"DREUX",cl:["AD","AVERY BERKEL HOUD 119","BIOCOOP LES CORALINES","CIC","DENTEGO","DR AKARKACH","GEN OPT","KONE BOX DREUX","LABORATOIRE APEX","SG","LOM (VISAUDIO + VYV CARE)","NEMO DECATHLON"]},
+ {n:"HOUDAN",cl:["DR MARECHAL","BP HOUDAN"]},
+ {n:"IVRY LA BATAILLE",cl:["EHPAD LA VERTE COLLINE"]},
+ {n:"LEVES",cl:["DR MONTOYA","JC DECAUX"]},
+ {n:"LUCE",cl:["GEN OPT","LOM (VISAUDIO + VYV CARE)"]},
+ {n:"LUISANT",cl:["BARRAULT","CIC"]},
+ {n:"MAULETTE",cl:["DR STANCIU"]},
+ {n:"MARVILLE LES BOIS",cl:["KONE DOUGLAS TRICA"]},
+ {n:"NOGENT LE ROI",cl:["CARREFOUR MARKET POILANE","SG"]},
+ {n:"TREMBLAY LES VILLAGES",cl:["DR RONDEPIERRE"]},
+ {n:"VERNOUILLET",cl:["AGCO SAMA","DOY PARC AUTO PLUS","ETS SAMA","GEN OPT","SAMA VERNOUILLET","SYMBIO Z"]}
+]},
+{id:"DREUX15S",jours:"LUNDI SOIR au VENDREDI SOIR",c:"#3E6FB5",communes:[
+ {n:"ANET",cl:["BP","CA","CE"]},
+ {n:"BU",cl:["CA"]},
+ {n:"CHERISY",cl:["CA"]},
+ {n:"DREUX",cl:["BP","BNP","CA","CA CENTRE D AFFAIRES","CE DREUX CENTRE","CE LES BATES","CM","GCM","LCL"]},
+ {n:"VERNOUILLET",cl:["CA","CA LES CORVEES","CE","CM"]}
+]},
+{id:"VERNEUIL15S",jours:"LUNDI SOIR au VENDREDI SOIR",c:"#C29A00",communes:[
+ {n:"BREZOLLES",cl:["CA","CM"]},
+ {n:"CHATEAUNEUF EN THYMERAIS",cl:["CA","CE","CM","GCM"]},
+ {n:"LA FERTE VIDAME",cl:["CA","PSA LA FERTE VIDAME"]},
+ {n:"NONANCOURT",cl:["BNP"]},
+ {n:"SENONCHES",cl:["BP","CA","CE","CM","GCM"]},
+ {n:"ST REMY SUR AVRE",cl:["ESPACE DENTAIRE DE L'AVRE"]},
+ {n:"ST LUBIN DES JONCHERETS",cl:["CA","CE","CM"]},
+ {n:"VERNEUIL SUR AVRE",cl:["CM"]}
+]},
+{id:"BROU15S",jours:"LUNDI SOIR au VENDREDI SOIR",c:"#574083",communes:[
+ {n:"ARROU",cl:["CA","CM"]},
+ {n:"AUTHON DU PERCHE",cl:["CA","CM"]},
+ {n:"BAILLEAU LE PIN",cl:["CA","CM"]},
+ {n:"BARJOUVILLE",cl:["BP"]},
+ {n:"BONNEVAL",cl:["BP","CA","CE","CM","GCM"]},
+ {n:"BROU",cl:["BP","CA","CE","CM","GCM"]},
+ {n:"DAMMARIE",cl:["CA"]},
+ {n:"ILLIERS COMBRAY",cl:["CA","CE","CM"]},
+ {n:"LA BAZOCHE GOUET",cl:["CA"]},
+ {n:"LUIGNY",cl:["PRO ARCHIVES SYSTEME"]},
+ {n:"THIVARS",cl:["CA"]}
+]},
+{id:"RAMBOUILLET15S",jours:"LUNDI SOIR au VENDREDI SOIR",c:"#1F8A8C",communes:[
+ {n:"EPERNON",cl:["BNP","BP","CA","CE","CM"]},
+ {n:"GALLARDON",cl:["CA","CE","CM"]},
+ {n:"MAINTENON",cl:["BP","CA","CE","CM","GCM","LCL"]},
+ {n:"NOGENT LE ROI",cl:["CA","CE","CM","GCM"]},
+ {n:"RAMBOUILLET",cl:["CM"]}
+]},
+{id:"CHARTRESEQ15S",jours:"LUNDI SOIR au VENDREDI SOIR",c:"#8E44AD",communes:[
+ {n:"CHARTRES",cl:["BDF CHARTRES","BP CHARTRES MADELEINE","BP EURE ET LOIR ENTREPRISES","CA CHARTRES LA MADELEINE","CA CHARTRES LES 3 PONTS","CAF EURE ET LOIR CHARTRES","CE CA MULTI MARCHES 28","CE CHARTRES CENTRE","CE CHARTRES LES PETITS CLOS","CE CHARTRES MADELEINE","CM CHARTRES MADELEINE","COGEDIS FIDEOR CHARTRES","CPAM EURE ET LOIR CHARTRES","DOC HOPITAUX CHARTRES","L PHOX CHARTRES STUDIO MARTINO","SG CHARTRES LA MADELEINE","URSSAF"]},
+ {n:"LUCE",cl:["BP","CA","CE","CIC","CM","GCM","MGEN SD LUCE","SG CHARTRES LA MADELEINE"]},
+ {n:"LUISANT",cl:["CA","CE","CIC","CM"]},
+ {n:"MAINVILLIERS",cl:["CA","CE","CM"]},
+ {n:"LEVES",cl:["CA","CE","CM"]},
+ {n:"CHAMPHOL",cl:["CA"]}
+]},
+{id:"REMALARD15S",jours:"LUNDI SOIR au VENDREDI SOIR",c:"#B5651D",communes:[
+ {n:"COURVILLE SUR EURE",cl:["CA","CE","CM","GCM"]},
+ {n:"LA LOUPE",cl:["BP","CA","CE","CM","GCM"]},
+ {n:"LE THEIL SUR HUISNE",cl:["CE"]},
+ {n:"LUCE",cl:["CE LUCE OUEST"]},
+ {n:"NOGENT LE ROTROU",cl:["BP","BNP","CA","CA LES GAUCHETIERES","CE CENTRE","CM","GCM","LCL"]},
+ {n:"REMALARD",cl:["CM","GCM"]},
+ {n:"ST GEORGES SUR EURE",cl:["CA"]},
+ {n:"THIRON GARDAIS",cl:["CA"]}
+]},
+{id:"AG2R15M",jours:"LUNDI SOIR au VENDREDI SOIR",c:"#2C6E49",communes:[
+ {n:"CHARTRES",cl:["CA SIEGE","CRCAM","FRAGRANCE","EVERIAL EDMONT POILLOT"]},
+ {n:"GELLAINVILLE",cl:["MERCER EDIX"]}
+]},
+{id:"NOGENT26M",jours:"MARDI MATIN au SAMEDI MATIN",c:"#A63446",communes:[
+ {n:"AUTHON DU PERCHE",cl:["JUNG SIMON R AUTHON DU PERCHE"]},
+ {n:"BELHOMERT",cl:["AGCO AGRIFARM 28 BELHOMERT"]},
+ {n:"BAILLEU LE PIN",cl:["VADERSTAD","CW INTERMARCHE"]},
+ {n:"BERD HUIS",cl:["CAB DENT LAPERCHE BERD HUIS"]},
+ {n:"BROU",cl:["CW INTERMARCHE","CW SUPER U","NEMO INTERMARCHE","NEMO SUPER U","POILANE INTERMARCHE"]},
+ {n:"CHAMPROND EN GATINE",cl:["STILL GASSER KEVIN CHAMPROND"]},
+ {n:"CHUISNES",cl:["FENWICK GIRARD YOAN CHUISNES"]},
+ {n:"COULONGES MLES SABLONS 61",cl:["CLAAS DEPUSSAY SM3 61"]},
+ {n:"COURVILLE/EURE",cl:["AGCO 28","AGCO GHESTEM AGRI 28","CW SUPER U","DOC FOYER DE VIE"]},
+ {n:"FONTENAY SUR EURE",cl:["CSAV C CARDOSO","HONDA BIKEPARC"]},
+ {n:"ILLIERS COMBRAY",cl:["CW INTERMARCHE","NEMO INTERMARCHE","SNCF GARE"]},
+ {n:"LA BAZOCHE GOUET",cl:["CLAAS DEPUSSAY"]},
+ {n:"LA LOUPE",cl:["NEMO INTERMARCHE LA LOUPE","CW INTERMARCHE LA LOUPE"]},
+ {n:"LANCEY",cl:["JUNG LE GALL AURELIEN LANCEY"]},
+ {n:"LE COUDRAY",cl:["FENWICK MALCUIT L LE COUDRAY"]},
+ {n:"LUCE",cl:["CAB DENT DR HAMON FILLON","CIC"]},
+ {n:"MAGNY",cl:["FENWICK GILLET JOEY MAGNY"]},
+ {n:"MORANCEZ",cl:["KONE DEPOT MORANCEZ"]},
+ {n:"NOGENT LE ROTROU",cl:["CIC","LOM/ECOUTE VOIR","LABO GEORGES ARNAUD","SG"]},
+ {n:"REMALARD",cl:["DR VILLENEUVE"]},
+ {n:"SENONCHES",cl:["CW INTERMARCHE","DR TILLET CHRISTIAN","NEMO 28 INTERMARCHE"]},
+ {n:"ST DENIS D AUTHOU",cl:["AGCO AGRI 28 ST DENIS"]},
+ {n:"ST GEORGES SUR EURE",cl:["CW INTERMARCHE"]},
+ {n:"THIMERT GATELLES",cl:["AGCO 28 THIMERT GATELLES"]},
+ {n:"THIRON GARDAIS",cl:["DR SIMON CHRISTIAN"]},
+ {n:"YEVRES",cl:["AGCO ETS DELAVALLEE"]}
+]},
+{id:"CHARTRES1M",jours:"LUNDI MATIN - Dispatch vendredi soir",c:"#4A6FA5",communes:[
+ {n:"CHARTRES",cl:["CA SIEGE","CRCAM","EVERIAL CHARTRES","FRAGRANCE","KM KONIKA 28","MSA CHARTRES"]},
+ {n:"DREUX",cl:["DARTY MAG INT"]},
+ {n:"GELLAINVILLE",cl:["MERCER EDIX"]},
+ {n:"HANCHES",cl:["CEWE SUPER U"]},
+ {n:"LUCE",cl:["HARMONIE MUTUELLE (HM)"]},
+ {n:"LUISANT",cl:["LCL BRINKS"]},
+ {n:"MAINVILLIERS",cl:["KM FACTORA 28"]},
+ {n:"VERNOUILLET",cl:["CEWE HYPER U"]}
+]},
+{id:"CHARTRESEQ25M",jours:"LUNDI SOIR au JEUDI SOIR",c:"#8C6A3F",communes:[
+ {n:"BARJOUVILLE",cl:["GEN OPT BARJOUVILLE","NEMO 28 LECLERC BARJOUVILLE","NOCIBE BARJOUVILLE","SO BIO BARJOUVILLE","LOGILEC ACCEUIL","LOGILEC LOCKER","CEWE LECLERC BARJOUVILLE"]},
+ {n:"CHARTRES",cl:["BNPP CHARTRES","CA CHARTRES ESPACE PROJET","CA CHARTRES LE CYGNE","CA CHARTRES LES HALLES","CARREFOUR CHARTRES","CCF CHARTRES","CE CA MULTI MARCHES","CE CHARTRES CENTRE","CE CHARTRES TASSIGNY","CIC CHARTRES METROPOLE","CIC EURE ET LOIR ENTREPRISES","CM CHARTRES","COGEDIS FIDEOR CHARTRES","CW INTERMARCHE GORD","DENTEGO CHARTRES","EVERIAL CHARTRES","FEU VERT MAG CHARTRES","GCM SITE DE GESTION CHARTRES","GEN OPT CHARTRES","GEN OPT CHARTRES LA MADELEI","GRAND OP CHARTRES","K CARREFOUR CHARTRES","LABORATOIRE MARAIS 2A","LCL CHARTRES","MON MARCHE BIO CHARTRES","MONOPRIX CHARTRES","MSA CHARTRES","NATUREO CHARTRES","NOCIBE CHARTRES MONOPRIX","PW FNAC CHARTRES","RESTAURANT MOULIN DE PONCEAU","SAV DARTY CHARTRES","SG CHARTRES","SG CHARTRES LA MADELEINE","SNCF GARE CHARTRES"]},
+ {n:"GELLAINVILLE",cl:["CL DEPUSSAY"]},
+ {n:"LE COUDRAY",cl:["DOC HOPITAUX"]},
+ {n:"LE VAL LUISANT",cl:["HD PP EQUIP 28 LE VAL LUISANT"]},
+ {n:"LUCE",cl:["CIC LUCE","ECOUTER VOIR LUCE ME V","FEU VERT MAG LUCE","GEN OPT LUCE","HM LUCE"]},
+ {n:"LUISANT",cl:["BARRAULT CHARTRES","CIC LUISANT","LCL BRINKS LUISANT"]},
+ {n:"MAINVILLIERS",cl:["NEMO DECATHLON","CW INTERMARCHE"]}
+]},
+{id:"CHARTRESEQ6M",jours:"VENDREDI SOIR",c:"#5C7A29",communes:[
+ {n:"CHARTRES",cl:["BNPP","BP","CA ESPACE PROJET","CA CHARTRES LE CYGNE","CA CHARTRES LES HALLES","CA SIEGE CHARTRES","CCF CHARTRES","CE CA MULTI MARCHES 28","CE CHARTRES CENTRE","CE CHARTRES TASSIGNY","CM","CIC CHARTRES METROPOLE","CIC EURE ET LOIR ENTREPRISES","CRCAM VAL DE FRANCE","GCM SITE DE GESTION","GEN OPT CHARTRES LA MADELEI","GEN OPTIQUE","GRAND OPTICAL","LABORATOIRE MARAIS 2A","LCL","MONOPRIX","ORANGE (uniquement samedi)","PHOTO WEB FNAC","SAV DARTY","SCAEL","SG CHARTRES","SG CHARTRES LA MADELEINE"]},
+ {n:"BARJOUVILLE",cl:["GEN OPT","SO BIO"]},
+ {n:"LE VAL LUISANT",cl:["HD PP EQUIP 28 LE VAL LUISANT"]},
+ {n:"LUISANT",cl:["BARRAULT CHARTRES","CIC"]},
+ {n:"LUCE",cl:["ECOUTER VOIR LUCE ME V","GEN OPT LUCE","SG"]},
+ {n:"MAINVILLIERS",cl:["NEMO"]}
+]}
+];
+
+const T_NIEVRE58 = [
+{id:"COSNE25M",jours:"LUNDI SOIR au JEUDI SOIR",c:"#D5342B",communes:[
+ {n:"ARGENT SUR SAULDRE",cl:["CW SUPER U","CCF"]},
+ {n:"AUBIGNY SUR NERE",cl:["BP","CE","CW INTERMARCHE","DR LEVERNIEUX MATON","DRS JOLY/TELLIER","CCF","HD PP BERNARDON","K CARREFOUR MKT"]},
+ {n:"BEAULIEU SUR LOIRE",cl:["AGCO BE AGRI"]},
+ {n:"BLANCAFORT",cl:["JUNG GENET MAXIME"]},
+ {n:"BONNY SURE LOIRE",cl:["NEMO 45 SUP U"]},
+ {n:"BOULLERET",cl:["RESTAURANT L ARDOISE"]},
+ {n:"BRIARE",cl:["CE","GROUPAMA","NEMO 45 SUPER U","SG"]},
+ {n:"CERDON",cl:["FENWICK BOURMAULT F CERDON"]},
+ {n:"CHATILLON SUR LOIRE",cl:["CE","DR GUESNARD"]},
+ {n:"CIEZ",cl:["EUROTYRE"]},
+ {n:"COSNE SUR LOIRE",cl:["AD","AUTO COMPTOIR DE LA NIEVRE","B SUCCES","BNP","BP","CABINET RADIOLOGIE COSNE","CE","CIC","CM","DOC CH","SUPER U","DR BUCHET FREGEAI","FCB AUCHAN","HD PP ALABEURTHE","K CARREFOUR MKT","LCL","LE PHOTOGRAPHE","LOM (VISAUDIO+VYV CARE)","NEMO 58 AUCHAN","NEMO 58 CARR MARKET","SG","SNCF GARE","DR GUERRIER"]},
+ {n:"COULLONS",cl:["CW INTERMARCHE"]},
+ {n:"DONZY",cl:["CW INTERMARCHE"]},
+ {n:"GIEN",cl:["AUCHAN","B SUCCES CC AUCHAN","CPAM","CW LECLERC","LECLERC LOGILEC","EQUIP JARDIN GIEN","HP PP EQUIP JARDIN","NEMO 45 AUCHAN","POINT S"]},
+ {n:"LA CHARITE SUR LOIRE",cl:["ETS COIGNET PNEUS","SNCF GARE"]},
+ {n:"LERE",cl:["DR BERGERON"]},
+ {n:"OIZON",cl:["AGCO ETS PAUTRAT"]},
+ {n:"POILLY LEZ GIEN",cl:["CW INTERMARCHE"]},
+ {n:"POUILLY SUR LOIRE",cl:["CAB DENTAIRE DR GENESTE"]},
+ {n:"ST SATUR",cl:["CE","DR LUPU"]},
+ {n:"VAILLY SUR SAULDRE",cl:["AGCO ETS DIDIER"]}
+]},
+{id:"COSNE6M",jours:"VENDREDI SOIR",c:"#E07020",communes:[
+ {n:"ARGENTON SUR SAULDRE",cl:["CCF"]},
+ {n:"AUBIGNY SUR NERE",cl:["BP","CIC","DR JOLY","DR LEVERNIEUX","CCF","HD PP BERNARDON"]},
+ {n:"BEAULIEU SUR LOIRE",cl:["AGCO BE AGRI"]},
+ {n:"BRIARE",cl:["CIC","LCL","SG"]},
+ {n:"CHATILLON SUR LOIRE",cl:["DR GUENARD CHARLES"]},
+ {n:"COSNE SUR LOIRE",cl:["AD","AUTO COMPTOIR","BNP","BP","CE","CIC","CM","DR BUCHET FREGEAI","HD PP ALABEURTHE","LOM ECOUTER VOIR","SG","SNCF GARE"]},
+ {n:"GIEN",cl:["AUCHAN","HP PP EQUIP JARDIN","LECLERC LOGILEC","POINT S"]},
+ {n:"LA CHARITE SUR LOIRE",cl:["ETS COIGNET PNEUS"]},
+ {n:"POUILLY SUR LOIRE",cl:["CAB DENTAIRE DR GENESTE"]},
+ {n:"ST GONDON",cl:["AGCO ETAM"]},
+ {n:"ST SATUR",cl:["DR LUPU"]},
+ {n:"VAILLY SUR SAULDRE",cl:["AGCO ETS DIDIER"]}
+]},
+{id:"COSNE6S",jours:"VENDREDI SOIR",c:"#2F8F5B",communes:[
+ {n:"CLAMECY",cl:["LCL"]},
+ {n:"CHÂTEAU CHINON",cl:["LCL"]},
+ {n:"COSNE COURS SUR LOIRE",cl:["LCL"]},
+ {n:"DECIZE",cl:["LCL"]}
+]},
+{id:"DECIZE25M",jours:"LUNDI SOIR au JEUDI SOIR",c:"#B03060",communes:[
+ {n:"AUNAY EN BAZOIS",cl:["SV PRO"]},
+ {n:"BAZOLLES",cl:["AGCO"]},
+ {n:"CERCY LA TOUR",cl:["CABINET PITTILLONI LAMARQUE","SNCF GARE"]},
+ {n:"CORBIGNY",cl:["CL DEPUSSAY"]},
+ {n:"COULANGE LES NEVERS",cl:["CW ESPACE CULTUREL LECL","NEMO 58 LECLERC","NATURA PAIN BELLEDONNE"]},
+ {n:"DECIZE",cl:["BP","CM","CW LECLERC","CW INTERMARCHE","DR GERAUD COUDERT","DUMAS COLINOT","GENDARMERIE","LABORATOIRE COLLONGE","NEMO 58 LECLERC","SG","SNCF GARE"]},
+ {n:"LA MACHINE",cl:["BP (TUBE)","CW INTERMARCHE"]},
+ {n:"ST BENIN D'AZY",cl:["CW INTERMARCHE"]},
+ {n:"MOULIN ENGILBERT",cl:["DR ISSARD","AGCO ETS BUCHEZ"]},
+ {n:"NEVERS",cl:["BNP","BNP TRT","BP NEVERS REMPARTS","BP NEVERS VAL DES LOGES","CDM NEVERS COLBERT","CE NEVERS CARNOT","CE NEVERS MONTAPINS","CIC","CM NEVERS BOUQUILLARD","CM NEVERS CARNOT","DR MARQUES DOMINIQUE","DR ROMAIN BEAUGE","DR VELLAY","GP AUTO","LCL NEVERS COQUILLE","LOM","MONOPRIX","NEMO 58 INTERMARCHE","NUGER","SG","SG NEVERS GRANDS CHAMPS","SAV DARTY NEVERS/BT"]},
+ {n:"SAUVIGNY LES BOIS",cl:["SV PRO"]},
+ {n:"ST ELOI",cl:["CL DEPUSSAY"]},
+ {n:"VARENNES VAUZELLES",cl:["EXPERT JARDIN"]}
+]},
+{id:"DECIZE6M",jours:"VENDREDI SOIR",c:"#3E6FB5",communes:[
+ {n:"AUNAY EN BAZOIS",cl:["SV PRO"]},
+ {n:"BAZOLLES",cl:["AGCO"]},
+ {n:"CERCY LA TOUR",cl:["CABINET PITTILLONI LAMARQUE"]},
+ {n:"DECIZE",cl:["CM","DR GERAUD COUDERT","DUMAS COLINOT","GENDARMERIE","LABORATOIRE COLLONGE","SG"]},
+ {n:"MOULINS ENGILBERT",cl:["DR ISSARD","AGCO ETS BUCHEZ"]},
+ {n:"NEVERS",cl:["BIOCOOP","BNP","BNP TRT","BP NEVERS REMPARTS","BP NEVERS VAL DES LOGES","CM NEVERS BOUQUILLARD","CM NEVERS CARNOT","CDM NEVERS COLBERT","CCF","CE NEVERS CARNOT","CIC","DR MARQUES DOMINIQUE","DR ROMAIN BEAUGE","DR VELLAY","GP AUTO","LOM","MONOPRIX","NUGER","SG","SG NEVERS GRANDS CHAMPS","SAV DARTY NEVERS/BT"]},
+ {n:"SAUVIGNY LES BOIS",cl:["SV PRO"]}
+]},
+{id:"DECIZE1S",jours:"VENDREDI SOIR",c:"#C29A00",communes:[
+ {n:"DECIZE",cl:["BP","CE","LABO COLLONGE"]},
+ {n:"DONZY",cl:["BP"]},
+ {n:"GUERIGNY",cl:["CE"]},
+ {n:"IMPHY",cl:["CE"]},
+ {n:"LA MACHINE",cl:["BP"]},
+ {n:"ST BENIN D AZY",cl:["DR REMY THIEBOT","IDX DRS REROLLE ST BENIN DAZY"]}
+]},
+{id:"DECIZE25S",jours:"DU LUNDI SOIR AU JEUDI SOIR",c:"#574083",communes:[
+ {n:"CHÂTEAU CHINON",cl:["CENTRE HOSPITALIER"]},
+ {n:"CLAMECY",cl:["CENTRE HOSPITALIER","GAMM VERT"]},
+ {n:"DECIZE",cl:["BP","CE","LCL"]},
+ {n:"DONZY",cl:["BP","GAMM VERT"]},
+ {n:"GUERINY",cl:["CE"]},
+ {n:"IMPHY",cl:["CE","CW INTERMARCHE","LCL"]},
+ {n:"LA CHARITE SUR LOIRE",cl:["CENTRE HOSPITAL SPE P LOO","CENTRE HOSPITAL H DUNANT"]},
+ {n:"LA MACHINE",cl:["BP"]},
+ {n:"LORMES",cl:["CENTRE HOSPITALIER"]},
+ {n:"PREMERY",cl:["GAMM VERT"]},
+ {n:"ST AMAND EN PUISAY",cl:["BP"]},
+ {n:"ST BENIN D'AZY",cl:["DR REMY"]}
+]},
+{id:"NEVERS1S",jours:"VENDREDI SOIR",c:"#1F8A8C",communes:[
+ {n:"NEVERS",cl:["CARPA","CAF","CIC","DOC CRE HOSPI LAGGL","MGEN"]}
+]},
+{id:"NEVERS25S",jours:"DU LUNDI SOIR AU JEUDI SOIR",c:"#8E44AD",communes:[
+ {n:"MARZY",cl:["CW WELCOM","K CARREFOUR"]},
+ {n:"NEVERS",cl:["CAF","CARPA","CENTRE IMAGERIE MEDICALE","CENTRE IMAGERIE MEDICALE NEV2","CW WELCOM NEVERS COLBERT","DOC CTRE HOSPI LAGG","MGEN SD"]}
+]},
+{id:"NEVORL25S",jours:"DU LUNDI SOIR AU JEUDI SOIR",c:"#B5651D",communes:[
+ {n:"LA CHARITE SUR LOIRE",cl:["BNP","BP","CE","DR BARRIOL","CW INTER LA CHARITE"]},
+ {n:"BRIARE",cl:["PAP SD NEGOCE 45 BRIARE"]},
+ {n:"VARENNES VAUZELLES",cl:["AD","KLEBER VARENNES","STK TSG 58 VARENNES TOKHEIM","MAN ALLIANCE 58 VARENNES","STK KM 0041 VARENNES TOKHEIM","P IVARS"]}
+]},
+{id:"NEVERS6S",jours:"VENDREDI SOIR",c:"#2C6E49",communes:[
+ {n:"NEVERS",cl:["CIC","LCL NEVERS COQUILLE"]}
+]},
+{id:"NEVORL1S",jours:"DU VENDREDI SOIR",c:"#A63446",communes:[
+ {n:"BRIARE",cl:["PAP SD NEGOCE 45 BRIARE"]},
+ {n:"LA CHARITE SUR LOIRE",cl:["BNP","BP","CE","DR BARRIOL"]},
+ {n:"VARENNES VAUZELLES",cl:["AD","CCM","MAN ALLIANCE 58 VARENNES","STK KM 0041 VARENNES 58","STK TSG 58 VARENNES","KLEBER VARENNES","P IVARS"]}
+]},
+{id:"SANCOINS25M",jours:"LUNDI SOIR au JEUDI SOIR",c:"#4A6FA5",communes:[
+ {n:"BEFFES",cl:["NEMO PROXIMARCHE"]},
+ {n:"CHALLUY",cl:["CE"]},
+ {n:"CHANTENAY ST IMBERT",cl:["SARL RESSAT"]},
+ {n:"CHATEAUNEUF VAL DE BARGIS",cl:["AGCO ST HUBERT"]},
+ {n:"COULANGE LES NEVERS",cl:["CE"]},
+ {n:"FOURCHAMBAULT",cl:["BP","CE","CW INTERMARCHE","LABORATOIRE MILLERIOUX"]},
+ {n:"GARCHIZY",cl:["ENEDIS"]},
+ {n:"GUERIGNY",cl:["CW INTERMARCHE GUERIGNY"]},
+ {n:"LA GUERCHE / LAUBOIS",cl:["CE"]},
+ {n:"MARZY",cl:["NEMO DECATHLON","DARTY MAG","MA JOLIE PHOTO"]},
+ {n:"NERONDES",cl:["CW INTERMARCHE"]},
+ {n:"NEVERS",cl:["AUDIOPROX","BDF","B SUCCES","BIOCOOP","CW INTERMARCHE","DR SPIEKERMANN","FCB CAMARA","GEN OPT","GROUPAMA","CCF","JC DECAUX","MSA","ORANGE","SNCF GARE"]},
+ {n:"SAGONNE",cl:["AGCO ETS JOUHANNEAU","STILL VALDAN REMI SAGONNE"]},
+ {n:"SANCAIZE MAUCE",cl:["SNCF GARE"]},
+ {n:"SANCOINS",cl:["BP","DR LALIQUE"]},
+ {n:"ST PIERRE LE MOUTIER",cl:["CE","DR KOEKELCOREN"]},
+ {n:"VARENNES VAUZELLES",cl:["B SUCCES","BP","CE","CM","CW INTERMARCHE","EUROTYRE","HD PP EXPERT JARDIN","HD PP ALABEURTHE","KM COPIEFAX","SNCF GARE"]}
+]},
+{id:"SANCOINS6M",jours:"VENDREDI SOIR",c:"#8C6A3F",communes:[
+ {n:"FOURCHAMBAULT",cl:["BP","CE","LABORATOIRE MILLERIOUX"]},
+ {n:"CHANTENAY ST IMBERT",cl:["RESAT"]},
+ {n:"CHATEAUNEUF VAL DE BARGIS",cl:["AGCO ST HUBERT"]},
+ {n:"NEVERS",cl:["JC DECAUX","KONE DEPOT NEVERS"]},
+ {n:"SAGONNE",cl:["AGCO ETS JOUHANNEAU","STILL VALDAN REMI SAGONNE"]},
+ {n:"SANCOINS",cl:["DR LALIQUE"]},
+ {n:"ST PIERRE LE MOUTIER",cl:["DR KOEKELCOREN"]},
+ {n:"VARENNES VAUZELLES",cl:["BP","CM","HD PP EXPERT JARDIN","HD PP ALABEURTHE"]}
+]},
+{id:"SANCOINS1M",jours:"DISPATCH DU VENDREDI SOIR",c:"#5C7A29",communes:[
+ {n:"CHÂTEAU CHINON",cl:["CENTRE HOSPITALIER"]},
+ {n:"CHATEAUNEUF VAL DE BARGIS",cl:["AGCO ST HUBERT"]},
+ {n:"CLAMECY",cl:["CENTRE HOSPITALIER"]},
+ {n:"GARCHIZY",cl:["ENEDIS"]},
+ {n:"LA CHARITE SUR LOIRE",cl:["CENTRE HOSPITALIER SPE P LOO","CENTRE HOSPITALIER H DUNANT"]},
+ {n:"LORMES",cl:["CENTRE HOSPITALIER"]},
+ {n:"MARZY",cl:["DARTY MAG"]},
+ {n:"NEVERS",cl:["BDF","DR SPIEKERMANN","MSA","GROUPAMA","ORANGE"]},
+ {n:"VARENNES VAUZELLES",cl:["EUROTYRE","KM COPIEFAX"]}
+]}
+];
+
+const T_VIERZON = [
+{id:"FRET18VIERZON",jours:"LUNDI SOIR au VENDREDI SOIR (1845 SOIR)",c:"#D5342B",communes:[
+ {n:"ST AMAND MONTROND",cl:["AD","AGCO","CCF","LABORATOIRE FORT","CIC","LOM / ECOUTER VOIR","CM","NEMO INTERMARCHE","CW INTERMARCHE","CW LECLERC","PAP","DARTY MAG FRA MONTRO"]},
+ {n:"BOURGES",cl:["DR GIRAUD","DR LAFON","DR RANGUIN","DRS JOUVENAUD","DENTEGO","HM","CAB DENT FORT MANUEL","CABINET DR LANGLOIS","CCF","KONE","CIC PLUS","CL TERRA","LOM / ECOUTER VOIR","CM AURON","CM LES MARRONNIERS","MONOPRIX","SAV DARTY BOX","STK TSG","DR BLANC"]},
+ {n:"VIERZON",cl:["AD","CAB DENT DR ROMANOVA","CCF","CIC","LCL","LOM / ECOUTER VOIR","CM","NEMO INTERMARCHE","NOCIBE","CW INTERMARCHE","PAP GP AUTO 2R","PAP GP AUTO RODRIGUES","SNCF","DARTY MAG FRA","SNCF UO TRACTION"]},
+ {n:"CHALIVOY MILON",cl:["AGCO"]},
+ {n:"AINAY LE CHÂTEAU",cl:["DR LOREST","BP","DOC CTRE HOSP"]},
+ {n:"HENRICHEMONT",cl:["AGCO","CL TERRA"]},
+ {n:"MENETOU SALON",cl:["AGCO","FENWICK JAMET"]},
+ {n:"ORVAL",cl:["AGCO","HD PP PAUGE"]},
+ {n:"QUANTILLY",cl:["ELM MAILLE B"]},
+ {n:"ROMORANTIN",cl:["EQUIP JARDIN","BIO LOGIC","GEN OPT","GRPA","CA","HD PP EQUIP JARDIN","CARREFOUR","LCL","CIC","LOGILEC BRICO ACC","LOGILEC SAV/ RES","MONOPRIX","CM","CPAM","NEMO DECATHLON","PAP","POLE MEDICAL","CW LECLERC","DARTY MAG FRA","DDFIP"]},
+ {n:"ST GERMAIN DU PUY",cl:["AGCO","GEN OPT","HD PP EQUIP J"]},
+ {n:"LINIEZ",cl:["AGCO"]},
+ {n:"STE SOLANGE",cl:["FENWICK GUAY"]},
+ {n:"NOHANT VIC",cl:["AGCO"]},
+ {n:"VALENCAY",cl:["AGCO"]},
+ {n:"ISSOUDUN",cl:["FLAURAUD EUROTYRE","CCF","KODAK LECLERC","NOCIBE","CW INTERMARCHE","CW LECLERC"]},
+ {n:"MARAY",cl:["AGCO"]},
+ {n:"LA CHATRE",cl:["FLAURAUD PROFIL","HD PP DENORMAN DELBAR","CCF","CW SUPER U"]},
+ {n:"LUCAY",cl:["APRO"]},
+ {n:"ST DOULCHARD",cl:["GEN OPT","NEMO DECATHLON"]},
+ {n:"MENNETOU",cl:["CA"]},
+ {n:"SALBRIS",cl:["GRPA","CA","JUNG GENET MAXIME","SFG MOREUX J"]},
+ {n:"ST FLORENT SUR CHER",cl:["HD PP PONTONNIER","CW SUPER U"]},
+ {n:"ALLOGNY",cl:["JUNG MONICAULT S"]},
+ {n:"BERRY BOUY",cl:["LABORATOIRE MILLEDENT"]},
+ {n:"LAMOTTE BEUVRON",cl:["CIC"]},
+ {n:"LE CHATELET",cl:["NEMO SUPER U","CW SUPER U"]},
+ {n:"ARCAY",cl:["CONFO MALHERBE"]},
+ {n:"CHATEAUMEILLANT",cl:["CW INTERMARCHE"]},
+ {n:"DUN SUR AURON",cl:["CW SUPER U"]},
+ {n:"CHABRIS",cl:["NEMO SUPER U","CW SUPER U"]},
+ {n:"CHARTRES",cl:["NEMO S/ CHER UTILE"]},
+ {n:"MEHUN",cl:["CW INTERMARCHE"]},
+ {n:"SELLES SUR CHER",cl:["NEMO SUPER U"]},
+ {n:"AIGURANDE",cl:["CW INTERMARCHE"]},
+ {n:"THAUMIERS",cl:["POILANE CHATEAU DE LA FORET"]},
+ {n:"LE MAGNY",cl:["CW INTERMARCHE"]},
+ {n:"PRUNIERS",cl:["CW DRIVE LECLERC","CW SUPER U"]},
+ {n:"NOUAN LE FUZELIER",cl:["SFG ADENOT M"]},
+ {n:"CHATEAUROUX",cl:["SGS","URSSAF"]},
+ {n:"VASSELAY",cl:["SOFAXIS"]},
+ {n:"ALLOUIS",cl:["STILL GIRAUD LOIC"]}
+]}
+];
+
+const T_CHATEAUROUX = [
+{id:"CHATEAUROUX15J",jours:"LUNDI SOIR au VENDREDI SOIR",c:"#D5342B",communes:[
+ {n:"LA FERTE ST AUBIN",cl:["CW SUPER U"]},
+ {n:"LAMOTTE BEUVRON",cl:["CW INTERMARCHE"]},
+ {n:"OLIVET",cl:["MUTUELLE DES MOTARDS (AMDM)"]},
+ {n:"ORLEANS",cl:["XPATH CHU D ORLEANS"]},
+ {n:"SALBRIS",cl:["CW SUPER U"]}
+]}
+];
+
+const DEPOTS = [
+  {id:'ORLEANS', label:'Orléans', tournees:T_ORLEANS},
+  {id:'CHARTRES', label:'Chartres', tournees:T_CHARTRES},
+  {id:'MONTARGIS', label:'Montargis', tournees:T_MONTARGIS},
+  {id:'NIEVRE58', label:'Nièvre (58)', tournees:T_NIEVRE58},
+  {id:'VIERZON', label:'Vierzon (18)', tournees:T_VIERZON},
+  {id:'CHATEAUROUX', label:'Châteauroux', tournees:T_CHATEAUROUX},
+];
+
 /* ============ ÉTAT ============ */
-const app=document.getElementById('app'), nav=document.getElementById('nav');
-let mode='fiches', selT=0;
+const app=document.getElementById('app'), nav=document.getElementById('nav'), depotNav=document.getElementById('depotNav');
+let mode='fiches', selT=0, selDepot='ORLEANS';
 let deck=[], deckIdx=0, deckOk=0, deckRedo=[], fcFilter='ALL', flipped=false;
 let quiz=[], qIdx=0, qScore=0, qAnswered=false;
+function curDepot(){return DEPOTS.find(d=>d.id===selDepot)||DEPOTS[0];}
+function curT(){return curDepot().tournees;}
+function renderDepotNav(){
+  depotNav.innerHTML=DEPOTS.map(d=>`<button class="${d.id===selDepot?'on':''}" onclick="pickDepot('${d.id}')">${d.label}<small>${d.tournees.length} tournée${d.tournees.length>1?'s':''}</small></button>`).join('');
+  const sub=document.getElementById('hdSub');
+  if(sub)sub.textContent=`Dispatch colis · communes & clients · ${curDepot().label} · ${curT().length} tournée${curT().length>1?'s':''}`;
+}
+window.pickDepot=id=>{
+  if(id===selDepot)return;
+  selDepot=id; selT=0; fcFilter='ALL'; deck=[];deckIdx=0;deckOk=0;deckRedo=[];flipped=false;
+  quiz=[];qIdx=0;qScore=0;qAnswered=false;
+  rebuildIndex();
+  renderDepotNav();
+  render();
+  window.scrollTo({top:0});
+};
 
 const MODES=[['scan','📷 Scan'],['fiches','Fiches'],['logic','Logique'],['flash','Flashcards'],['quiz','Quiz'],['search','Recherche']];
 function renderNav(){nav.innerHTML=MODES.map(([k,l])=>`<button class="${mode===k?'on':''}" onclick="setMode('${k}')">${l}</button>`).join('');}
@@ -353,7 +881,7 @@ function tselHTML(sel,cb,withAll){
   const wk=inWeekendWindow();
   let h='<div class="tsel">';
   if(withAll)h+=`<button style="border-color:#221E2B;${sel==='ALL'?'background:#221E2B':''}" class="${sel==='ALL'?'on':''}" onclick="${cb}('ALL')">TOUTES<small>7 tournées</small></button>`;
-  h+=T.map((t,i)=>{const on=(sel===i||sel===t.id);
+  h+=curT().map((t,i)=>{const on=(sel===i||sel===t.id);
     const st=wk?tourWeekendStatus(t):null;
     const dim=st==='termine'?'opacity:.55;':'';
     const wkCol={actif:'#2F8F5B',mixte:'#C29A00',termine:'#B03060'};
@@ -362,7 +890,7 @@ function tselHTML(sel,cb,withAll){
   return h+'</div>';
 }
 function renderFiches(){
-  const t=T[selT];
+  const t=curT()[selT];
   let h=tselHTML(selT,'pickT',false);
   h+=`<div class="pouch" style="border-color:${t.c}">
     <div class="tour-head"><div class="num">${t.id}</div><div class="jours">${t.jours}${tourStatusBadge(t)}</div></div>`;
@@ -377,7 +905,7 @@ window.pickT=i=>{selT=i;render();window.scrollTo({top:0});};
 /* ============ FLASHCARDS ============ */
 function buildDeck(){
   const pool=[];
-  T.forEach(t=>{if(fcFilter!=='ALL'&&t.id!==fcFilter)return;
+  curT().forEach(t=>{if(fcFilter!=='ALL'&&t.id!==fcFilter)return;
     t.communes.forEach(c=>pool.push({t,c}));});
   for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
   deck=pool;deckIdx=0;deckOk=0;deckRedo=[];flipped=false;
@@ -422,12 +950,12 @@ function renderFlash(){
 /* ============ QUIZ ============ */
 function uniqueClients(){
   const map={};
-  T.forEach(t=>t.communes.forEach(c=>c.cl.forEach(x=>{(map[x]=map[x]||[]).push({t,c});})));
+  curT().forEach(t=>t.communes.forEach(c=>c.cl.forEach(x=>{(map[x]=map[x]||[]).push({t,c});})));
   return Object.entries(map).filter(([,v])=>v.length===1).map(([k,v])=>({cl:k,...v[0]}));
 }
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 function buildQuiz(){
-  const uc=uniqueClients(), allCommunes=[];T.forEach(t=>t.communes.forEach(c=>allCommunes.push({t,c})));
+  const uc=uniqueClients(), allCommunes=[];curT().forEach(t=>t.communes.forEach(c=>allCommunes.push({t,c})));
   quiz=[];qIdx=0;qScore=0;qAnswered=false;
   const pool1=shuffle([...uc]).slice(0,5);   // client -> commune
   pool1.forEach(u=>{
@@ -436,7 +964,7 @@ function buildQuiz(){
   });
   const pool2=shuffle([...allCommunes]).slice(0,5); // commune -> tournée
   pool2.forEach(x=>{
-    const wrong=shuffle(T.filter(t=>t.id!==x.t.id)).slice(0,3).map(t=>t.id);
+    const wrong=shuffle(curT().filter(t=>t.id!==x.t.id)).slice(0,3).map(t=>t.id);
     quiz.push({q:`Sur quelle tournée se trouve <b>${esc(x.c.n)}</b> ?`,opts:shuffle([x.t.id,...wrong]),ans:x.t.id});
   });
   shuffle(quiz);
@@ -479,7 +1007,7 @@ window.doSearch=v=>{
   const s=v.trim().toLowerCase();
   if(s.length<2){box.innerHTML='<div class="empty">Tape au moins 2 lettres (client ou commune).</div>';return;}
   const hits=[];
-  T.forEach(t=>t.communes.forEach(c=>{
+  curT().forEach(t=>t.communes.forEach(c=>{
     if(c.n.toLowerCase().includes(s))hits.push({t,c,cl:'— toute la commune —'});
     c.cl.forEach(x=>{if(x.toLowerCase().includes(s))hits.push({t,c,cl:x});});
   }));
@@ -497,7 +1025,12 @@ function renderSearch(){
 /* ============ LOGIQUE (carte mentale) ============ */
 window.goFiche=i=>{selT=i;setMode('fiches');};
 function renderLogic(){
-  const N=(i,x,y,dir)=>`<button class="cnode" style="left:${x}%;top:${y}%;background:${T[i].c}" onclick="goFiche(${i})">${T[i].id}<small>${dir}</small></button>`;
+  if(selDepot!=='ORLEANS'){
+    app.innerHTML=`<h2 class="sec">Logique</h2>
+    <div class="hintbar">La boussole des tournées est une vue pédagogique dessinée à la main, disponible uniquement pour le dépôt Orléans. Pour ${esc(curDepot().label)}, utilise les onglets Fiches ou Recherche.</div>`;
+    return;
+  }
+  const N=(i,x,y,dir)=>`<button class="cnode" style="left:${x}%;top:${y}%;background:${T_ORLEANS[i].c}" onclick="goFiche(${i})">${T_ORLEANS[i].id}<small>${dir}</small></button>`;
   app.innerHTML=`
   <h2 class="sec">L'horloge des tournées</h2>
   <div class="hintbar">Tout tourne autour d'Orléans : 1 tournée = 1 secteur / 1 axe routier. Touche un secteur pour ouvrir sa fiche.</div>
@@ -513,13 +1046,13 @@ function renderLogic(){
   </div>
 
   <h2 class="sec">Les 7 axes</h2>
-  <div class="axe"><span class="dir" style="color:${T[0].c}">4501M · Nord proche —</span> la première couronne du dépôt : Fleury-les-Aubrais, Saran, Ormes, St Jean de Braye. Zones commerciales et industrielles.</div>
-  <div class="axe"><span class="dir" style="color:${T[1].c}">4502M · Sud proche —</span> rive sud de la Loire : Olivet, La Source, St Jean le Blanc, St Pryvé, St Cyr… et descend en Sologne jusqu'à La Ferté St Aubin.</div>
-  <div class="axe"><span class="dir" style="color:${T[2].c}">4503M · Est, vallée de la Loire —</span> un couloir le long du fleuve : Chécy → St Denis de l'Hôtel → Châteauneuf → Ouzouer → Gien. Repère : les packs bancaires de centre-bourg.</div>
-  <div class="axe"><span class="dir" style="color:${T[3].c}">4504M · Nord-Ouest, la Beauce —</span> la longue distance vers le 28 : Artenay, Toury, Janville, Chartres, Châteaudun, Brou. Repère : presque tout est en (28) ou (41).</div>
-  <div class="axe"><span class="dir" style="color:${T[4].c}">4505M · Ouest —</span> sortie ouest (St Jean de la Ruelle, Ingré, La Chapelle St Mesmin) puis l'axe Beaugency : Baule, Tavers, Cléry… et remonte dans le 41 (Oucques, Moisy).</div>
-  <div class="axe"><span class="dir" style="color:${T[5].c}">Pithiviers · Nord-Est, le Gâtinais —</span> Neuville-aux-Bois, Pithiviers, Puiseaux, Sermaises. Beaucoup de techniciens SAV en campagne.</div>
-  <div class="axe"><span class="dir" style="color:${T[6].c}">4507VM · Le centre de l'horloge —</span> hyper-centre d'Orléans uniquement. Seule tournée VM (jusqu'au vendredi soir) : banques, cabinets médicaux, opticiens — la zone la plus dense en pros.</div>
+  <div class="axe"><span class="dir" style="color:${T_ORLEANS[0].c}">4501M · Nord proche —</span> la première couronne du dépôt : Fleury-les-Aubrais, Saran, Ormes, St Jean de Braye. Zones commerciales et industrielles.</div>
+  <div class="axe"><span class="dir" style="color:${T_ORLEANS[1].c}">4502M · Sud proche —</span> rive sud de la Loire : Olivet, La Source, St Jean le Blanc, St Pryvé, St Cyr… et descend en Sologne jusqu'à La Ferté St Aubin.</div>
+  <div class="axe"><span class="dir" style="color:${T_ORLEANS[2].c}">4503M · Est, vallée de la Loire —</span> un couloir le long du fleuve : Chécy → St Denis de l'Hôtel → Châteauneuf → Ouzouer → Gien. Repère : les packs bancaires de centre-bourg.</div>
+  <div class="axe"><span class="dir" style="color:${T_ORLEANS[3].c}">4504M · Nord-Ouest, la Beauce —</span> la longue distance vers le 28 : Artenay, Toury, Janville, Chartres, Châteaudun, Brou. Repère : presque tout est en (28) ou (41).</div>
+  <div class="axe"><span class="dir" style="color:${T_ORLEANS[4].c}">4505M · Ouest —</span> sortie ouest (St Jean de la Ruelle, Ingré, La Chapelle St Mesmin) puis l'axe Beaugency : Baule, Tavers, Cléry… et remonte dans le 41 (Oucques, Moisy).</div>
+  <div class="axe"><span class="dir" style="color:${T_ORLEANS[5].c}">Pithiviers · Nord-Est, le Gâtinais —</span> Neuville-aux-Bois, Pithiviers, Puiseaux, Sermaises. Beaucoup de techniciens SAV en campagne.</div>
+  <div class="axe"><span class="dir" style="color:${T_ORLEANS[6].c}">4507VM · Le centre de l'horloge —</span> hyper-centre d'Orléans uniquement. Seule tournée VM (jusqu'au vendredi soir) : banques, cabinets médicaux, opticiens — la zone la plus dense en pros.</div>
 
   <h2 class="sec">Réflexes face à un colis</h2>
   <div class="reflex"><b>Marque de machines + nom de personne</b> (Fenwick, Still, Jung, Kone, AGCO, Claas…) = <b>technicien SAV</b> livré à domicile. C'est pour ça que des petits villages (Moisy, Nibelle, Coulmiers…) sont sur les feuilles — 1 village = 1 technicien, souvent unique. Ces noms sont les meilleurs indices pour retrouver la tournée.</div>
@@ -581,15 +1114,18 @@ function levenshtein(a,b){
 function wordSim(a,b){if(!a.length||!b.length)return 0;return 1-levenshtein(a,b)/Math.max(a.length,b.length);}
 function flatEntries(){
   const arr=[];
-  T.forEach(t=>t.communes.forEach(c=>{
+  curT().forEach(t=>t.communes.forEach(c=>{
     arr.push({label:c.n,type:'commune',t,c});
     c.cl.forEach(cl=>arr.push({label:cl,type:'client',t,c}));
   }));
   return arr;
 }
-const ENTRIES=flatEntries();
-const COMMUNE_TOURS={};
-T.forEach(t=>t.communes.forEach(c=>{(COMMUNE_TOURS[c.n]=COMMUNE_TOURS[c.n]||new Set()).add(t.id);}));
+let ENTRIES=[], COMMUNE_TOURS={};
+function rebuildIndex(){
+  ENTRIES=flatEntries();
+  COMMUNE_TOURS={};
+  curT().forEach(t=>t.communes.forEach(c=>{(COMMUNE_TOURS[c.n]=COMMUNE_TOURS[c.n]||new Set()).add(t.id);}));
+}
 function communeAmbiguous(name){return (COMMUNE_TOURS[name]&&COMMUNE_TOURS[name].size)>1;}
 function scoreLabel(labelWords,ocrWords){
   let weightSum=0,matchSum=0;
@@ -649,7 +1185,7 @@ function matchEntry(rawText){
 }
 function showVerdict(v,url){
   const out=document.getElementById('scan-out');
-  const t=T.find(x=>x.id===v.tournee);
+  const t=curT().find(x=>x.id===v.tournee);
   if(!t){
     out.innerHTML=`<img class="preview" src="${url}">
     <div class="verdict"><div class="v-tour" style="background:#6E6879">INTROUVABLE<small>pas de correspondance</small></div>
@@ -683,6 +1219,8 @@ function render(){
   const b=weekendBannerHTML();
   if(b)app.insertAdjacentHTML('afterbegin',b);
 }
+rebuildIndex();
+renderDepotNav();
 renderNav();render();
 </script>
 </body>
