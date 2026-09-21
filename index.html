@@ -175,6 +175,37 @@ nav button.on{background:var(--ink);color:#fff}
 .wkbar b{color:var(--yellow)}
 .tstat{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;padding:2px 7px;border-radius:3px;margin-left:8px;vertical-align:middle}
 h2.sec{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;letter-spacing:.05em;text-transform:uppercase;margin:4px 0 10px}
+
+/* Suivi des heures */
+.hcard{background:var(--paper);border:3px solid var(--violet);border-radius:6px;padding:20px 16px;margin-bottom:16px;text-align:center}
+.hcard .hstatus{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--grey)}
+.hcard .htime{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:46px;color:var(--violet);letter-spacing:.03em;margin:6px 0}
+.hcard .hsub{font-size:13px;color:var(--grey);font-weight:500;margin-bottom:14px}
+.hbtn{display:block;width:100%;padding:16px;border-radius:6px;border:none;font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  font-size:20px;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;margin-bottom:8px}
+.hbtn.go{background:#2F8F5B;color:#fff}
+.hbtn.stop{background:var(--red);color:#fff}
+.hweek{background:var(--paper);border:1.5px solid var(--line);border-radius:6px;padding:12px 14px;margin-bottom:16px;
+  display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.hweek .wl{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--grey);font-weight:700}
+.hweek .wv{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;color:var(--ink)}
+.hweek .wv.over{color:var(--red)}
+.hweek .wv.under{color:#2F8F5B}
+.htarget{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--grey);font-weight:600}
+.htarget input{width:52px;padding:4px 6px;border:1.5px solid var(--line);border-radius:4px;font-size:13px;font-family:'Inter',sans-serif}
+.hrow{background:var(--paper);border:1.5px solid var(--line);border-left:5px solid var(--violet);border-radius:4px;
+  padding:10px 12px;margin-bottom:8px}
+.hrow .hr-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.hrow .hr-date{font-weight:700;font-size:13.5px}
+.hrow .hr-dur{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;color:var(--violet)}
+.hrow .hr-times{font-size:12px;color:var(--grey);font-weight:600;margin-top:2px}
+.hrow .hr-actions{margin-top:6px}
+.hedit{margin-top:8px;display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
+.hedit label{font-size:11px;color:var(--grey);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.hedit input[type=time]{display:block;margin-top:3px;padding:8px;border:1.5px solid var(--ink);border-radius:4px;font-size:14px;font-family:'Inter',sans-serif}
+.hedit button{padding:9px 12px;border-radius:4px;border:none;font-weight:700;font-size:12.5px;cursor:pointer}
+.hedit .hsave{background:var(--ink);color:#fff}
+.hedit .hdel{background:#fff;color:var(--red);border:1.5px solid var(--red)}
 @media (prefers-reduced-motion: reduce){.fcard{transition:none}}
 </style>
 </head>
@@ -945,6 +976,7 @@ const app=document.getElementById('app'), nav=document.getElementById('nav'), de
 let mode='fiches', selT=0, selDepot='ORLEANS';
 let deck=[], deckIdx=0, deckOk=0, deckRedo=[], fcFilter='ALL', flipped=false;
 let quiz=[], qIdx=0, qScore=0, qAnswered=false;
+let heuresEditKey=null, heuresTimer=null;
 function curDepot(){return DEPOTS.find(d=>d.id===selDepot)||DEPOTS[0];}
 function curT(){return curDepot().tournees;}
 function renderDepotNav(){
@@ -962,7 +994,7 @@ window.pickDepot=id=>{
   window.scrollTo({top:0});
 };
 
-const MODES=[['scan','📷 Scan'],['fiches','Fiches'],['logic','Logique'],['flash','Flashcards'],['quiz','Quiz'],['search','Recherche']];
+const MODES=[['heures','⏱ Heures'],['scan','📷 Scan'],['fiches','Fiches'],['logic','Logique'],['flash','Flashcards'],['quiz','Quiz'],['search','Recherche']];
 function renderNav(){nav.innerHTML=MODES.map(([k,l])=>`<button class="${mode===k?'on':''}" onclick="setMode('${k}')">${l}</button>`).join('');}
 function setMode(m){mode=m;renderNav();render();}
 window.setMode=setMode;
@@ -1328,9 +1360,128 @@ function showVerdict(v,url){
   </div>`;
 }
 
+/* ============ SUIVI DES HEURES ============ */
+function pad2(n){return String(n).padStart(2,'0');}
+function todayKey(){const d=new Date();return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;}
+function nowHM(){const d=new Date();return `${pad2(d.getHours())}:${pad2(d.getMinutes())}`;}
+function hmToMin(hm){const [h,m]=hm.split(':').map(Number);return h*60+m;}
+function minToHM(min){min=Math.max(0,Math.round(min));const h=Math.floor(min/60),m=min%60;return `${h}h${pad2(m)}`;}
+function dureeMin(depart,fin){if(!depart||!fin)return null;let d=hmToMin(fin)-hmToMin(depart);if(d<0)d+=1440;return d;}
+function fmtDate(key){const [y,m,d]=key.split('-').map(Number);const dt=new Date(y,m-1,d);
+  const jours=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];return `${jours[dt.getDay()]} ${pad2(d)}/${pad2(m)}`;}
+function loadHeures(){try{return JSON.parse(localStorage.getItem('heuresLog')||'{}');}catch(e){return {};}}
+function saveHeures(h){try{localStorage.setItem('heuresLog',JSON.stringify(h));}catch(e){}}
+function heuresTarget(){try{const v=parseFloat(localStorage.getItem('heuresTarget'));return v>0?v:39;}catch(e){return 39;}}
+function weekMonday(){const d=new Date();const day=(d.getDay()+6)%7;d.setDate(d.getDate()-day);d.setHours(0,0,0,0);return d;}
+function weeklyTotalMin(h){
+  const monday=weekMonday();let total=0;
+  for(let i=0;i<7;i++){
+    const dt=new Date(monday);dt.setDate(monday.getDate()+i);
+    const key=`${dt.getFullYear()}-${pad2(dt.getMonth()+1)}-${pad2(dt.getDate())}`;
+    const e=h[key];
+    if(e&&e.depart&&e.fin)total+=dureeMin(e.depart,e.fin);
+    else if(e&&e.depart&&!e.fin&&key===todayKey())total+=dureeMin(e.depart,nowHM());
+  }
+  return total;
+}
+window.heureDepart=()=>{
+  const h=loadHeures(),k=todayKey();
+  h[k]={depart:nowHM()};
+  saveHeures(h);heuresEditKey=null;render();
+};
+window.heureFin=()=>{
+  const h=loadHeures(),k=todayKey();
+  if(!h[k]||!h[k].depart)return;
+  h[k].fin=nowHM();saveHeures(h);heuresEditKey=null;render();
+};
+window.heureEditToggle=key=>{heuresEditKey=(heuresEditKey===key?null:key);render();};
+window.heureSave=key=>{
+  const dEl=document.getElementById('hd_'+key),fEl=document.getElementById('hf_'+key);
+  const depart=dEl?dEl.value:'',fin=fEl?fEl.value:'';
+  const h=loadHeures();
+  if(!depart&&!fin)delete h[key];
+  else h[key]={depart:depart||undefined,fin:fin||undefined};
+  saveHeures(h);heuresEditKey=null;render();
+};
+window.heureDelete=key=>{
+  if(!confirm('Supprimer cette journée ?'))return;
+  const h=loadHeures();delete h[key];saveHeures(h);heuresEditKey=null;render();
+};
+window.heureTargetSave=v=>{
+  const n=parseFloat(v);if(!isNaN(n)&&n>0){try{localStorage.setItem('heuresTarget',String(n));}catch(e){}}
+  render();
+};
+function heuresEditRowHTML(key,ent){
+  ent=ent||{};
+  return `<div class="hedit">
+    <label>Départ<input type="time" id="hd_${key}" value="${ent.depart||''}"></label>
+    <label>Fin<input type="time" id="hf_${key}" value="${ent.fin||''}"></label>
+    <button class="hsave" onclick="heureSave('${key}')">Enregistrer</button>
+    <button class="hdel" onclick="heureDelete('${key}')">Supprimer</button>
+  </div>`;
+}
+function renderHeures(){
+  const h=loadHeures(),k=todayKey(),e=h[k]||{},target=heuresTarget();
+  let statusHTML;
+  if(!e.depart){
+    statusHTML=`<div class="hstatus">Pas encore parti</div><div class="htime">—</div>
+      <div class="hsub">Appuie quand tu quittes le dépôt</div>
+      <button class="hbtn go" onclick="heureDepart()">🟢 Départ</button>
+      <button class="linkbtn" onclick="heureEditToggle('${k}')">Saisie manuelle</button>`;
+  } else if(!e.fin){
+    statusHTML=`<div class="hstatus">En route depuis ${e.depart}</div><div class="htime" id="hLiveTime">${minToHM(dureeMin(e.depart,nowHM()))}</div>
+      <div class="hsub">Départ à ${e.depart}</div>
+      <button class="hbtn stop" onclick="heureFin()">🔴 Fin de journée</button>
+      <button class="linkbtn" onclick="heureEditToggle('${k}')">Saisie manuelle</button>`;
+  } else {
+    statusHTML=`<div class="hstatus">Journée terminée</div><div class="htime">${minToHM(dureeMin(e.depart,e.fin))}</div>
+      <div class="hsub">${e.depart} → ${e.fin}</div>
+      <button class="linkbtn" onclick="heureEditToggle('${k}')">✏️ Corriger</button>`;
+  }
+  let html=`<h2 class="sec">⏱ Suivi des heures</h2><div class="hcard">${statusHTML}</div>`;
+  if(heuresEditKey===k)html+=heuresEditRowHTML(k,e);
+
+  const wmin=weeklyTotalMin(h),diff=wmin-target*60;
+  html+=`<div class="hweek">
+    <div><div class="wl">Cette semaine</div><div class="wv ${diff>0?'over':diff<0?'under':''}">${minToHM(wmin)}</div></div>
+    <div><div class="wl">${diff>=0?'Dépassement':'Reste avant objectif'}</div><div class="wv">${minToHM(Math.abs(diff))}</div></div>
+    <div class="htarget">Objectif/sem. <input type="number" min="1" step="0.5" value="${target}" onchange="heureTargetSave(this.value)"> h</div>
+  </div>`;
+
+  html+=`<h2 class="sec">Historique</h2>`;
+  const keys=Object.keys(h).sort().reverse().slice(0,30);
+  if(!keys.length)html+=`<div class="empty">Aucune journée enregistrée pour l'instant.</div>`;
+  else html+=keys.map(key=>{
+    const ent=h[key],dur=ent.depart&&ent.fin?dureeMin(ent.depart,ent.fin):null;
+    let row=`<div class="hrow">
+      <div class="hr-top">
+        <div class="hr-date">${fmtDate(key)}${key===k?' · Aujourd\'hui':''}</div>
+        <div class="hr-dur">${dur!=null?minToHM(dur):'—'}</div>
+      </div>
+      <div class="hr-times">${ent.depart||'—'} → ${ent.fin||'—'}</div>
+      <div class="hr-actions"><button class="linkbtn" onclick="heureEditToggle('${key}')">${heuresEditKey===key?'Fermer':'Modifier'}</button></div>
+    </div>`;
+    if(heuresEditKey===key&&key!==k)row+=heuresEditRowHTML(key,ent);
+    return row;
+  }).join('');
+
+  app.innerHTML=html;
+
+  if(e.depart&&!e.fin){
+    heuresTimer=setInterval(()=>{
+      const live=document.getElementById('hLiveTime');
+      if(!live){clearInterval(heuresTimer);heuresTimer=null;return;}
+      const hh=loadHeures(),ee=hh[todayKey()];
+      if(ee&&ee.depart&&!ee.fin)live.textContent=minToHM(dureeMin(ee.depart,nowHM()));
+    },30000);
+  }
+}
+
 /* ============ RENDER ============ */
 function render(){
+  if(heuresTimer){clearInterval(heuresTimer);heuresTimer=null;}
   if(mode==='scan')renderScan();
+  else if(mode==='heures')renderHeures();
   else if(mode==='fiches')renderFiches();
   else if(mode==='logic')renderLogic();
   else if(mode==='flash')renderFlash();
