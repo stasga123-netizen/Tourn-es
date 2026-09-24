@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tournées — Admin</title>
+<style>
+:root{
+  --violet:#6C4FA1; --violet-dark:#574083; --paper:#FAFAF7; --ink:#221E2B;
+  --grey:#6E6879; --line:#E4E1DA; --red:#D5342B; --yellow:#F5D941; --green:#2F8F5B;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,sans-serif;background:#EFEDE7;color:var(--ink)}
+header{background:var(--violet);color:#fff;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+header h1{font-size:20px;font-weight:700;letter-spacing:.03em}
+header .who{font-size:13px;opacity:.85}
+header button{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.5);color:#fff;padding:7px 14px;border-radius:5px;cursor:pointer;font-size:13px}
+.wrap{max-width:980px;margin:0 auto;padding:20px 16px 80px}
+#login{max-width:360px;margin:80px auto;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:28px}
+#login h2{font-size:20px;margin-bottom:16px}
+#login input{width:100%;padding:11px;margin-bottom:10px;border:1.5px solid var(--ink);border-radius:5px;font-size:15px}
+#login button{width:100%;padding:12px;border:none;border-radius:5px;background:var(--violet);color:#fff;font-weight:700;font-size:15px;cursor:pointer}
+.err{color:var(--red);font-size:13px;margin-top:8px}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.row select,.row input{padding:9px 10px;border:1.5px solid var(--ink);border-radius:5px;font-size:14px;background:#fff}
+button.pill{padding:8px 14px;border:1.5px solid var(--ink);border-radius:5px;background:#fff;cursor:pointer;font-size:13.5px;font-weight:600}
+button.pill.on{background:var(--ink);color:#fff}
+button.small{padding:5px 10px;font-size:12.5px;border-radius:4px;border:1.5px solid var(--line);background:#fff;cursor:pointer}
+button.danger{color:var(--red);border-color:var(--red)}
+button.primary{background:var(--violet);color:#fff;border:none;font-weight:700;padding:11px 20px;border-radius:5px;cursor:pointer;font-size:14.5px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:16px;margin-bottom:14px}
+.card h3{font-size:15px;margin-bottom:10px}
+.commune{border:1.5px solid var(--line);border-left:4px solid var(--violet);border-radius:6px;padding:12px;margin-bottom:10px}
+.commune-head{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.commune-head input{flex:1;font-weight:700;padding:7px 9px;border:1.5px solid var(--ink);border-radius:4px;font-size:14px}
+.client-row{display:flex;gap:6px;align-items:flex-start;margin-bottom:6px;flex-wrap:wrap}
+.client-row input.nom{flex:1;min-width:160px;padding:6px 8px;border:1px solid var(--line);border-radius:4px;font-size:13.5px}
+.alias-tags{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
+.tag{background:#F0ECF7;color:var(--violet-dark);font-size:11.5px;padding:2px 7px;border-radius:10px;display:flex;gap:4px;align-items:center}
+.tag button{border:none;background:none;cursor:pointer;color:var(--violet-dark);font-weight:700;padding:0}
+.meta-row{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.meta-row label{font-size:12px;color:var(--grey);display:block;margin-bottom:3px}
+.meta-row input[type=text]{padding:8px;border:1.5px solid var(--ink);border-radius:5px;font-size:14px}
+.meta-row input[type=color]{width:50px;height:38px;border:1.5px solid var(--ink);border-radius:5px;padding:2px}
+.saved{color:var(--green);font-size:13px;font-weight:600}
+.empty{color:var(--grey);padding:30px;text-align:center}
+.loading{color:var(--grey);padding:30px;text-align:center}
+</style>
+</head>
+<body>
+<div id="login">
+  <h2>Connexion manager</h2>
+  <input id="email" type="email" placeholder="Email" autocomplete="username">
+  <input id="pass" type="password" placeholder="Mot de passe" autocomplete="current-password">
+  <button onclick="doLogin()">Se connecter</button>
+  <div class="err" id="loginErr"></div>
+</div>
+<div id="admin" style="display:none">
+  <header>
+    <h1>Tournées — Admin</h1>
+    <div style="display:flex;align-items:center;gap:14px">
+      <span class="who" id="whoAmI"></span>
+      <button onclick="doLogout()">Déconnexion</button>
+    </div>
+  </header>
+  <div class="wrap" id="app"></div>
+</div>
+
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+import {getFirestore, collection, query, orderBy, getDocs, doc, setDoc, deleteDoc} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+import {getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDoALR1ARhahY07JjR-yvDsgsqKixBI8x8",
+  authDomain: "tournee-tcs.firebaseapp.com",
+  projectId: "tournee-tcs",
+  storageBucket: "tournee-tcs.firebasestorage.app",
+  messagingSenderId: "570813011756",
+  appId: "1:570813011756:web:63c19812f04eebc9333e89"
+};
+const fbApp = initializeApp(firebaseConfig);
+const db = getFirestore(fbApp);
+const auth = getAuth(fbApp);
+
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+
+window.doLogin = async () => {
+  const email = document.getElementById('email').value.trim();
+  const pass = document.getElementById('pass').value;
+  const err = document.getElementById('loginErr');
+  err.textContent = '';
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+  } catch (e) {
+    err.textContent = "Connexion refusée : " + (e.code === 'auth/invalid-credential' ? 'email ou mot de passe incorrect.' : (e.message || e));
+  }
+};
+window.doLogout = () => signOut(auth);
+
+let DEPOTS = [];
+let selDepotId = null, selTourId = null;
+
+async function loadDepots() {
+  const snap = await getDocs(query(collection(db, 'depots'), orderBy('order')));
+  DEPOTS = [];
+  for (const d of snap.docs) {
+    const tSnap = await getDocs(query(collection(db, 'depots', d.id, 'tournees'), orderBy('order')));
+    DEPOTS.push({
+      id: d.id, label: d.data().label, order: d.data().order,
+      tournees: tSnap.docs.map(td => ({id: td.id, ...td.data()})),
+    });
+  }
+}
+
+function curDepot() { return DEPOTS.find(d => d.id === selDepotId); }
+function curTournee() { const dep = curDepot(); return dep && dep.tournees.find(t => t.id === selTourId); }
+
+function renderApp() {
+  const app = document.getElementById('app');
+  let h = '<div class="row">';
+  h += DEPOTS.map(d => `<button class="pill ${d.id===selDepotId?'on':''}" onclick="pickDepot('${d.id}')">${esc(d.label)} <small>(${d.tournees.length})</small></button>`).join('');
+  h += `<button class="pill" onclick="addDepot()">+ Dépôt</button></div>`;
+
+  const dep = curDepot();
+  if (dep) {
+    h += '<div class="row">';
+    h += dep.tournees.map(t => `<button class="pill ${t.id===selTourId?'on':''}" style="border-color:${t.c}" onclick="pickTour('${t.id}')">${esc(t.id)}</button>`).join('');
+    h += `<button class="pill" onclick="addTour()">+ Tournée</button></div>`;
+  }
+
+  const t = curTournee();
+  if (t) {
+    h += renderTourEditor(t);
+  } else {
+    h += '<div class="empty">Choisis (ou crée) une tournée pour l\'éditer.</div>';
+  }
+  app.innerHTML = h;
+}
+
+function renderTourEditor(t) {
+  let h = `<div class="card">
+    <div class="meta-row">
+      <div><label>ID tournée</label><input type="text" value="${esc(t.id)}" disabled></div>
+      <div><label>Jours</label><input type="text" id="tJours" value="${esc(t.jours||'')}"></div>
+      <div><label>Couleur</label><input type="color" id="tColor" value="${esc(t.c||'#6C4FA1')}"></div>
+    </div>
+    <div id="communesZone">`;
+  (t.communes || []).forEach((c, ci) => { h += renderCommune(c, ci); });
+  h += `</div>
+    <button class="pill" onclick="addCommune()">+ Commune</button>
+    <div style="margin-top:16px;display:flex;gap:12px;align-items:center">
+      <button class="primary" onclick="saveTour()">Enregistrer</button>
+      <button class="pill danger" onclick="removeTour()">Supprimer cette tournée</button>
+      <span class="saved" id="saveMsg"></span>
+    </div>
+  </div>`;
+  return h;
+}
+
+function renderCommune(c, ci) {
+  let h = `<div class="commune" data-ci="${ci}">
+    <div class="commune-head">
+      <input type="text" value="${esc(c.n)}" onchange="editCommuneName(${ci},this.value)">
+      <button class="small danger" onclick="removeCommune(${ci})">Suppr. commune</button>
+    </div>`;
+  (c.cl || []).forEach((cl, li) => { h += renderClient(ci, cl, li); });
+  h += `<button class="small" onclick="addClient(${ci})">+ Client</button></div>`;
+  return h;
+}
+
+function renderClient(ci, cl, li) {
+  const aliasTags = (cl.alias || []).map((a, ai) =>
+    `<span class="tag">${esc(a)}<button onclick="removeAlias(${ci},${li},${ai})">×</button></span>`).join('');
+  return `<div class="client-row" data-ci="${ci}" data-li="${li}">
+    <input class="nom" type="text" value="${esc(cl.nom)}" onchange="editClientName(${ci},${li},this.value)">
+    <div class="alias-tags">${aliasTags}<button class="small" onclick="addAlias(${ci},${li})">+ alias</button></div>
+    <button class="small danger" onclick="removeClient(${ci},${li})">Suppr.</button>
+  </div>`;
+}
+
+window.pickDepot = (id) => { selDepotId = id; selTourId = null; renderApp(); };
+window.pickTour = (id) => { selTourId = id; renderApp(); };
+
+window.addDepot = async () => {
+  const id = prompt("ID du nouveau dépôt (ex. TOURS37, en majuscules, sans espace) :");
+  if (!id) return;
+  const label = prompt("Nom affiché (ex. Tours (37)) :", id) || id;
+  await setDoc(doc(db, 'depots', id.trim().toUpperCase()), {label, order: DEPOTS.length});
+  await loadDepots();
+  selDepotId = id.trim().toUpperCase(); selTourId = null;
+  renderApp();
+};
+
+window.addTour = async () => {
+  const dep = curDepot(); if (!dep) return;
+  const id = prompt("ID de la nouvelle tournée (ex. 4508M) :");
+  if (!id) return;
+  const jours = prompt("Jours (ex. Lundi soir → Jeudi soir) :", "") || "";
+  await setDoc(doc(db, 'depots', dep.id, 'tournees', id.trim()), {
+    jours, c: '#6C4FA1', communes: [], order: dep.tournees.length,
+  });
+  await loadDepots();
+  selDepotId = dep.id; selTourId = id.trim();
+  renderApp();
+};
+
+window.removeTour = async () => {
+  const t = curTournee(); const dep = curDepot();
+  if (!t || !confirm(`Supprimer la tournée ${t.id} et toutes ses communes/clients ? Irréversible.`)) return;
+  await deleteDoc(doc(db, 'depots', dep.id, 'tournees', t.id));
+  await loadDepots();
+  selTourId = null;
+  renderApp();
+};
+
+function withTour(fn) {
+  const t = curTournee(); if (!t) return;
+  fn(t);
+  renderApp();
+}
+
+window.addCommune = () => withTour(t => { t.communes = t.communes || []; t.communes.push({n: 'NOUVELLE COMMUNE', cl: []}); });
+window.editCommuneName = (ci, v) => withTour(t => { t.communes[ci].n = v.toUpperCase(); });
+window.removeCommune = (ci) => withTour(t => { if (confirm('Supprimer cette commune et ses clients ?')) t.communes.splice(ci, 1); });
+
+window.addClient = (ci) => withTour(t => { t.communes[ci].cl = t.communes[ci].cl || []; t.communes[ci].cl.push({nom: 'Nouveau client', alias: []}); });
+window.editClientName = (ci, li, v) => withTour(t => { t.communes[ci].cl[li].nom = v; });
+window.removeClient = (ci, li) => withTour(t => { t.communes[ci].cl.splice(li, 1); });
+
+window.addAlias = (ci, li) => withTour(t => {
+  const a = prompt('Texte lu sur une étiquette pour ce client (alias) :');
+  if (!a) return;
+  const cl = t.communes[ci].cl[li];
+  cl.alias = cl.alias || [];
+  if (!cl.alias.includes(a)) cl.alias.push(a);
+});
+window.removeAlias = (ci, li, ai) => withTour(t => { t.communes[ci].cl[li].alias.splice(ai, 1); });
+
+window.saveTour = async () => {
+  const t = curTournee(); const dep = curDepot();
+  if (!t) return;
+  t.jours = document.getElementById('tJours').value;
+  t.c = document.getElementById('tColor').value;
+  const msg = document.getElementById('saveMsg');
+  msg.textContent = 'Enregistrement…'; msg.style.color = 'var(--grey)';
+  try {
+    await setDoc(doc(db, 'depots', dep.id, 'tournees', t.id), {
+      jours: t.jours, c: t.c, communes: t.communes, order: t.order || 0,
+    });
+    msg.textContent = '✓ Enregistré'; msg.style.color = 'var(--green)';
+    setTimeout(() => { if (msg) msg.textContent = ''; }, 2500);
+  } catch (e) {
+    msg.textContent = 'Échec : ' + (e.message || e); msg.style.color = 'var(--red)';
+  }
+};
+
+onAuthStateChanged(auth, async (user) => {
+  if (user && user.isAnonymous) {
+    // une session anonyme laissée par l'app dépôt (même navigateur) ne doit jamais donner accès à l'admin
+    await signOut(auth);
+    return;
+  }
+  if (user) {
+    document.getElementById('login').style.display = 'none';
+    document.getElementById('admin').style.display = 'block';
+    document.getElementById('whoAmI').textContent = user.email || user.uid;
+    document.getElementById('app').innerHTML = '<div class="loading">Chargement…</div>';
+    try {
+      await loadDepots();
+      renderApp();
+    } catch (e) {
+      document.getElementById('app').innerHTML = `<div class="empty">Erreur de chargement : ${esc(e.message||e)}</div>`;
+    }
+  } else {
+    document.getElementById('login').style.display = 'block';
+    document.getElementById('admin').style.display = 'none';
+  }
+});
+</script>
+</body>
+</html>

@@ -7,180 +7,154 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Tournées">
-<meta name="theme-color" content="#6C4FA1">
+<meta name="theme-color" content="#F4F4F7">
 <link rel="apple-touch-icon" href="icon.png">
 <title>Tournées Orléans — Révision dispatch</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --violet:#6C4FA1; --violet-dark:#574083; --paper:#FAFAF7; --ink:#221E2B;
-  --grey:#6E6879; --line:#E4E1DA; --red:#D5342B; --yellow:#F5D941;
+  --bg:#F4F4F7; --card:#FFFFFF; --ink:#15131C; --grey:#6B7280; --grey-soft:#9AA0AE; --line:#EAEAEF;
+  --violet:#6C4FA1; --green:#1FAA59; --green-soft:#E4F6EA; --red:#E23D34; --red-soft:#FCEAE8;
+  --yellow:#C98A00; --yellow-soft:#FCF3D8;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%}
 html{-webkit-text-size-adjust:100%}
-body{font-family:'Inter',system-ui,sans-serif;background:#EFEDE7;color:var(--ink);-webkit-font-smoothing:antialiased;
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;
   overscroll-behavior-y:none;touch-action:manipulation}
-button,label{touch-action:manipulation;user-select:none;-webkit-user-select:none}
-button:active,.scan-btn:active{transform:scale(.97);transition:transform .08s}
-header{padding-top:calc(18px + env(safe-area-inset-top))}
-nav{-webkit-overflow-scrolling:touch;scrollbar-width:none}
-nav::-webkit-scrollbar{display:none}
-.wrap{padding-bottom:calc(90px + env(safe-area-inset-bottom))}
-.wrap{max-width:760px;margin:0 auto;padding:0 14px 90px}
+button,label{touch-action:manipulation;user-select:none;-webkit-user-select:none;font-family:inherit}
+button{cursor:pointer}
+button:active{transform:scale(.97);transition:transform .08s}
 
-/* Header */
-header{background:var(--violet);color:#fff;padding:18px 14px 14px;position:relative}
-header::after{content:"";display:block;position:absolute;left:0;right:0;bottom:-6px;height:6px;
-  background:repeating-linear-gradient(90deg,var(--violet) 0 26px,transparent 26px 34px);opacity:.35}
-.hd-in{max-width:760px;margin:0 auto}
-h1{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:30px;letter-spacing:.04em;text-transform:uppercase;line-height:1}
-.hd-sub{font-size:12.5px;opacity:.85;margin-top:4px;font-weight:500}
+/* ---------- Layout shell ---------- */
+header{padding:calc(14px + env(safe-area-inset-top)) 18px 10px;background:var(--bg)}
+.hd-row{max-width:640px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:9px}
+.brand .mark{width:32px;height:32px;border-radius:9px;background:var(--ink);color:#fff;display:flex;align-items:center;
+  justify-content:center;font-weight:800;font-size:16px}
+.brand .name{font-weight:800;font-size:19px;letter-spacing:-.01em}
+.avatar-btn{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--line);background:var(--card);
+  display:flex;align-items:center;justify-content:center;color:var(--grey);position:relative}
+.avatar-btn svg{width:18px;height:18px}
+.hd-sub{max-width:640px;margin:6px auto 0;font-size:12.5px;color:var(--grey);font-weight:500}
 
-/* Nav */
-nav{display:flex;gap:6px;max-width:760px;margin:16px auto 14px;padding:0 14px;overflow-x:auto}
-nav button{flex:0 0 auto;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:600;letter-spacing:.05em;
-  text-transform:uppercase;padding:9px 16px;border:1.5px solid var(--ink);background:var(--paper);color:var(--ink);
-  border-radius:4px;cursor:pointer}
-nav button.on{background:var(--ink);color:#fff}
+.acct-menu{position:fixed;top:calc(58px + env(safe-area-inset-top));right:16px;background:var(--card);
+  border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 30px rgba(20,15,40,.14);padding:6px;z-index:60;
+  min-width:210px}
+.acct-menu a,.acct-menu button{display:flex;align-items:center;gap:10px;width:100%;padding:11px 12px;border:none;
+  background:none;border-radius:9px;font-size:14px;font-weight:600;color:var(--ink);text-align:left;text-decoration:none}
+.acct-menu a:active,.acct-menu button:active{background:var(--bg)}
+.acct-menu .hint{padding:8px 12px 4px;font-size:11px;color:var(--grey-soft);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
 
-/* Depot bar */
-#depotNav{display:flex;gap:6px;max-width:760px;margin:14px auto 0;padding:0 14px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-#depotNav::-webkit-scrollbar{display:none}
-#depotNav button{flex:0 0 auto;font-family:'Barlow Condensed',sans-serif;font-size:14.5px;font-weight:700;letter-spacing:.04em;
-  text-transform:uppercase;padding:7px 14px;border:1.5px solid var(--violet);background:#fff;color:var(--violet-dark);
-  border-radius:4px 4px 0 0;cursor:pointer;text-align:center}
-#depotNav button small{display:block;font-family:'Inter',sans-serif;font-weight:500;font-size:9px;text-transform:none;
-  letter-spacing:0;color:var(--grey);margin-top:1px}
-#depotNav button.on{background:var(--violet);color:#fff}
-#depotNav button.on small{color:rgba(255,255,255,.85)}
+/* ---------- Depot row ---------- */
+.depot-row{display:flex;gap:14px;max-width:640px;margin:4px auto 6px;padding:6px 18px 4px;overflow-x:auto;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none}
+.depot-row::-webkit-scrollbar{display:none}
+.depot-chip{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:5px;background:none;border:none;
+  opacity:.55}
+.depot-chip.on{opacity:1}
+.depot-chip .badge{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  color:#fff;font-weight:800;font-size:13px;letter-spacing:.02em;box-shadow:0 2px 6px rgba(20,15,40,.12)}
+.depot-chip.on .badge{box-shadow:0 0 0 2.5px var(--card),0 0 0 4.5px var(--ink)}
+.depot-chip .lbl-mask{width:60px;overflow:hidden}
+.depot-chip .lbl{display:inline-block;font-size:10px;font-weight:700;color:var(--grey);white-space:nowrap;
+  text-transform:uppercase;letter-spacing:.02em}
+.depot-chip.on .lbl{color:var(--ink)}
+.depot-chip .lbl.mq{animation:mq-scroll 3.6s ease-in-out infinite alternate}
+@keyframes mq-scroll{from{transform:translateX(0)}to{transform:translateX(var(--mq-dist,0px))}}
 
-/* Pouch card = fiche tarifold */
-.pouch{background:var(--paper);border:3px solid var(--red);border-radius:5px;box-shadow:0 3px 10px rgba(30,20,50,.10);
-  position:relative;margin-bottom:16px;overflow:hidden}
-.pouch::before,.pouch::after{content:"";position:absolute;top:-3px;width:14px;height:9px;background:#2B2B2B;border-radius:0 0 4px 4px}
-.pouch::before{left:20%}.pouch::after{right:20%}
+/* ---------- Content ---------- */
+.wrap{max-width:640px;margin:0 auto;padding:4px 18px calc(96px + env(safe-area-inset-bottom))}
+h2.sec{font-weight:800;font-size:19px;letter-spacing:-.01em;margin:10px 0 12px}
+.hint-text{font-size:12.5px;color:var(--grey);margin-bottom:14px;font-weight:500;line-height:1.45}
+.alert-box{border-radius:12px;padding:12px 14px;font-size:12.5px;margin-bottom:14px;font-weight:500;line-height:1.45}
+.wkbar{background:var(--ink);color:#fff;border-radius:14px;padding:13px 14px;font-size:12.5px;line-height:1.5;
+  margin-bottom:14px}
+.wkbar b{color:var(--yellow)}
 
-.band{background:var(--violet);color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:16px;
-  letter-spacing:.06em;text-transform:uppercase;padding:5px 12px}
-.tour-head{padding:16px 14px 10px;text-align:center;border-bottom:1px solid var(--line)}
-.tour-head .num{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:34px;color:var(--violet);letter-spacing:.05em}
-.tour-head .jours{font-size:11.5px;color:var(--grey);text-transform:uppercase;letter-spacing:.14em;margin-top:2px;font-weight:600}
+/* ---------- Bottom nav ---------- */
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  display:flex;padding:6px 10px calc(8px + env(safe-area-inset-bottom));z-index:50;max-width:640px;margin:0 auto}
+.bottom-nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;background:none;border:none;
+  padding:8px 4px;color:var(--grey-soft);border-radius:12px}
+.bottom-nav button svg{width:23px;height:23px}
+.bottom-nav button span{font-size:10.5px;font-weight:700;letter-spacing:.01em}
+.bottom-nav button.on{color:var(--ink)}
 
-.clients{list-style:none}
-.clients li{padding:7px 14px 7px 26px;border-bottom:1px solid var(--line);font-size:14px;font-weight:500}
-.clients li:last-child{border-bottom:none}
-
-/* Tournée color chips */
-.chip{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13.5px;letter-spacing:.05em;
-  color:#fff;padding:2px 9px;border-radius:3px;vertical-align:middle}
-
-/* Tournée selector grid */
-.tsel{display:grid;grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:8px;margin-bottom:16px}
-.tsel button{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;letter-spacing:.04em;padding:12px 4px;
-  border-radius:5px;border:3px solid;background:var(--paper);cursor:pointer;color:var(--ink)}
-.tsel button small{display:block;font-family:'Inter',sans-serif;font-weight:500;font-size:9.5px;color:var(--grey);
-  letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
-.tsel button.on{color:#fff}
-.tsel button.on small{color:rgba(255,255,255,.85)}
-
-/* Flashcard */
-.fc-zone{perspective:1200px}
-.fcard{position:relative;min-height:300px;cursor:pointer;transform-style:preserve-3d;transition:transform .45s}
-.fcard.flip{transform:rotateY(180deg)}
-.face{position:absolute;inset:0;backface-visibility:hidden;background:var(--paper);border:3px solid var(--red);
-  border-radius:6px;box-shadow:0 4px 14px rgba(30,20,50,.12);display:flex;flex-direction:column}
-.face.back{transform:rotateY(180deg);overflow-y:auto}
-.face .center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:22px;text-align:center;gap:10px}
-.fc-commune{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:34px;letter-spacing:.03em;text-transform:uppercase;line-height:1.05}
-.fc-hint{font-size:11.5px;color:var(--grey);text-transform:uppercase;letter-spacing:.12em;font-weight:600}
-.fc-count{font-size:13px;color:var(--grey)}
-.fc-controls{display:flex;gap:8px;margin-top:12px}
-.fc-controls button{flex:1;padding:13px;border-radius:5px;border:1.5px solid var(--ink);font-weight:700;font-size:14px;cursor:pointer;font-family:'Inter',sans-serif}
-.b-ko{background:#fff;color:var(--red);border-color:var(--red)}
-.b-ok{background:var(--ink);color:#fff}
-.fc-meta{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--grey);margin:10px 2px;font-weight:600}
-.linkbtn{background:none;border:none;color:var(--violet);font-weight:700;font-size:12.5px;cursor:pointer;text-decoration:underline}
-
-/* Quiz */
-.q-card{background:var(--paper);border:3px solid var(--ink);border-radius:6px;padding:20px 16px;box-shadow:0 4px 14px rgba(30,20,50,.10)}
-.q-num{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey);font-weight:700;margin-bottom:8px}
-.q-text{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:24px;line-height:1.15;margin-bottom:16px}
-.q-text b{color:var(--violet)}
-.opts{display:flex;flex-direction:column;gap:8px}
-.opts button{text-align:left;padding:13px 14px;border-radius:5px;border:1.5px solid var(--line);background:#fff;
-  font-size:14.5px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif}
-.opts button.good{background:#E4F4E7;border-color:#2F8F5B;color:#1D5C39}
-.opts button.bad{background:#FBE7E5;border-color:var(--red);color:#8F1F18}
-.q-next{margin-top:14px;width:100%;padding:13px;border-radius:5px;border:none;background:var(--violet);color:#fff;font-weight:700;font-size:15px;cursor:pointer}
-.score-line{font-size:13px;font-weight:700;color:var(--grey);margin-bottom:10px}
-.result{background:var(--paper);border:3px solid var(--violet);border-radius:6px;padding:28px 18px;text-align:center}
-.result .big{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:52px;color:var(--violet)}
-.result p{color:var(--grey);font-size:14px;margin:6px 0 16px;font-weight:500}
+/* ---------- Cards / generic ---------- */
+.card{background:var(--card);border-radius:16px;padding:16px;box-shadow:0 1px 2px rgba(20,15,40,.04),0 6px 18px rgba(20,15,40,.05)}
 
 /* Search */
-.search input{width:100%;padding:14px;border-radius:5px;border:2px solid var(--ink);font-size:16px;font-family:'Inter',sans-serif;background:var(--paper)}
-.hit{background:var(--paper);border:1.5px solid var(--line);border-left:5px solid var(--violet);border-radius:4px;
-  padding:10px 12px;margin-top:8px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.search input{width:100%;padding:14px 16px;border-radius:14px;border:1.5px solid var(--line);font-size:16px;
+  font-family:'Inter',sans-serif;background:var(--card)}
+.hit{background:var(--card);border-radius:14px;box-shadow:0 1px 2px rgba(20,15,40,.04),0 4px 14px rgba(20,15,40,.05);
+  padding:12px 14px;margin-top:8px;display:flex;justify-content:space-between;align-items:center;gap:10px}
 .hit .cl{font-weight:700;font-size:14px}
-.hit .loc{font-size:12px;color:var(--grey);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
-.empty{color:var(--grey);font-size:14px;text-align:center;padding:24px 10px;font-weight:500}
+.hit .loc{font-size:11.5px;color:var(--grey);font-weight:600;text-transform:uppercase;letter-spacing:.03em;margin-top:1px}
+.empty{color:var(--grey);font-size:14px;text-align:center;padding:26px 10px;font-weight:500}
+.chip{display:inline-block;font-weight:800;font-size:12.5px;letter-spacing:.02em;color:#fff;padding:4px 10px;
+  border-radius:20px;vertical-align:middle}
+.linkbtn{background:none;border:none;color:var(--violet);font-weight:700;font-size:12.5px;text-decoration:underline}
 
-/* Boussole des secteurs */
-.compass{position:relative;width:min(340px,92vw);height:min(340px,92vw);margin:6px auto 18px}
-.ring{position:absolute;inset:8%;border:2px dashed #B8B2C4;border-radius:50%}
-.cnode{position:absolute;transform:translate(-50%,-50%);font-family:'Barlow Condensed',sans-serif;font-weight:700;
-  font-size:15px;letter-spacing:.04em;color:#fff;padding:6px 10px;border-radius:4px;cursor:pointer;border:none;
-  box-shadow:0 2px 6px rgba(30,20,50,.25);text-align:center;line-height:1.05}
-.cnode small{display:block;font-family:'Inter',sans-serif;font-weight:600;font-size:8.5px;letter-spacing:.08em;opacity:.9}
-.axe{background:var(--paper);border:1.5px solid var(--line);border-radius:5px;padding:11px 12px;margin-bottom:8px;font-size:13.5px;line-height:1.45}
-.axe .dir{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:.06em;text-transform:uppercase}
-.reflex{background:var(--paper);border:1.5px solid var(--line);border-left:5px solid var(--yellow);border-radius:5px;
-  padding:12px;margin-bottom:8px;font-size:13.5px;line-height:1.5}
-.reflex b{color:var(--violet-dark)}
 /* Scan */
-.scan-btn{display:block;width:100%;padding:20px;border-radius:6px;border:3px dashed var(--violet);background:var(--paper);
-  color:var(--violet-dark);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:22px;letter-spacing:.05em;
-  text-transform:uppercase;cursor:pointer;text-align:center}
-.scan-btn small{display:block;font-family:'Inter',sans-serif;font-weight:500;font-size:12px;text-transform:none;letter-spacing:0;color:var(--grey);margin-top:4px}
-.preview{width:100%;max-height:220px;object-fit:contain;border-radius:5px;border:1.5px solid var(--line);margin-top:12px;background:#fff}
+.scan-btn{display:flex;flex-direction:column;align-items:center;gap:8px;width:100%;padding:34px 20px;border-radius:18px;
+  border:1.5px dashed var(--grey-soft);background:var(--card);color:var(--ink);font-weight:800;font-size:16px;text-align:center}
+.scan-btn svg{width:30px;height:30px;color:var(--grey)}
+.scan-btn small{display:block;font-weight:500;font-size:12.5px;color:var(--grey)}
+.preview{width:100%;max-height:220px;object-fit:contain;border-radius:14px;border:1px solid var(--line);margin-top:12px;background:#fff}
 .loading{text-align:center;padding:26px 10px;color:var(--grey);font-weight:600;font-size:14px}
-.spin{display:inline-block;width:26px;height:26px;border:3px solid var(--line);border-top-color:var(--violet);border-radius:50%;
+.spin{display:inline-block;width:24px;height:24px;border:3px solid var(--line);border-top-color:var(--ink);border-radius:50%;
   animation:sp .8s linear infinite;margin-bottom:8px}
 @keyframes sp{to{transform:rotate(360deg)}}
-.verdict{margin-top:14px;background:var(--paper);border-radius:6px;overflow:hidden;border:3px solid var(--ink);box-shadow:0 4px 14px rgba(30,20,50,.12)}
-.verdict .v-tour{color:#fff;text-align:center;padding:18px 10px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:44px;letter-spacing:.05em;line-height:1}
-.verdict .v-tour small{display:block;font-size:15px;font-weight:600;letter-spacing:.12em;opacity:.9;margin-top:2px}
-.verdict .v-body{padding:14px}
-.verdict .v-row{font-size:14px;padding:5px 0;border-bottom:1px solid var(--line)}
+.verdict{margin-top:14px;background:var(--card);border-radius:18px;overflow:hidden;
+  box-shadow:0 1px 2px rgba(20,15,40,.04),0 8px 24px rgba(20,15,40,.07)}
+.verdict .v-tour{color:#fff;text-align:center;padding:22px 10px;font-weight:800;font-size:40px;letter-spacing:-.01em;line-height:1}
+.verdict .v-tour small{display:block;font-size:14px;font-weight:600;letter-spacing:.02em;opacity:.92;margin-top:3px}
+.verdict .v-body{padding:15px}
+.verdict .v-row{font-size:14px;padding:6px 0;border-bottom:1px solid var(--line)}
 .verdict .v-row:last-child{border:none}
-.verdict .v-row b{display:inline-block;min-width:86px;color:var(--grey);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
-.conf{display:inline-block;padding:2px 8px;border-radius:3px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
-.conf.haute{background:#E4F4E7;color:#1D5C39}.conf.moyenne{background:#FCF6D8;color:#6A5A12}.conf.basse{background:#FBE7E5;color:#8F1F18}
+.verdict .v-row b{display:inline-block;min-width:86px;color:var(--grey);font-size:11px;text-transform:uppercase;letter-spacing:.05em;font-weight:700}
+.conf{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.03em}
+.conf.haute{background:var(--green-soft);color:#116836}.conf.moyenne{background:var(--yellow-soft);color:#6A5410}.conf.basse{background:var(--red-soft);color:#8F241C}
+
+/* Tournées tab */
+.tour-list{display:flex;flex-direction:column;gap:9px}
+.tour-card{display:flex;align-items:center;gap:12px;width:100%;background:var(--card);border-radius:16px;padding:14px 15px;
+  box-shadow:0 1px 2px rgba(20,15,40,.04),0 4px 14px rgba(20,15,40,.05);text-align:left}
+.tour-dot{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
+.tour-card-main{flex:1;min-width:0}
+.tour-card-id{display:block;font-weight:800;font-size:15px}
+.tour-card-meta{display:block;font-size:11.5px;color:var(--grey);font-weight:500;margin-top:1px}
+.tour-card-count{font-size:11.5px;color:var(--grey-soft);font-weight:700;white-space:nowrap}
+.back-btn{background:none;border:none;color:var(--grey);font-weight:700;font-size:13px;padding:4px 0 12px;display:flex;align-items:center;gap:4px}
+.tour-head-card{background:var(--card);border-radius:16px;padding:18px;text-align:center;margin-bottom:14px;
+  border:1.5px solid var(--line);box-shadow:0 1px 2px rgba(20,15,40,.04),0 4px 14px rgba(20,15,40,.05)}
+.tour-head-id{font-weight:800;font-size:28px;letter-spacing:-.01em}
+.tour-head-days{font-size:12px;color:var(--grey);font-weight:600;text-transform:uppercase;letter-spacing:.03em;margin-top:3px}
+.commune-block{background:var(--card);border-radius:16px;margin-bottom:10px;overflow:hidden;
+  box-shadow:0 1px 2px rgba(20,15,40,.04),0 4px 14px rgba(20,15,40,.05)}
+.commune-title{background:var(--ink);color:#fff;font-weight:700;font-size:13.5px;letter-spacing:.02em;padding:10px 14px}
+.client-list .client-row{padding:9px 14px;font-size:14px;font-weight:500;border-bottom:1px solid var(--line)}
+.client-list .client-row:last-child{border-bottom:none}
+
 /* Écran PIN */
-#lock{position:fixed;inset:0;background:var(--violet);z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px}
-#lock h2{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:30px;color:#fff;letter-spacing:.05em;text-transform:uppercase}
-#lock p{color:rgba(255,255,255,.75);font-size:13px;font-weight:500}
+#lock{position:fixed;inset:0;background:var(--ink);z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px}
+#lock h2{font-weight:800;font-size:24px;color:#fff;letter-spacing:-.01em}
+#lock p{color:rgba(255,255,255,.6);font-size:13px;font-weight:500}
 .dots{display:flex;gap:14px;margin:6px 0}
-.dot{width:16px;height:16px;border-radius:50%;border:2px solid #fff;background:transparent}
-.dot.full{background:#fff}
-.pad{display:grid;grid-template-columns:repeat(3,72px);gap:12px}
-.pad button{height:72px;border-radius:50%;border:2px solid rgba(255,255,255,.5);background:rgba(255,255,255,.08);
-  color:#fff;font-size:26px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif}
-.pad button:active{background:rgba(255,255,255,.3)}
+.dot{width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.5);background:transparent}
+.dot.full{background:#fff;border-color:#fff}
+.pad{display:grid;grid-template-columns:repeat(3,70px);gap:12px}
+.pad button{height:70px;border-radius:50%;border:1.5px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);
+  color:#fff;font-size:24px;font-weight:600}
+.pad button:active{background:rgba(255,255,255,.18)}
 #lock.shake .dots{animation:shk .35s}
 @keyframes shk{20%{transform:translateX(-10px)}40%{transform:translateX(10px)}60%{transform:translateX(-7px)}80%{transform:translateX(7px)}}
-.hintbar{background:#FCF6D8;border:1.5px solid #E4CF6A;border-radius:5px;padding:10px 12px;font-size:12.5px;color:#6A5A12;margin-bottom:14px;font-weight:500}
-.wkbar{background:#2B2438;color:#fff;border-radius:6px;padding:12px 14px;font-size:13px;line-height:1.5;margin-bottom:14px;border-left:5px solid var(--yellow)}
-.wkbar b{color:var(--yellow)}
-.tstat{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#fff;padding:2px 7px;border-radius:3px;margin-left:8px;vertical-align:middle}
-h2.sec{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;letter-spacing:.05em;text-transform:uppercase;margin:4px 0 10px}
-@media (prefers-reduced-motion: reduce){.fcard{transition:none}}
 </style>
 </head>
 <body>
 <div id="lock">
-  <h2>Tournées Orléans</h2>
+  <h2>Tournées</h2>
   <p>Entre ton code</p>
   <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
   <div class="pad">
@@ -190,17 +164,50 @@ h2.sec{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;
     <span></span><button onclick="pin(0)">0</button><button onclick="pin(-1)">⌫</button>
   </div>
 </div>
-<header><div class="hd-in">
-  <h1>Tournées</h1>
-  <div class="hd-sub" id="hdSub">Dispatch colis · communes &amp; clients</div>
-</div></header>
 
-<div id="depotNav"></div>
-<nav id="nav"></nav>
+<header><div class="hd-row">
+  <div class="brand"><span class="mark">T</span><span class="name">Tournées</span></div>
+  <button class="avatar-btn" id="acctBtn" onclick="toggleAcctMenu(event)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8.5" r="3.3"/><path d="M5 20c1-3.8 4-5.8 7-5.8s6 2 7 5.8"/></svg>
+  </button>
+</div>
+<div class="hd-sub" id="hdSub">Dispatch colis · communes &amp; clients</div>
+</header>
+<div id="acctMenu" class="acct-menu" hidden>
+  <div class="hint">Compte</div>
+  <a href="admin.html" target="_blank" rel="noopener">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/><path d="M10 8l4 4-4 4"/><path d="M14 12H3"/></svg>
+    Connexion manager
+  </a>
+  <button onclick="relock()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+    Verrouiller l'app
+  </button>
+</div>
+
+<div id="depotNav" class="depot-row"></div>
 <div class="wrap" id="app"></div>
+<nav id="nav" class="bottom-nav"></nav>
 
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-<script>
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+import {getFirestore, collection, query, orderBy, getDocs, runTransaction, doc} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+import {getAuth, signInAnonymously} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js";
+
+/* ============ FIREBASE ============ */
+const firebaseConfig = {
+  apiKey: "AIzaSyDoALR1ARhahY07JjR-yvDsgsqKixBI8x8",
+  authDomain: "tournee-tcs.firebaseapp.com",
+  projectId: "tournee-tcs",
+  storageBucket: "tournee-tcs.firebasestorage.app",
+  messagingSenderId: "570813011756",
+  appId: "1:570813011756:web:63c19812f04eebc9333e89"
+};
+const fbApp = initializeApp(firebaseConfig);
+const fbDb = getFirestore(fbApp);
+const fbAuth = getAuth(fbApp);
+
 /* ============ VERROU PIN ============ */
 const PIN_HASH="aa82088246685c17ebf16d48877686b831ed384ffdc42e76494283c271704d7a";
 let pinBuf="";
@@ -222,748 +229,110 @@ window.pin=async n=>{
     }
   }
 };
+window.relock=()=>{
+  try{localStorage.removeItem('unlocked');}catch(e){}
+  document.getElementById('lock').style.display='flex';
+  pinBuf='';document.querySelectorAll('.dot').forEach(d=>d.classList.remove('full'));
+  hideAcctMenu();
+};
+
+/* ============ COMPTE (menu) ============ */
+window.toggleAcctMenu=e=>{
+  e.stopPropagation();
+  const m=document.getElementById('acctMenu');
+  m.hidden=!m.hidden;
+};
+function hideAcctMenu(){document.getElementById('acctMenu').hidden=true;}
+document.addEventListener('click',e=>{
+  const m=document.getElementById('acctMenu'), btn=document.getElementById('acctBtn');
+  if(!m.hidden && !m.contains(e.target) && e.target!==btn && !btn.contains(e.target))hideAcctMenu();
+});
 
 /* ============ DONNÉES ============ */
-const T_ORLEANS = [
-{id:"4501M",jours:"Lundi soir → Jeudi soir",c:"#D5342B",communes:[
- {n:"FLEURY LES AUBRAIS",cl:["CW Leclerc","CW Intermarché","EDF","Honda","JC Decaux","Logilec (ACC / RES / CONS)","Nemo Leclerc","Orange","Poilane Leclerc","Pain Belledone Leclerc","SNCF"]},
- {n:"ORLÉANS",cl:["CDC Hab Go","Labo Casgrens Lefort","MSA Beauce Cœur de Loire","PE Région Centre","SG DCR","SNCF"]},
- {n:"ORMES",cl:["Biofarmo","Logilec Drive","Quadrilaser","SG Gras Savoye 10H"]},
- {n:"SARAN",cl:["AI Accès Industrie","Carrefour","CW Intermarché","Ex Malakoff Humanis","Feu Vert Mag","Gen Opt","K Carrefour","Nemo Carrefour"]},
- {n:"ST JEAN DE BRAYE",cl:["AMAP MH","Laboratoire Dental Côme"]}
-]},
-{id:"4502M",jours:"Lundi soir → Jeudi soir",c:"#E07020",communes:[
- {n:"LA FERTÉ ST AUBIN",cl:["Dr Becquet","Sagitta Phie de Sologne","Votre Épicerie Bio","Urban Bellanger","Urban Guynand"]},
- {n:"OLIVET",cl:["AG Palat","CHR Orléans","CIC","CW Leclerc","Darty Mag Int","Dr Dard","Enedis","Équip Jardin Stock","Groupama Siège","HD PP Équip Jardin","Honda Asphalte","Les Comptoirs de la Bio","Logilec (ACC / RES / CONS)","Malakoff Humanis","Nemo Leclerc","So Bio","Pap de Stock Pièce Auto","Poilane Leclerc","URSSAF"]},
- {n:"ORLÉANS (La Source / Sud)",cl:["Biz Aublive Kenny","BRGM","Ctr Dent Ramsey La Source","CHR Orléans La Source","CW U Express","Gen Opt Orléans Sud","Hob Rakoto Pierre Yves","Jung Dusonchet B","SG Loomis","Nemo Décathlon","HD AT Dupont 13H"]},
- {n:"ST CYR EN VAL",cl:["Dr Dias","ML St Cyr","Vitalaire"]},
- {n:"ST HILAIRE ST MESMIN",cl:["AGCO Gge Alluard","Urban Chaline"]},
- {n:"ST JEAN LE BLANC",cl:["CW Intermarché","Fenwick Pingot P","Poilane Intermarché","Jungheinrich Charbonnier","ELM Leblanc"]},
- {n:"ST PRYVÉ ST MESMIN",cl:["CW Super U","Équip Jardin","Fenwick Blanche A","HD PP Équip Jardin","CM St Pryvé"]}
-]},
-{id:"4503M",jours:"Lundi soir → Jeudi soir",c:"#2F8F5B",communes:[
- {n:"ARRABLOY",cl:["Fenwick Essity OP FR"]},
- {n:"BONNÉE LES BORDES",cl:["CW Intermarché"]},
- {n:"BRAY ST AIGNAN",cl:["Still Villard J Paul"]},
- {n:"CHÂTEAUNEUF-SUR-LOIRE",cl:["BP","CE","CM","CW Super U","Dr Cerina / Hautefeuille","De Mary Olivier","Groupama","LCL","SG Les Halles","SG"]},
- {n:"CHÉCY",cl:["Biocoop","BP","CE","CIC Belle Rives","CM","CW Leclerc","Dr Wagner","Équip Jardin","Gen Opt","Logilec 45 ACC / RES","LOM / Écouter Voir","Nemo 45 Leclerc","Nocibé","SG"]},
- {n:"DAMPIERRE EN BURLY",cl:["Dr Mos Dampierre"]},
- {n:"FLEURY LES AUBRAIS",cl:["CIC"]},
- {n:"GIEN",cl:["BP","CE","CIC","LCL","CM","SG","Dr Benisti","Dr Mos Gien","Dr Villejean","Dr Pagbe Ndobo Pauline","Groupama","LOM / Écouter Voir","SAV Darty Box","SCM Pralem et Fiocre","T Da Costa","TSG Antenne de Gien"]},
- {n:"LORRIS",cl:["Intermarché","Nemo 45 Leclerc","Visual Optique"]},
- {n:"OUZOUER-SUR-LOIRE",cl:["CW Intermarché"]},
- {n:"ORLÉANS",cl:["Botanic"]},
- {n:"SANDILLON",cl:["CW Super U"]},
- {n:"ST BENOÎT-SUR-LOIRE",cl:["Centre Pièce Auto"]},
- {n:"ST GONDON",cl:["AGCO Étam 45"]},
- {n:"ST DENIS DE L'HÔTEL",cl:["DCW Avr Auto"]},
- {n:"ST PÈRE-SUR-LOIRE",cl:["CW Super U","Nemo 45 Sup","Speedy"]},
- {n:"VIENNE EN VAL",cl:["CW Intermarché"]}
-]},
-{id:"4504M",jours:"Lundi soir → Jeudi soir",c:"#B03060",communes:[
- {n:"ARTENAY",cl:["AGCO Allezy 09H"]},
- {n:"BAZOCHES EN DUNOIS (28)",cl:["AGCO 28"]},
- {n:"BEAUCE LA ROMAINE (41)",cl:["AGCO 41"]},
- {n:"BROU (28)",cl:["Cab Dent Dr Monaco","Dex Legaigneur F","SG Les Halles"]},
- {n:"CERCOTTES",cl:["Still Bourgerolle J"]},
- {n:"CLOYES-SUR-LE-LOIR (28)",cl:["CW Intermarché"]},
- {n:"CHARTRES (28)",cl:["Labo Marais2A","Scael","Orange"]},
- {n:"CHÂTEAUDUN (28)",cl:["AGCO Delavallée","Cab Dent Dr Bazgu","CIC","CW Intermarché","CW Leclerc","Dentego","HD PP Ets Lemoult","Nemo Décathlon","Nemo Intermarché","Nemo Leclerc","Nocibé","SG","Logilec Accueil","Logilec Réserve","SNCF Gare"]},
- {n:"DROUÉ (41)",cl:["CL Depussay"]},
- {n:"CHEVILLY",cl:["Cab Dent Dr Moulis"]},
- {n:"INGRÉ",cl:["Miele Thomas"]},
- {n:"JANVILLE (28)",cl:["AGCO Ets Allezy"]},
- {n:"LA BAZOCHE GOUET (28)",cl:["CW Intermarché"]},
- {n:"LES VILLAGES VOVÉENS (28)",cl:["AGCO Durety SA","CW Intermarché","Poilane Intermarché","Nemo Intermarché","SNCF Gare"]},
- {n:"LA CHAPELLE DU NOYER (28)",cl:["CL Depussay"]},
- {n:"MIGNIÈRES (28)",cl:["Iron Mountain France"]},
- {n:"OUZOUER LE MARCHÉ",cl:["CW Intermarché"]},
- {n:"ST DENIS LES PONTS (28)",cl:["Gen Opt","Nemo Leclerc"]},
- {n:"ST PELLERIN (28)",cl:["SNCF Gare"]},
- {n:"TOURY (28)",cl:["Sagitta Phie"]},
- {n:"TERMINIERS",cl:["CL Depussay"]}
-]},
-{id:"4505M",jours:"Lundi soir → Jeudi soir",c:"#3E6FB5",communes:[
- {n:"BACCON",cl:["Still Dubois Jordan"]},
- {n:"BAULE",cl:["CW Hyper U"]},
- {n:"BREVAINVILLE",cl:["Darty Falguier"]},
- {n:"CLÉRY ST ANDRÉ",cl:["CW Intermarché"]},
- {n:"COULMIERS",cl:["Still Dela Aurélien"]},
- {n:"VIEVY LE RAYÉ",cl:["Jung Delbarre G / Ecoman"]},
- {n:"ÉPIEDS EN BEAUCE",cl:["CSAV J Spirkovitch"]},
- {n:"INGRÉ",cl:["CM","Fenwick Ferreira O","Labodent","Miel Thomas"]},
- {n:"HUISSEAU SUR MAUVES",cl:["Jung Time N"]},
- {n:"LA CHAPELLE ST MESMIN",cl:["AI Accès Industrie","CIC","CW Intermarché","Urban Rabier Charles","Fenwick Philippeau L","Fenwick Chancerel F","Fenwick Le Goff T","TDC"]},
- {n:"MOISY",cl:["Still Kolacz D Coffre"]},
- {n:"ORLÉANS",cl:["CM Madeleine","CM Siège"]},
- {n:"ORMES",cl:["Kone 3367","Kone Boulard Cyril (dépôt Ormes)"]},
- {n:"OUCQUES",cl:["AGCO Ghestem"]},
- {n:"ST JEAN DE LA RUELLE",cl:["CE Siège","Gen Opt","LOM / Écouter Voir","Nemo 45 Auchan","Orkyn MJ","Somed","FCB Auchan Fujifilm"]},
- {n:"ST JEAN FROIDMENTEL",cl:["Jung Hacher CE"]},
- {n:"ST LAURENT NOUAN",cl:["CW Super U","La Folie en Vrac"]},
- {n:"TAVERS",cl:["Biomonde","CW Leclerc","Gen Opt","Logilec","Nemo Leclerc"]}
-]},
-{id:"PITHIVIERS",jours:"Secteur Pithiviers (M + VM)",c:"#C29A00",communes:[
- {n:"NEUVILLE AUX BOIS",cl:["CW Super U","Kleber Malecot","Fenwick Goueffon C Sanchez","Nemo 45 Super U","Still Esnault M","Pro Archives Système"]},
- {n:"NIBELLE",cl:["Fenwick Santos C"]},
- {n:"REBRÉCHIEN",cl:["Hob Ladune F Caisson"]},
- {n:"SERMAISES",cl:["Kone Tanquerel Marc","Still Raffalli A"]},
- {n:"ST LOUP DES VIGNES",cl:["Fenwick Deschamps J"]},
- {n:"PITHIVIERS",cl:["CH","CIC","Claas Depussay","CPAM","CW Leclerc","Darty Mag Fra","FCB Hannequin Com","Fenwick Barre F","Gen Opt","Logilec (ACC / RES / CONS)","LOM / Écouter Voir","Nemo Décathlon","Nemo 45 Leclerc","ML Peter Chanu","So Bio","Dr Tudoran"]},
- {n:"PITHIVIERS LE VIEIL",cl:["AGCO 45 (MS 9H)","CW Intermarché","HP DD Loisir Services"]},
- {n:"PUISEAUX",cl:["T Da Costa"]},
- {n:"SARAN (VM)",cl:["GMF Assurance","Man Cichy Manut 45","Gen Opt"]},
- {n:"TERMINIERS (VM)",cl:["Claas Depussay"]}
-]},
-{id:"4507VM",jours:"Lundi soir → Vendredi soir",c:"#574083",communes:[
- {n:"ORLÉANS (centre-ville)",cl:["BCP","Cab Dent Mut","Carpa","Docteur Malka Yonataine","CCF Martroi","CCF St Marceau","CIC Loiret Berry Entreprises","CIC Dauphine","CIC Martroi","Crystal Clinic","CMD Orléans","CW Intermarché Orléans","DCT Burg","Dentego","Dr Jamain Arnaud","Dr Nozerac","EO Dr Delavierre","Gen Opt Place d'Arc","Grand Op République","Groupama Ets","Harmonie Mutuelle (HM)","Images Photo","K Carrefour Place d'Arc","Laboratoire Thomas","LCL Martroi","Les Comptoirs de la Bio","LOM / Écouter Voir Bannier","LOM / Écouter Bourgogne","Macif Sud","Nocibé","PW Fnac MJS","SG Sogecap","Ramsey Centre"]}
-]}
-];
-
-const T_MONTARGIS = [
-{id:"TR174545",jours:"LUNDI SOIR au VENDREDI SOIR",c:"#D5342B",communes:[
- {n:"BELLEGARDE",cl:["CE","HD PP LOISIR SERV","LABORATOIRE CHAVANEAU"]},
- {n:"BOISCOMMUN",cl:["WL WALLERAND MANULOC"]},
- {n:"CHAMPIGNELLES",cl:["DR BUISSON"]},
- {n:"CHATILLON COLIGNY",cl:["CE","DR DEBEAUVAIS","GROUPAMA","SG"]},
- {n:"LORRIS",cl:["CE","GROUPAMA","SG"]},
- {n:"NOGENT SUR VERNISSON",cl:["CE","DR ISNARD","KONE GROS P NOGENT"]},
- {n:"NOYERS",cl:["FENWICK AMAZZINI F PERE","FENWICK SEBASTIEN BRUN"]},
- {n:"QUIERS SUR BEZONDE",cl:["J LOPES"]},
- {n:"STE GENEVIEVE DES BOIS",cl:["JUNG DELHOUME T"]},
- {n:"VIMORY",cl:["FENWICK HEBRARD O"]},
- {n:"VILLEMOUTIERS",cl:["N ANDRE"]}
-]},
-{id:"COURTENAY1M",jours:"VENDREDI SOIR",c:"#E07020",communes:[
- {n:"AMILLY",cl:["LECLERC","DARTY MAG","CEGEDIM AMILLY"]},
- {n:"CHÂTEAU RENARD",cl:["AGCO BOUCHER"]},
- {n:"CORBEILLES",cl:["AGCO"]},
- {n:"MONTARGIS",cl:["DR DRESCA","MNH SIEGE"]},
- {n:"LADON",cl:["AGCO HUGUENY"]},
- {n:"PREFONTAINES",cl:["VADERSTAD"]},
- {n:"PRESSIGNY LES PINS",cl:["AGCO"]},
- {n:"ST HILAIRE SUR PUISEAUX",cl:["VADERSTAD"]},
- {n:"VILLEMANDEUR",cl:["ORANGE"]}
-]},
-{id:"COURTENAY1S",jours:"VENDREDI SOIR",c:"#2F8F5B",communes:[
- {n:"AMILLY",cl:["CEGEDIM AMILLY"]},
- {n:"MONTARGIS",cl:["BNP","CPAM","CARPA","DR DRESCA","VYV DENTAIRE MONTARGIS","PALATINE NEXITY"]},
- {n:"PITHIVIERS",cl:["MALT FRANCO BELGE"]},
- {n:"VILLEMANDEUR",cl:["BNP"]}
-]},
-{id:"COURTENAY25M",jours:"LUNDI SOIR au JEUDI SOIR",c:"#B03060",communes:[
- {n:"AMILLY",cl:["BP","CE","CEGEDIM","CM","COUVOIR","SAV DARTY + MAG","FEU VERT","GEN OPT","CW LECLERC","KODAK L LECLERC","LECLERC","LOM (VISAUDIO + VYV CARE)","NATUREO","NEMO DECATHLON","NOCIBE","SG"]},
- {n:"CHALETTE SUR LOING",cl:["BP","CE","CE VESINES","CW SUPER U","HYPER CASINO","NEMO 45 SUPER U","OPTIQUE VISUAL"]},
- {n:"CHÂTEAU LANDON",cl:["LE BIO PAYSAN"]},
- {n:"CHÂTEAU RENARD",cl:["AGCO BOUCHER","CE","GROUPAMA","SG"]},
- {n:"CHATILLON COLIGNY",cl:["NEMO 45 SUPER U"]},
- {n:"COURTENAY",cl:["BP","CE","DR SAMAMA MAX","GROUPAMA","HD PP CHAPUS","SG"]},
- {n:"CORBEILLES",cl:["AGCO"]},
- {n:"DORDIVES",cl:["CE"]},
- {n:"DOUCHY",cl:["STILL SROKA DAVID  DOUCHY"]},
- {n:"FERRIERES EN GATINAIS",cl:["CE","KONE THORIS L","FENWICK PETROVSKI D"]},
- {n:"MONTARGIS",cl:["BP","CE MONTARGIS CHAUSSEE","CE MONTARGIS DOREE","CENTRE DE SANTE DENTAIRE 3D","CIC","CAB DENT MUT","CPAM","CM","DR DRESCA","DR NICA","DR STANA","EPICERIE EFFERVESCENCE","GROUPAMA","LCL MONTARGIS DOREE","LOM","MNH SIEGE","NEMO 45 LECLERC","SG"]},
- {n:"LADON",cl:["AGCO HUGUENY"]},
- {n:"PREFONTAINES",cl:["VADERSTAD"]},
- {n:"PRESSIGNY LES PINS",cl:["AGCO"]},
- {n:"ST HILAIRE SUR PUISEAUX",cl:["VADERSTAD"]},
- {n:"TRIGUERES",cl:["DR KIMPE"]},
- {n:"VILLEMANDEUR",cl:["CE","CW INTERMARCHE","EQUIP JARDIN","ORANGE"]}
-]},
-{id:"COURTENAY25S",jours:"LUNDI SOIR au JEUDI SOIR",c:"#3E6FB5",communes:[
- {n:"BEAUNE LA ROLANDE",cl:["CW SUPER U"]},
- {n:"CHATILLON COLIGNY",cl:["CW SUPER U"]},
- {n:"CORBEILLES",cl:["CW INTERMARCHE"]},
- {n:"MONTARGIS",cl:["BNP","CARPA","CW FRANCE LOISIRS","DR DRESCA","NOCIBE","VYV DENTAIRE MONTARGIS","PALATINE NEXITY"]},
- {n:"PITHIVIERS",cl:["MALT FRANCO BELGE"]},
- {n:"PUISEAUX",cl:["CW INTERMARCHE"]},
- {n:"VILLEMANDEUR",cl:["BNP"]}
-]},
-{id:"COURTENAY6M",jours:"VENDREDI SOIR",c:"#C29A00",communes:[
- {n:"AMILLY",cl:["CM","DARTY","GEN OPT","LOM","NEMO DECATHLON","SG"]},
- {n:"CHALETTE SUR LOING",cl:["OPTIQUE VISUAL"]},
- {n:"CHÂTEAU LANDON",cl:["LE BIO PAYSAN"]},
- {n:"CHÂTEAU RENARD",cl:["SG"]},
- {n:"COURTENAY",cl:["DR SAMANA MAX","HD PP CHAPUS","SG"]},
- {n:"DOUCHY",cl:["STILL SROKA DAVID DOUCHY"]},
- {n:"FERRIERES EN GATINAIS",cl:["KONE THORIS L","FENWICK PETROVSKI D"]},
- {n:"MONTARGIS",cl:["CABINET DENTAIRE MUTUALISTE","CENTRE DE SANTE DENTAIRE 3D","CIC","CM","DR NICA","DR STANA","EPICERIE EFFERVESCENCE","LOM (VISAUDIO + VYV CARE)","SG"]},
- {n:"TRIGUERES",cl:["DR KIMPE"]},
- {n:"VILLEMANDEUR",cl:["EQUIP JARDIN"]}
-]},
-{id:"COURTENAY6S",jours:"VENDREDI SOIR",c:"#574083",communes:[
- {n:"BRIARE",cl:["GROUPAMA","LCL"]},
- {n:"CHÂTEAU RENARD",cl:["GROUPAMA"]},
- {n:"CHATILLON COLIGNY",cl:["GROUPAMA"]},
- {n:"COURTENAY",cl:["GROUPAMA"]},
- {n:"GIEN",cl:["GROUPAMA","LCL"]},
- {n:"LORRIS",cl:["GROUPAMA"]},
- {n:"MONTARGIS",cl:["GROUPAMA"]},
- {n:"SULLY / LOIRE",cl:["GROUPAMA","LCL"]},
- {n:"MONTARGIS DOREE",cl:["LCL"]}
-]}
-];
-
-const T_CHARTRES = [
-{id:"TR172845-2",jours:"LUNDI SOIR au VENDREDI SOIR",c:"#D5342B",communes:[
- {n:"AUNEAU",cl:["ML ARCHAMBAULT AUNEAU","SG","KONE PIRES DA SILVA J"]},
- {n:"BAILLEAU",cl:["FENWICK LE FERS C FL"]},
- {n:"BONNEVAL",cl:["TSG BOX 24 TOKHEIM","TSG LECARPENTIER 28"]},
- {n:"BOUGLAINVAL",cl:["FENWICK EGLOFF Q"]},
- {n:"BULLAINVILLE",cl:["FENWICK CHAPRON S"]},
- {n:"DANGEAU",cl:["FENWICK BLAZE FRANCOIS"]},
- {n:"EPERNON",cl:["CIC"]},
- {n:"GALLARDON",cl:["LABORATOIRE LECLET","FENWICK MARTIN JG","KONE GUILLET T"]},
- {n:"GELLAINVILLE",cl:["FENWICK LINDE PARC INDUS"]},
- {n:"GIDY",cl:["JUNG BUGE DANIEL GIDY"]},
- {n:"SANCHEVILLE",cl:["AGCO"]},
- {n:"HANCHES",cl:["POILANE HYPER U"]},
- {n:"LUCE",cl:["STILL YILMAZ OKAN"]},
- {n:"MAINTENON",cl:["POILANE INTERMARCHE"]},
- {n:"MIGNIERES",cl:["FENWICK LE VAILLANT T FL"]},
- {n:"NOGENT LE ROI",cl:["DARTY F DECAYEUX","POILANE CARREFOUR MARKET","SG"]},
- {n:"SARAN",cl:["CSAV C BRUNEAU SARAN","FENWICK GALLIN FLORIAN SARAN","MIELE THOMAS 45","STILL SARAN 3","STILL BIDON CR BOULAY SARAN"]}
-]},
-{id:"TR172845",jours:"LUNDI SOIR au VENDREDI SOIR",c:"#E07020",communes:[
- {n:"AUNEAU",cl:["BP","CA","CE","CM","GCM"]},
- {n:"BAZOCHES EN DUNOIS",cl:["ML PONTHIEU"]},
- {n:"CHATENAY",cl:["FENWICK MARTINET O CHATENAY"]},
- {n:"FONTENAY SUR EURE",cl:["C LOPES"]},
- {n:"FRANCOURVILLE",cl:["JUNG CHEVALIER B"]},
- {n:"GELLAINVILLE",cl:["CM ACCUEIL"]},
- {n:"MOUTIERS",cl:["JUNG BRUNO BRUNETTI"]},
- {n:"ORGERES EN BEAUCE",cl:["CA","CM"]},
- {n:"PATAY",cl:["CE","CM"]},
- {n:"SAINVILLE",cl:["CA"]},
- {n:"SOURS",cl:["CA"]},
- {n:"ST PERAVY LA COLOMBE",cl:["HOB PAILLET"]},
- {n:"TOURNOISIS",cl:["AGCO PRO CULTURE"]},
- {n:"VOVES",cl:["CA","CE","CM","GCM"]}
-]},
-{id:"DREUX25M",jours:"MARDI MATIN au VENDREDI MATIN",c:"#2F8F5B",communes:[
- {n:"ANET",cl:["CIC","CW ESPACE CULT LECLERC","CW LECLERC","ECHO NATURE","NEMO 28 LECLERC","LOGILEC ACCEUIL"]},
- {n:"BOULLAY THIERRY",cl:["CSAV S SEVILLE"]},
- {n:"BROUE",cl:["AGCO ETS GAUTIER"]},
- {n:"CHAMPHOL",cl:["CW INTERMARHE"]},
- {n:"CHARTRES",cl:["DARTY","EVERIAL","FLAGRANCE","S AUBERT 28 CHARTRES"]},
- {n:"CHERISY",cl:["CW INTERMARCHE","HD TM ESP MTC"]},
- {n:"CRECY COUVE",cl:["S SEVILLE 28"]},
- {n:"DREUX",cl:["AB HOUD DJAMEL","AD","BIOCOOP LES CORALINES","CIC","CW LECLERC","DARTY","DENTEGO","GEN OPT","K CARREFOUR DREUX","KONE BOX DREUX","LABORATOIRE APEX","LOM (VISAUDIO + VYV CARE)","NEMO DECATHLON","NOCIBE","SG","GARE SNCF","LABORATOIRE SMILE DENTAIRE","DR AKTAS","LOGILEC RESERVE","LOGILEC PICK UP","LOGILEC ACCEUIL"]},
- {n:"GALLARDON",cl:["POILANE CARREFOUR"]},
- {n:"GELLAINVILLE",cl:["MERCER EDIX"]},
- {n:"GOUSSAINVILLE",cl:["JUNG CORBEL PL"]},
- {n:"HANCHES",cl:["CW SUPER U","NEMO SUPER U"]},
- {n:"HOUDAN",cl:["BP","DR MARECHAL","ESCALE BIO"]},
- {n:"LAONS",cl:["ML BINET LAONS"]},
- {n:"LEVES",cl:["DR MONTOYA","DOC FOND DALIGRE M THERESE","JC DECAUX"]},
- {n:"LURAY",cl:["FENWICK HADDAJI RAMSY LURAY"]},
- {n:"MAINTENON",cl:["SNCF GARE","CW INTERMARCHE 28 MAINTENON"]},
- {n:"MAINVILLIERS",cl:["STILL DUMEUR P"]},
- {n:"MARVILLE LES BOIS",cl:["KONE DOUGLAS TRICA"]},
- {n:"MORANCEZ",cl:["CW INTERMARCHE"]},
- {n:"SOURS",cl:["CW COCCINELLE SOURS"]},
- {n:"ST LUBIN LES JONCHERETS",cl:["CW LECLERC"]},
- {n:"ST REMY SUR AVRE",cl:["ESPACE DENTAIRE DE L'AVRE"]},
- {n:"TREMBLAY LES VILLAGES",cl:["DR ROMPIERRE","JUNG LEROY T"]},
- {n:"VERNOUILLET",cl:["AD PIECES VALUES","CENTRE DES ARCHIVES","AGCO","CW HYPER U","DOY PARC AUTO PLUS","GEN OPT","NEMO 28 SUPER U","SAMA","SYMBIO Z"]}
-]},
-{id:"DREUX6M",jours:"VENDREDI SOIR",c:"#B03060",communes:[
- {n:"ANET",cl:["CIC"]},
- {n:"BROUE",cl:["AGCO ETS GAUTIER"]},
- {n:"CRECY COUVE",cl:["S SEVILLE 28"]},
- {n:"CHARTRES",cl:["S AUBERT 28 CHARTRES"]},
- {n:"CHERISY",cl:["HD TM ESP MTC"]},
- {n:"DREUX",cl:["AD","AVERY BERKEL HOUD 119","BIOCOOP LES CORALINES","CIC","DENTEGO","DR AKARKACH","GEN OPT","KONE BOX DREUX","LABORATOIRE APEX","SG","LOM (VISAUDIO + VYV CARE)","NEMO DECATHLON"]},
- {n:"HOUDAN",cl:["DR MARECHAL","BP HOUDAN"]},
- {n:"IVRY LA BATAILLE",cl:["EHPAD LA VERTE COLLINE"]},
- {n:"LEVES",cl:["DR MONTOYA","JC DECAUX"]},
- {n:"LUCE",cl:["GEN OPT","LOM (VISAUDIO + VYV CARE)"]},
- {n:"LUISANT",cl:["BARRAULT","CIC"]},
- {n:"MAULETTE",cl:["DR STANCIU"]},
- {n:"MARVILLE LES BOIS",cl:["KONE DOUGLAS TRICA"]},
- {n:"NOGENT LE ROI",cl:["CARREFOUR MARKET POILANE","SG"]},
- {n:"TREMBLAY LES VILLAGES",cl:["DR RONDEPIERRE"]},
- {n:"VERNOUILLET",cl:["AGCO SAMA","DOY PARC AUTO PLUS","ETS SAMA","GEN OPT","SAMA VERNOUILLET","SYMBIO Z"]}
-]},
-{id:"DREUX15S",jours:"LUNDI SOIR au VENDREDI SOIR",c:"#3E6FB5",communes:[
- {n:"ANET",cl:["BP","CA","CE"]},
- {n:"BU",cl:["CA"]},
- {n:"CHERISY",cl:["CA"]},
- {n:"DREUX",cl:["BP","BNP","CA","CA CENTRE D AFFAIRES","CE DREUX CENTRE","CE LES BATES","CM","GCM","LCL"]},
- {n:"VERNOUILLET",cl:["CA","CA LES CORVEES","CE","CM"]}
-]},
-{id:"VERNEUIL15S",jours:"LUNDI SOIR au VENDREDI SOIR",c:"#C29A00",communes:[
- {n:"BREZOLLES",cl:["CA","CM"]},
- {n:"CHATEAUNEUF EN THYMERAIS",cl:["CA","CE","CM","GCM"]},
- {n:"LA FERTE VIDAME",cl:["CA","PSA LA FERTE VIDAME"]},
- {n:"NONANCOURT",cl:["BNP"]},
- {n:"SENONCHES",cl:["BP","CA","CE","CM","GCM"]},
- {n:"ST REMY SUR AVRE",cl:["ESPACE DENTAIRE DE L'AVRE"]},
- {n:"ST LUBIN DES JONCHERETS",cl:["CA","CE","CM"]},
- {n:"VERNEUIL SUR AVRE",cl:["CM"]}
-]},
-{id:"BROU15S",jours:"LUNDI SOIR au VENDREDI SOIR",c:"#574083",communes:[
- {n:"ARROU",cl:["CA","CM"]},
- {n:"AUTHON DU PERCHE",cl:["CA","CM"]},
- {n:"BAILLEAU LE PIN",cl:["CA","CM"]},
- {n:"BARJOUVILLE",cl:["BP"]},
- {n:"BONNEVAL",cl:["BP","CA","CE","CM","GCM"]},
- {n:"BROU",cl:["BP","CA","CE","CM","GCM"]},
- {n:"DAMMARIE",cl:["CA"]},
- {n:"ILLIERS COMBRAY",cl:["CA","CE","CM"]},
- {n:"LA BAZOCHE GOUET",cl:["CA"]},
- {n:"LUIGNY",cl:["PRO ARCHIVES SYSTEME"]},
- {n:"THIVARS",cl:["CA"]}
-]},
-{id:"RAMBOUILLET15S",jours:"LUNDI SOIR au VENDREDI SOIR",c:"#1F8A8C",communes:[
- {n:"EPERNON",cl:["BNP","BP","CA","CE","CM"]},
- {n:"GALLARDON",cl:["CA","CE","CM"]},
- {n:"MAINTENON",cl:["BP","CA","CE","CM","GCM","LCL"]},
- {n:"NOGENT LE ROI",cl:["CA","CE","CM","GCM"]},
- {n:"RAMBOUILLET",cl:["CM"]}
-]},
-{id:"CHARTRESEQ15S",jours:"LUNDI SOIR au VENDREDI SOIR",c:"#8E44AD",communes:[
- {n:"CHARTRES",cl:["BDF CHARTRES","BP CHARTRES MADELEINE","BP EURE ET LOIR ENTREPRISES","CA CHARTRES LA MADELEINE","CA CHARTRES LES 3 PONTS","CAF EURE ET LOIR CHARTRES","CE CA MULTI MARCHES 28","CE CHARTRES CENTRE","CE CHARTRES LES PETITS CLOS","CE CHARTRES MADELEINE","CM CHARTRES MADELEINE","COGEDIS FIDEOR CHARTRES","CPAM EURE ET LOIR CHARTRES","DOC HOPITAUX CHARTRES","L PHOX CHARTRES STUDIO MARTINO","SG CHARTRES LA MADELEINE","URSSAF"]},
- {n:"LUCE",cl:["BP","CA","CE","CIC","CM","GCM","MGEN SD LUCE","SG CHARTRES LA MADELEINE"]},
- {n:"LUISANT",cl:["CA","CE","CIC","CM"]},
- {n:"MAINVILLIERS",cl:["CA","CE","CM"]},
- {n:"LEVES",cl:["CA","CE","CM"]},
- {n:"CHAMPHOL",cl:["CA"]}
-]},
-{id:"REMALARD15S",jours:"LUNDI SOIR au VENDREDI SOIR",c:"#B5651D",communes:[
- {n:"COURVILLE SUR EURE",cl:["CA","CE","CM","GCM"]},
- {n:"LA LOUPE",cl:["BP","CA","CE","CM","GCM"]},
- {n:"LE THEIL SUR HUISNE",cl:["CE"]},
- {n:"LUCE",cl:["CE LUCE OUEST"]},
- {n:"NOGENT LE ROTROU",cl:["BP","BNP","CA","CA LES GAUCHETIERES","CE CENTRE","CM","GCM","LCL"]},
- {n:"REMALARD",cl:["CM","GCM"]},
- {n:"ST GEORGES SUR EURE",cl:["CA"]},
- {n:"THIRON GARDAIS",cl:["CA"]}
-]},
-{id:"AG2R15M",jours:"LUNDI SOIR au VENDREDI SOIR",c:"#2C6E49",communes:[
- {n:"CHARTRES",cl:["CA SIEGE","CRCAM","FRAGRANCE","EVERIAL EDMONT POILLOT"]},
- {n:"GELLAINVILLE",cl:["MERCER EDIX"]}
-]},
-{id:"NOGENT26M",jours:"MARDI MATIN au SAMEDI MATIN",c:"#A63446",communes:[
- {n:"AUTHON DU PERCHE",cl:["JUNG SIMON R AUTHON DU PERCHE"]},
- {n:"BELHOMERT",cl:["AGCO AGRIFARM 28 BELHOMERT"]},
- {n:"BAILLEU LE PIN",cl:["VADERSTAD","CW INTERMARCHE"]},
- {n:"BERD HUIS",cl:["CAB DENT LAPERCHE BERD HUIS"]},
- {n:"BROU",cl:["CW INTERMARCHE","CW SUPER U","NEMO INTERMARCHE","NEMO SUPER U","POILANE INTERMARCHE"]},
- {n:"CHAMPROND EN GATINE",cl:["STILL GASSER KEVIN CHAMPROND"]},
- {n:"CHUISNES",cl:["FENWICK GIRARD YOAN CHUISNES"]},
- {n:"COULONGES MLES SABLONS 61",cl:["CLAAS DEPUSSAY SM3 61"]},
- {n:"COURVILLE/EURE",cl:["AGCO 28","AGCO GHESTEM AGRI 28","CW SUPER U","DOC FOYER DE VIE"]},
- {n:"FONTENAY SUR EURE",cl:["CSAV C CARDOSO","HONDA BIKEPARC"]},
- {n:"ILLIERS COMBRAY",cl:["CW INTERMARCHE","NEMO INTERMARCHE","SNCF GARE"]},
- {n:"LA BAZOCHE GOUET",cl:["CLAAS DEPUSSAY"]},
- {n:"LA LOUPE",cl:["NEMO INTERMARCHE LA LOUPE","CW INTERMARCHE LA LOUPE"]},
- {n:"LANCEY",cl:["JUNG LE GALL AURELIEN LANCEY"]},
- {n:"LE COUDRAY",cl:["FENWICK MALCUIT L LE COUDRAY"]},
- {n:"LUCE",cl:["CAB DENT DR HAMON FILLON","CIC"]},
- {n:"MAGNY",cl:["FENWICK GILLET JOEY MAGNY"]},
- {n:"MORANCEZ",cl:["KONE DEPOT MORANCEZ"]},
- {n:"NOGENT LE ROTROU",cl:["CIC","LOM/ECOUTE VOIR","LABO GEORGES ARNAUD","SG"]},
- {n:"REMALARD",cl:["DR VILLENEUVE"]},
- {n:"SENONCHES",cl:["CW INTERMARCHE","DR TILLET CHRISTIAN","NEMO 28 INTERMARCHE"]},
- {n:"ST DENIS D AUTHOU",cl:["AGCO AGRI 28 ST DENIS"]},
- {n:"ST GEORGES SUR EURE",cl:["CW INTERMARCHE"]},
- {n:"THIMERT GATELLES",cl:["AGCO 28 THIMERT GATELLES"]},
- {n:"THIRON GARDAIS",cl:["DR SIMON CHRISTIAN"]},
- {n:"YEVRES",cl:["AGCO ETS DELAVALLEE"]}
-]},
-{id:"CHARTRES1M",jours:"LUNDI MATIN - Dispatch vendredi soir",c:"#4A6FA5",communes:[
- {n:"CHARTRES",cl:["CA SIEGE","CRCAM","EVERIAL CHARTRES","FRAGRANCE","KM KONIKA 28","MSA CHARTRES"]},
- {n:"DREUX",cl:["DARTY MAG INT"]},
- {n:"GELLAINVILLE",cl:["MERCER EDIX"]},
- {n:"HANCHES",cl:["CEWE SUPER U"]},
- {n:"LUCE",cl:["HARMONIE MUTUELLE (HM)"]},
- {n:"LUISANT",cl:["LCL BRINKS"]},
- {n:"MAINVILLIERS",cl:["KM FACTORA 28"]},
- {n:"VERNOUILLET",cl:["CEWE HYPER U"]}
-]},
-{id:"CHARTRESEQ25M",jours:"LUNDI SOIR au JEUDI SOIR",c:"#8C6A3F",communes:[
- {n:"BARJOUVILLE",cl:["GEN OPT BARJOUVILLE","NEMO 28 LECLERC BARJOUVILLE","NOCIBE BARJOUVILLE","SO BIO BARJOUVILLE","LOGILEC ACCEUIL","LOGILEC LOCKER","CEWE LECLERC BARJOUVILLE"]},
- {n:"CHARTRES",cl:["BNPP CHARTRES","CA CHARTRES ESPACE PROJET","CA CHARTRES LE CYGNE","CA CHARTRES LES HALLES","CARREFOUR CHARTRES","CCF CHARTRES","CE CA MULTI MARCHES","CE CHARTRES CENTRE","CE CHARTRES TASSIGNY","CIC CHARTRES METROPOLE","CIC EURE ET LOIR ENTREPRISES","CM CHARTRES","COGEDIS FIDEOR CHARTRES","CW INTERMARCHE GORD","DENTEGO CHARTRES","EVERIAL CHARTRES","FEU VERT MAG CHARTRES","GCM SITE DE GESTION CHARTRES","GEN OPT CHARTRES","GEN OPT CHARTRES LA MADELEI","GRAND OP CHARTRES","K CARREFOUR CHARTRES","LABORATOIRE MARAIS 2A","LCL CHARTRES","MON MARCHE BIO CHARTRES","MONOPRIX CHARTRES","MSA CHARTRES","NATUREO CHARTRES","NOCIBE CHARTRES MONOPRIX","PW FNAC CHARTRES","RESTAURANT MOULIN DE PONCEAU","SAV DARTY CHARTRES","SG CHARTRES","SG CHARTRES LA MADELEINE","SNCF GARE CHARTRES"]},
- {n:"GELLAINVILLE",cl:["CL DEPUSSAY"]},
- {n:"LE COUDRAY",cl:["DOC HOPITAUX"]},
- {n:"LE VAL LUISANT",cl:["HD PP EQUIP 28 LE VAL LUISANT"]},
- {n:"LUCE",cl:["CIC LUCE","ECOUTER VOIR LUCE ME V","FEU VERT MAG LUCE","GEN OPT LUCE","HM LUCE"]},
- {n:"LUISANT",cl:["BARRAULT CHARTRES","CIC LUISANT","LCL BRINKS LUISANT"]},
- {n:"MAINVILLIERS",cl:["NEMO DECATHLON","CW INTERMARCHE"]}
-]},
-{id:"CHARTRESEQ6M",jours:"VENDREDI SOIR",c:"#5C7A29",communes:[
- {n:"CHARTRES",cl:["BNPP","BP","CA ESPACE PROJET","CA CHARTRES LE CYGNE","CA CHARTRES LES HALLES","CA SIEGE CHARTRES","CCF CHARTRES","CE CA MULTI MARCHES 28","CE CHARTRES CENTRE","CE CHARTRES TASSIGNY","CM","CIC CHARTRES METROPOLE","CIC EURE ET LOIR ENTREPRISES","CRCAM VAL DE FRANCE","GCM SITE DE GESTION","GEN OPT CHARTRES LA MADELEI","GEN OPTIQUE","GRAND OPTICAL","LABORATOIRE MARAIS 2A","LCL","MONOPRIX","ORANGE (uniquement samedi)","PHOTO WEB FNAC","SAV DARTY","SCAEL","SG CHARTRES","SG CHARTRES LA MADELEINE"]},
- {n:"BARJOUVILLE",cl:["GEN OPT","SO BIO"]},
- {n:"LE VAL LUISANT",cl:["HD PP EQUIP 28 LE VAL LUISANT"]},
- {n:"LUISANT",cl:["BARRAULT CHARTRES","CIC"]},
- {n:"LUCE",cl:["ECOUTER VOIR LUCE ME V","GEN OPT LUCE","SG"]},
- {n:"MAINVILLIERS",cl:["NEMO"]}
-]}
-];
-
-const T_NIEVRE58 = [
-{id:"COSNE25M",jours:"LUNDI SOIR au JEUDI SOIR",c:"#D5342B",communes:[
- {n:"ARGENT SUR SAULDRE",cl:["CW SUPER U","CCF"]},
- {n:"AUBIGNY SUR NERE",cl:["BP","CE","CW INTERMARCHE","DR LEVERNIEUX MATON","DRS JOLY/TELLIER","CCF","HD PP BERNARDON","K CARREFOUR MKT"]},
- {n:"BEAULIEU SUR LOIRE",cl:["AGCO BE AGRI"]},
- {n:"BLANCAFORT",cl:["JUNG GENET MAXIME"]},
- {n:"BONNY SURE LOIRE",cl:["NEMO 45 SUP U"]},
- {n:"BOULLERET",cl:["RESTAURANT L ARDOISE"]},
- {n:"BRIARE",cl:["CE","GROUPAMA","NEMO 45 SUPER U","SG"]},
- {n:"CERDON",cl:["FENWICK BOURMAULT F CERDON"]},
- {n:"CHATILLON SUR LOIRE",cl:["CE","DR GUESNARD"]},
- {n:"CIEZ",cl:["EUROTYRE"]},
- {n:"COSNE SUR LOIRE",cl:["AD","AUTO COMPTOIR DE LA NIEVRE","B SUCCES","BNP","BP","CABINET RADIOLOGIE COSNE","CE","CIC","CM","DOC CH","SUPER U","DR BUCHET FREGEAI","FCB AUCHAN","HD PP ALABEURTHE","K CARREFOUR MKT","LCL","LE PHOTOGRAPHE","LOM (VISAUDIO+VYV CARE)","NEMO 58 AUCHAN","NEMO 58 CARR MARKET","SG","SNCF GARE","DR GUERRIER"]},
- {n:"COULLONS",cl:["CW INTERMARCHE"]},
- {n:"DONZY",cl:["CW INTERMARCHE"]},
- {n:"GIEN",cl:["AUCHAN","B SUCCES CC AUCHAN","CPAM","CW LECLERC","LECLERC LOGILEC","EQUIP JARDIN GIEN","HP PP EQUIP JARDIN","NEMO 45 AUCHAN","POINT S"]},
- {n:"LA CHARITE SUR LOIRE",cl:["ETS COIGNET PNEUS","SNCF GARE"]},
- {n:"LERE",cl:["DR BERGERON"]},
- {n:"OIZON",cl:["AGCO ETS PAUTRAT"]},
- {n:"POILLY LEZ GIEN",cl:["CW INTERMARCHE"]},
- {n:"POUILLY SUR LOIRE",cl:["CAB DENTAIRE DR GENESTE"]},
- {n:"ST SATUR",cl:["CE","DR LUPU"]},
- {n:"VAILLY SUR SAULDRE",cl:["AGCO ETS DIDIER"]}
-]},
-{id:"COSNE6M",jours:"VENDREDI SOIR",c:"#E07020",communes:[
- {n:"ARGENTON SUR SAULDRE",cl:["CCF"]},
- {n:"AUBIGNY SUR NERE",cl:["BP","CIC","DR JOLY","DR LEVERNIEUX","CCF","HD PP BERNARDON"]},
- {n:"BEAULIEU SUR LOIRE",cl:["AGCO BE AGRI"]},
- {n:"BRIARE",cl:["CIC","LCL","SG"]},
- {n:"CHATILLON SUR LOIRE",cl:["DR GUENARD CHARLES"]},
- {n:"COSNE SUR LOIRE",cl:["AD","AUTO COMPTOIR","BNP","BP","CE","CIC","CM","DR BUCHET FREGEAI","HD PP ALABEURTHE","LOM ECOUTER VOIR","SG","SNCF GARE"]},
- {n:"GIEN",cl:["AUCHAN","HP PP EQUIP JARDIN","LECLERC LOGILEC","POINT S"]},
- {n:"LA CHARITE SUR LOIRE",cl:["ETS COIGNET PNEUS"]},
- {n:"POUILLY SUR LOIRE",cl:["CAB DENTAIRE DR GENESTE"]},
- {n:"ST GONDON",cl:["AGCO ETAM"]},
- {n:"ST SATUR",cl:["DR LUPU"]},
- {n:"VAILLY SUR SAULDRE",cl:["AGCO ETS DIDIER"]}
-]},
-{id:"COSNE6S",jours:"VENDREDI SOIR",c:"#2F8F5B",communes:[
- {n:"CLAMECY",cl:["LCL"]},
- {n:"CHÂTEAU CHINON",cl:["LCL"]},
- {n:"COSNE COURS SUR LOIRE",cl:["LCL"]},
- {n:"DECIZE",cl:["LCL"]}
-]},
-{id:"DECIZE25M",jours:"LUNDI SOIR au JEUDI SOIR",c:"#B03060",communes:[
- {n:"AUNAY EN BAZOIS",cl:["SV PRO"]},
- {n:"BAZOLLES",cl:["AGCO"]},
- {n:"CERCY LA TOUR",cl:["CABINET PITTILLONI LAMARQUE","SNCF GARE"]},
- {n:"CORBIGNY",cl:["CL DEPUSSAY"]},
- {n:"COULANGE LES NEVERS",cl:["CW ESPACE CULTUREL LECL","NEMO 58 LECLERC","NATURA PAIN BELLEDONNE"]},
- {n:"DECIZE",cl:["BP","CM","CW LECLERC","CW INTERMARCHE","DR GERAUD COUDERT","DUMAS COLINOT","GENDARMERIE","LABORATOIRE COLLONGE","NEMO 58 LECLERC","SG","SNCF GARE"]},
- {n:"LA MACHINE",cl:["BP (TUBE)","CW INTERMARCHE"]},
- {n:"ST BENIN D'AZY",cl:["CW INTERMARCHE"]},
- {n:"MOULIN ENGILBERT",cl:["DR ISSARD","AGCO ETS BUCHEZ"]},
- {n:"NEVERS",cl:["BNP","BNP TRT","BP NEVERS REMPARTS","BP NEVERS VAL DES LOGES","CDM NEVERS COLBERT","CE NEVERS CARNOT","CE NEVERS MONTAPINS","CIC","CM NEVERS BOUQUILLARD","CM NEVERS CARNOT","DR MARQUES DOMINIQUE","DR ROMAIN BEAUGE","DR VELLAY","GP AUTO","LCL NEVERS COQUILLE","LOM","MONOPRIX","NEMO 58 INTERMARCHE","NUGER","SG","SG NEVERS GRANDS CHAMPS","SAV DARTY NEVERS/BT"]},
- {n:"SAUVIGNY LES BOIS",cl:["SV PRO"]},
- {n:"ST ELOI",cl:["CL DEPUSSAY"]},
- {n:"VARENNES VAUZELLES",cl:["EXPERT JARDIN"]}
-]},
-{id:"DECIZE6M",jours:"VENDREDI SOIR",c:"#3E6FB5",communes:[
- {n:"AUNAY EN BAZOIS",cl:["SV PRO"]},
- {n:"BAZOLLES",cl:["AGCO"]},
- {n:"CERCY LA TOUR",cl:["CABINET PITTILLONI LAMARQUE"]},
- {n:"DECIZE",cl:["CM","DR GERAUD COUDERT","DUMAS COLINOT","GENDARMERIE","LABORATOIRE COLLONGE","SG"]},
- {n:"MOULINS ENGILBERT",cl:["DR ISSARD","AGCO ETS BUCHEZ"]},
- {n:"NEVERS",cl:["BIOCOOP","BNP","BNP TRT","BP NEVERS REMPARTS","BP NEVERS VAL DES LOGES","CM NEVERS BOUQUILLARD","CM NEVERS CARNOT","CDM NEVERS COLBERT","CCF","CE NEVERS CARNOT","CIC","DR MARQUES DOMINIQUE","DR ROMAIN BEAUGE","DR VELLAY","GP AUTO","LOM","MONOPRIX","NUGER","SG","SG NEVERS GRANDS CHAMPS","SAV DARTY NEVERS/BT"]},
- {n:"SAUVIGNY LES BOIS",cl:["SV PRO"]}
-]},
-{id:"DECIZE1S",jours:"VENDREDI SOIR",c:"#C29A00",communes:[
- {n:"DECIZE",cl:["BP","CE","LABO COLLONGE"]},
- {n:"DONZY",cl:["BP"]},
- {n:"GUERIGNY",cl:["CE"]},
- {n:"IMPHY",cl:["CE"]},
- {n:"LA MACHINE",cl:["BP"]},
- {n:"ST BENIN D AZY",cl:["DR REMY THIEBOT","IDX DRS REROLLE ST BENIN DAZY"]}
-]},
-{id:"DECIZE25S",jours:"DU LUNDI SOIR AU JEUDI SOIR",c:"#574083",communes:[
- {n:"CHÂTEAU CHINON",cl:["CENTRE HOSPITALIER"]},
- {n:"CLAMECY",cl:["CENTRE HOSPITALIER","GAMM VERT"]},
- {n:"DECIZE",cl:["BP","CE","LCL"]},
- {n:"DONZY",cl:["BP","GAMM VERT"]},
- {n:"GUERINY",cl:["CE"]},
- {n:"IMPHY",cl:["CE","CW INTERMARCHE","LCL"]},
- {n:"LA CHARITE SUR LOIRE",cl:["CENTRE HOSPITAL SPE P LOO","CENTRE HOSPITAL H DUNANT"]},
- {n:"LA MACHINE",cl:["BP"]},
- {n:"LORMES",cl:["CENTRE HOSPITALIER"]},
- {n:"PREMERY",cl:["GAMM VERT"]},
- {n:"ST AMAND EN PUISAY",cl:["BP"]},
- {n:"ST BENIN D'AZY",cl:["DR REMY"]}
-]},
-{id:"NEVERS1S",jours:"VENDREDI SOIR",c:"#1F8A8C",communes:[
- {n:"NEVERS",cl:["CARPA","CAF","CIC","DOC CRE HOSPI LAGGL","MGEN"]}
-]},
-{id:"NEVERS25S",jours:"DU LUNDI SOIR AU JEUDI SOIR",c:"#8E44AD",communes:[
- {n:"MARZY",cl:["CW WELCOM","K CARREFOUR"]},
- {n:"NEVERS",cl:["CAF","CARPA","CENTRE IMAGERIE MEDICALE","CENTRE IMAGERIE MEDICALE NEV2","CW WELCOM NEVERS COLBERT","DOC CTRE HOSPI LAGG","MGEN SD"]}
-]},
-{id:"NEVORL25S",jours:"DU LUNDI SOIR AU JEUDI SOIR",c:"#B5651D",communes:[
- {n:"LA CHARITE SUR LOIRE",cl:["BNP","BP","CE","DR BARRIOL","CW INTER LA CHARITE"]},
- {n:"BRIARE",cl:["PAP SD NEGOCE 45 BRIARE"]},
- {n:"VARENNES VAUZELLES",cl:["AD","KLEBER VARENNES","STK TSG 58 VARENNES TOKHEIM","MAN ALLIANCE 58 VARENNES","STK KM 0041 VARENNES TOKHEIM","P IVARS"]}
-]},
-{id:"NEVERS6S",jours:"VENDREDI SOIR",c:"#2C6E49",communes:[
- {n:"NEVERS",cl:["CIC","LCL NEVERS COQUILLE"]}
-]},
-{id:"NEVORL1S",jours:"DU VENDREDI SOIR",c:"#A63446",communes:[
- {n:"BRIARE",cl:["PAP SD NEGOCE 45 BRIARE"]},
- {n:"LA CHARITE SUR LOIRE",cl:["BNP","BP","CE","DR BARRIOL"]},
- {n:"VARENNES VAUZELLES",cl:["AD","CCM","MAN ALLIANCE 58 VARENNES","STK KM 0041 VARENNES 58","STK TSG 58 VARENNES","KLEBER VARENNES","P IVARS"]}
-]},
-{id:"SANCOINS25M",jours:"LUNDI SOIR au JEUDI SOIR",c:"#4A6FA5",communes:[
- {n:"BEFFES",cl:["NEMO PROXIMARCHE"]},
- {n:"CHALLUY",cl:["CE"]},
- {n:"CHANTENAY ST IMBERT",cl:["SARL RESSAT"]},
- {n:"CHATEAUNEUF VAL DE BARGIS",cl:["AGCO ST HUBERT"]},
- {n:"COULANGE LES NEVERS",cl:["CE"]},
- {n:"FOURCHAMBAULT",cl:["BP","CE","CW INTERMARCHE","LABORATOIRE MILLERIOUX"]},
- {n:"GARCHIZY",cl:["ENEDIS"]},
- {n:"GUERIGNY",cl:["CW INTERMARCHE GUERIGNY"]},
- {n:"LA GUERCHE / LAUBOIS",cl:["CE"]},
- {n:"MARZY",cl:["NEMO DECATHLON","DARTY MAG","MA JOLIE PHOTO"]},
- {n:"NERONDES",cl:["CW INTERMARCHE"]},
- {n:"NEVERS",cl:["AUDIOPROX","BDF","B SUCCES","BIOCOOP","CW INTERMARCHE","DR SPIEKERMANN","FCB CAMARA","GEN OPT","GROUPAMA","CCF","JC DECAUX","MSA","ORANGE","SNCF GARE"]},
- {n:"SAGONNE",cl:["AGCO ETS JOUHANNEAU","STILL VALDAN REMI SAGONNE"]},
- {n:"SANCAIZE MAUCE",cl:["SNCF GARE"]},
- {n:"SANCOINS",cl:["BP","DR LALIQUE"]},
- {n:"ST PIERRE LE MOUTIER",cl:["CE","DR KOEKELCOREN"]},
- {n:"VARENNES VAUZELLES",cl:["B SUCCES","BP","CE","CM","CW INTERMARCHE","EUROTYRE","HD PP EXPERT JARDIN","HD PP ALABEURTHE","KM COPIEFAX","SNCF GARE"]}
-]},
-{id:"SANCOINS6M",jours:"VENDREDI SOIR",c:"#8C6A3F",communes:[
- {n:"FOURCHAMBAULT",cl:["BP","CE","LABORATOIRE MILLERIOUX"]},
- {n:"CHANTENAY ST IMBERT",cl:["RESAT"]},
- {n:"CHATEAUNEUF VAL DE BARGIS",cl:["AGCO ST HUBERT"]},
- {n:"NEVERS",cl:["JC DECAUX","KONE DEPOT NEVERS"]},
- {n:"SAGONNE",cl:["AGCO ETS JOUHANNEAU","STILL VALDAN REMI SAGONNE"]},
- {n:"SANCOINS",cl:["DR LALIQUE"]},
- {n:"ST PIERRE LE MOUTIER",cl:["DR KOEKELCOREN"]},
- {n:"VARENNES VAUZELLES",cl:["BP","CM","HD PP EXPERT JARDIN","HD PP ALABEURTHE"]}
-]},
-{id:"SANCOINS1M",jours:"DISPATCH DU VENDREDI SOIR",c:"#5C7A29",communes:[
- {n:"CHÂTEAU CHINON",cl:["CENTRE HOSPITALIER"]},
- {n:"CHATEAUNEUF VAL DE BARGIS",cl:["AGCO ST HUBERT"]},
- {n:"CLAMECY",cl:["CENTRE HOSPITALIER"]},
- {n:"GARCHIZY",cl:["ENEDIS"]},
- {n:"LA CHARITE SUR LOIRE",cl:["CENTRE HOSPITALIER SPE P LOO","CENTRE HOSPITALIER H DUNANT"]},
- {n:"LORMES",cl:["CENTRE HOSPITALIER"]},
- {n:"MARZY",cl:["DARTY MAG"]},
- {n:"NEVERS",cl:["BDF","DR SPIEKERMANN","MSA","GROUPAMA","ORANGE"]},
- {n:"VARENNES VAUZELLES",cl:["EUROTYRE","KM COPIEFAX"]}
-]}
-];
-
-const T_VIERZON = [
-{id:"FRET18VIERZON",jours:"LUNDI SOIR au VENDREDI SOIR (1845 SOIR)",c:"#D5342B",communes:[
- {n:"ST AMAND MONTROND",cl:["AD","AGCO","CCF","LABORATOIRE FORT","CIC","LOM / ECOUTER VOIR","CM","NEMO INTERMARCHE","CW INTERMARCHE","CW LECLERC","PAP","DARTY MAG FRA MONTRO"]},
- {n:"BOURGES",cl:["DR GIRAUD","DR LAFON","DR RANGUIN","DRS JOUVENAUD","DENTEGO","HM","CAB DENT FORT MANUEL","CABINET DR LANGLOIS","CCF","KONE","CIC PLUS","CL TERRA","LOM / ECOUTER VOIR","CM AURON","CM LES MARRONNIERS","MONOPRIX","SAV DARTY BOX","STK TSG","DR BLANC"]},
- {n:"VIERZON",cl:["AD","CAB DENT DR ROMANOVA","CCF","CIC","LCL","LOM / ECOUTER VOIR","CM","NEMO INTERMARCHE","NOCIBE","CW INTERMARCHE","PAP GP AUTO 2R","PAP GP AUTO RODRIGUES","SNCF","DARTY MAG FRA","SNCF UO TRACTION"]},
- {n:"CHALIVOY MILON",cl:["AGCO"]},
- {n:"AINAY LE CHÂTEAU",cl:["DR LOREST","BP","DOC CTRE HOSP"]},
- {n:"HENRICHEMONT",cl:["AGCO","CL TERRA"]},
- {n:"MENETOU SALON",cl:["AGCO","FENWICK JAMET"]},
- {n:"ORVAL",cl:["AGCO","HD PP PAUGE"]},
- {n:"QUANTILLY",cl:["ELM MAILLE B"]},
- {n:"ROMORANTIN",cl:["EQUIP JARDIN","BIO LOGIC","GEN OPT","GRPA","CA","HD PP EQUIP JARDIN","CARREFOUR","LCL","CIC","LOGILEC BRICO ACC","LOGILEC SAV/ RES","MONOPRIX","CM","CPAM","NEMO DECATHLON","PAP","POLE MEDICAL","CW LECLERC","DARTY MAG FRA","DDFIP"]},
- {n:"ST GERMAIN DU PUY",cl:["AGCO","GEN OPT","HD PP EQUIP J"]},
- {n:"LINIEZ",cl:["AGCO"]},
- {n:"STE SOLANGE",cl:["FENWICK GUAY"]},
- {n:"NOHANT VIC",cl:["AGCO"]},
- {n:"VALENCAY",cl:["AGCO"]},
- {n:"ISSOUDUN",cl:["FLAURAUD EUROTYRE","CCF","KODAK LECLERC","NOCIBE","CW INTERMARCHE","CW LECLERC"]},
- {n:"MARAY",cl:["AGCO"]},
- {n:"LA CHATRE",cl:["FLAURAUD PROFIL","HD PP DENORMAN DELBAR","CCF","CW SUPER U"]},
- {n:"LUCAY",cl:["APRO"]},
- {n:"ST DOULCHARD",cl:["GEN OPT","NEMO DECATHLON"]},
- {n:"MENNETOU",cl:["CA"]},
- {n:"SALBRIS",cl:["GRPA","CA","JUNG GENET MAXIME","SFG MOREUX J"]},
- {n:"ST FLORENT SUR CHER",cl:["HD PP PONTONNIER","CW SUPER U"]},
- {n:"ALLOGNY",cl:["JUNG MONICAULT S"]},
- {n:"BERRY BOUY",cl:["LABORATOIRE MILLEDENT"]},
- {n:"LAMOTTE BEUVRON",cl:["CIC"]},
- {n:"LE CHATELET",cl:["NEMO SUPER U","CW SUPER U"]},
- {n:"ARCAY",cl:["CONFO MALHERBE"]},
- {n:"CHATEAUMEILLANT",cl:["CW INTERMARCHE"]},
- {n:"DUN SUR AURON",cl:["CW SUPER U"]},
- {n:"CHABRIS",cl:["NEMO SUPER U","CW SUPER U"]},
- {n:"CHARTRES",cl:["NEMO S/ CHER UTILE"]},
- {n:"MEHUN",cl:["CW INTERMARCHE"]},
- {n:"SELLES SUR CHER",cl:["NEMO SUPER U"]},
- {n:"AIGURANDE",cl:["CW INTERMARCHE"]},
- {n:"THAUMIERS",cl:["POILANE CHATEAU DE LA FORET"]},
- {n:"LE MAGNY",cl:["CW INTERMARCHE"]},
- {n:"PRUNIERS",cl:["CW DRIVE LECLERC","CW SUPER U"]},
- {n:"NOUAN LE FUZELIER",cl:["SFG ADENOT M"]},
- {n:"CHATEAUROUX",cl:["SGS","URSSAF"]},
- {n:"VASSELAY",cl:["SOFAXIS"]},
- {n:"ALLOUIS",cl:["STILL GIRAUD LOIC"]}
-]},
-{id:"FRET18BOURGES",jours:"LUNDI SOIR au VENDREDI SOIR (183645 SOIR)",c:"#E07020",communes:[
- {n:"ST DOULCHARD",cl:["AD","GENERAL OPTIQUE","BNP","HD AT ALBA","BP","HD MC NARCY","CAB DENT GAY NICAULT","CE","CIC","LOM ECOUTER VOIR","CM","CSAV","NEMO DECATHLON","NEMO LECLERC","NOCIBE","CW LECLERC","DR FLECK"]},
- {n:"BOURGES",cl:["ENEDIS MALLET","ADOC","ADOMA","AGCO","BDF","HARMONIE","KLEBER","CAB DENT BENABADJI","KM COPIEFAX","KM GAD SOLUTIONS AB (43 av prospective)","CAF DU CHER","KM KM CL + points associés (2 av prospective 48 rue Pasteur John Bost)","CARPA","KODAK CARREFOUR","CCF","LCL CAE CUJAS","CE CARREFOUR","LCL CHANCELLERIE","CE CHANCELLERIE","LCL CUJAS","LCL VAL AURON","CM ST GERMAIN","MAN ALLIANCE","CPAM DU CHER","MGEN","CRCAM CENTRE LOIRE","MSA","NEMO LECLERC","CW INTERMARCHE","NOCIBE MARAIS","CW LA POSTE","CW LECLERC","ORANGE","PEINTURE PIECES AUTO","PHOTO MORLET","PW FNAC","SAV DARTY","DARTY MAG INT ST GERMAIN DU PUY","SNCF GARE","DOY PEINTURES PIECES","SNCF UTM","ST IMAGE PHOTO","ELM LEGER","URSSAF"]},
- {n:"ST GERMAIN DU PUY",cl:["EQUIP JARDIN","AGCO","GENERAL OPTIQUE","BP","CE","CW INTERMARCHE"]},
- {n:"FUSSY",cl:["FENWICK","CCF"]},
- {n:"LA CHAPELLE ST URSIN",cl:["LABORATOIRE PIGET"]},
- {n:"ST AMAND MONTROND",cl:["LCL"]},
- {n:"VIERZON",cl:["LCL"]},
- {n:"AINAY LE CHÂTEAU",cl:["CW INTERMARCHE"]},
- {n:"AVORD",cl:["CW INTERMARCHE"]},
- {n:"CHATEAUNEUF SUR CHER",cl:["CW INTERMARCHE"]},
- {n:"HENRICHEMONT",cl:["CW INTERMARCHE"]}
-]}
-];
-
-const T_CHATEAUROUX = [
-{id:"CHATEAUROUX15J",jours:"LUNDI SOIR au VENDREDI SOIR",c:"#D5342B",communes:[
- {n:"LA FERTE ST AUBIN",cl:["CW SUPER U"]},
- {n:"LAMOTTE BEUVRON",cl:["CW INTERMARCHE"]},
- {n:"OLIVET",cl:["MUTUELLE DES MOTARDS (AMDM)"]},
- {n:"ORLEANS",cl:["XPATH CHU D ORLEANS"]},
- {n:"SALBRIS",cl:["CW SUPER U"]}
-]},
-{id:"FRET36DEOLS",jours:"LUNDI SOIR au VENDREDI SOIR (183645 SOIR)",c:"#E07020",communes:[
- {n:"ARGENTON",cl:["AD"]},
- {n:"STE FAUSTE",cl:["FENWICK VIOLETTE D"]},
- {n:"ST MAUR",cl:["AD","FLAURAUD VULCO TRUCK","GL OPTIQUE","IDEAL PECHE","APROLIA","KM AB CENTRE","LOM ECOUTER VOIR","NEMO DECATHLON","CM"]},
- {n:"TRANZAULT",cl:["FENWICK BOURDEAUX C"]},
- {n:"AIGURANDE",cl:["AGCO"]},
- {n:"CHATEAUROUX",cl:["FLAURAUD PROFIL","GL OPTIQUE AUCHAN","GRPA","HD AT ETS PERIER","HD PP EQUIP JARDIN LE POINC","BDF","CAB DENT MUT","CAF","CARREFOUR","KONE","CCF","LABO DUMONTET","LABO SYNERGIE PROTHESE","CEWE COMMEDIA","LOM ECOUTER VOIR","CEWE INTERMARCHE","LOOMIS","MGEN","MSA BERRY TOURAINE","CIC","NEMO CARREFOUR","CM","NOCIBE X V. HUGO","ORANGE","CREDEP","DARTY MAG INT","PHOX PHOTO SPEED","DOC CTRE HOSPI","SAV DARTY ST MAUR","DR BRUGIERE","SGS (","DR KAZI TANI","DR SOOLTANGOS","SNCF GARE","ENEDIS ANVAUX","EQUIP JARDIN","FENWICK H VERISSIMO DOS SANTOS","THELEM ASSURANCE"]},
- {n:"BUZANCAIS",cl:["AGCO","CEWE INTERMARCHE","DOC CH ST ROCH","RESTAURANT PEREGRINATIONS"]},
- {n:"CHATILLON SUR INDRE",cl:["AGCO","CEWE INTERMARCHE"]},
- {n:"LE POINCONNET AUCHAN",cl:["FUJI"]},
- {n:"DEOLS",cl:["AGCO","KM CAMAIL E","KM COLLET P","KM TRICOCHE FA","CENTRE DENTAIRE OASIS","STILL AGHILAS BRAIK","STK KM 3021","FENWICK LAMATTE DEVERSON J","TSG DESVIGNES","TSG NGUYEN FOSSARD"]},
- {n:"LE POINCONNET",cl:["AGCO","MAN VIOUX DUBOIS","NEMO AUCHAN","NOCIBE AUCHAN","DR BOIGELOT","STILL BILLAUDOT"]},
- {n:"MONTIERCHAUME",cl:["AGCO","JUNG BONY ARNAUD"]},
- {n:"NEUVY ST SEPULCHRE",cl:["AGCO"]},
- {n:"RIVARENNES",cl:["AGCO","APROLIA"]},
- {n:"ARGENTON SUR CREUSE",cl:["HD PP ESP LOISIRS","CCF","LABO GAULMIN","SNCF GARE"]},
- {n:"ST HILAIRE SUR BENAIZE",cl:["AGCO"]},
- {n:"VALENCAY",cl:["AGCO ("]},
- {n:"SAINT MAUR",cl:["JUNG MOREAU LOUIS","CEWE (Bellevue et du Franc)LECLERC","PAP GP AUTO"]},
- {n:"PRISSAC",cl:["CAB DENT DR JEBELEANU"]},
- {n:"LUANT",cl:["KONE FARARD"]},
- {n:"ECUEILLE",cl:["CEWE INTERMARCHE"]},
- {n:"EGUZON",cl:["CEWE SUPER U"]},
- {n:"ST GAULTIER",cl:["M MAZIERE CONFO"]},
- {n:"ST BENOIT DU SAULT SUPER U",cl:["CEWE"]},
- {n:"ST MARCEL INTERMARCHE",cl:["CEWE"]},
- {n:"LA CHATRE",cl:["CIC"]},
- {n:"DIORS",cl:["CONFORAMA D BONIN"]},
- {n:"LACS",cl:["PAP GP AUTO"]},
- {n:"CHATILLON",cl:["DOC CTRE HOSPI"]},
- {n:"VILLEDIEU SUR INDRE",cl:["SAS AF AUTO PIECES"]},
- {n:"LA PEROUILLE",cl:["FENWICK LARGEMAIN R"]}
-]}
-];
-
-const T_BLOIS = [
-{id:"FRET41BLOIS",jours:"LUNDI SOIR au VENDREDI SOIR (374145 SOIR)",c:"#D5342B",communes:[
- {n:"BLOIS",cl:["AD (AD Romo AD St Ouen AD Vendome)","ADOC","AGCO","EUROFINS GALYS","FENWICK TALLANT KARL","FEU VERT MAG","GRPA ETS","GROUPAMA AG","AUTO PIECES GAMBETTA","BDF","HD DIGUET SPORT EVENT","CEWE ESPACE CULTUREL","CEWE INTERMARCHE","CEWE LECLERC","K CARREFOUR","KM FACTORIA","LABO CREATEETH","LOGILEC","LOGILEC SALAMANDRE","LOM ECOUTER VOIR","CIC CHATEAU","CIC JEU DE PAUME","CIC LOIR ET CHER ENTREPRISE","MGEN","MSA","OPTIMA OPTICIENS","ORANGE","CLINIQUE DES QUAIS","CLI VET PONT GABRIEL DR TAUPIN","CONSEIL DEPARTEMENTAL","CPAM","SOLOGNE ROUTAGE","DDFIP","DOCAPOST","T MANAGER","DR HAMZA ASMA","URSSAF"]},
- {n:"VENDOME",cl:["EQUIP AUTO","GENERALE OPTIQUE","HD PP VENDOMOISE","CEWE ESPACE CUL. LECLERC","CEWE INTERMARCHE","LOGILEC","CEWE LECLERC","LOM ECOUTER VOIR","NEMO LECLERC","CIC","PAP STUDIO AURORE ET LENA","POILANE INTERMARCHE","SPRINT LAB PHOTO","DR DEBALLON","VENDOMOIS PIECES AUTO"]},
- {n:"ST GERVAIS LA FORET",cl:["EQUIP JARDIN","HD PP EQUIP J","LOGILEC","CIC","VETERINAIRE DES PERRIERES"]},
- {n:"CHAMPIGNY EN BEAUCE",cl:["AGCO"]},
- {n:"BAUZY",cl:["FENWICK FONTAINE LAURENT"]},
- {n:"EPUISAY",cl:["AGCO"]},
- {n:"SAVIGNY BRAYE",cl:["AGCO (les 2)"]},
- {n:"MONT PRES CHAMBORD",cl:["FENWICK L MEURANT"]},
- {n:"ST AGIL",cl:["AGCO"]},
- {n:"RILLY SUR LOIR",cl:["FENWICK HILAIRE N"]},
- {n:"ST OUEN",cl:["AGCO"]},
- {n:"VILLEFRANCOEUR",cl:["AGCO"]},
- {n:"VINEUIL",cl:["FUJI AUCHAN","GENERALE OPTIQUE","NEMO AUCHAN","ELM POLLET FREDDY"]},
- {n:"VILLEROMAIN",cl:["AGCO"]},
- {n:"VILLIERS SUR LOIR",cl:["AGCO"]},
- {n:"NOYERS SUR CHER",cl:["APROLIA","CEWE INTERMARCHE"]},
- {n:"LA CHAUSSEE ST VICTOR",cl:["AMAP","KONE","ENEDIS"]},
- {n:"ST GERVAIS LA FORÊT",cl:["HD AT SUD LOIRE AUTO"]},
- {n:"LA CHAUSSEE ENTREPRISE",cl:["BP"]},
- {n:"ST GERVAIS",cl:["HD MC H"]},
- {n:"VILLEBAROU",cl:["B SUCCES","NEMO CORA","NEMO DECATHLON","TSK STG"]},
- {n:"MONTHOU SUR CHER",cl:["HD PP AEB"]},
- {n:"AMBOISE",cl:["CABINET DENTAIRE DR VAUCARD","HD PP EQUIP JARDIN","LABO TISSIER","LAPV","LOM ECOUTER VOIR","CIC"]},
- {n:"ROMORANTIN",cl:["CARREFOUR"]},
- {n:"HUISSEAU EN BEAUCE",cl:["HOBAR HERVOUET C"]},
- {n:"LUNAY",cl:["JUNG MINIERE MICHEL"]},
- {n:"CHAILLES INTERMARCHE",cl:["CEWE","NEMO"]},
- {n:"VILLENEUVE",cl:["JUNG DE BRITO L"]},
- {n:"CONTRES",cl:["CEWE SUPER U","CIC"]},
- {n:"HERBAULT",cl:["CEWE INTERMACHE","SFG BENARD A"]},
- {n:"MER",cl:["CEWE SUPER U"]},
- {n:"MONDOUBLEAU",cl:["CEWE SUPER U","NEMO SUPER U"]},
- {n:"VALLOIRE SUR CISSE",cl:["KONE CLEMENT"]},
- {n:"MONTOIRE SUR LE LOIR",cl:["CEWE INTERMARCHE","CEWE SUPER U","CIC"]},
- {n:"SELLES SUR CHER",cl:["CEWE SUPER U","CIC"]},
- {n:"ST AIGNAN SUPER U",cl:["CEWE"]},
- {n:"VEUZAIN SUR LOIRE INTERMARCHE",cl:["CEWE"]},
- {n:"MONTLOUIS",cl:["LOM ECOUTER VOIR"]},
- {n:"ST AIGNAN",cl:["LOM ECOUTER VOIR","CIC"]},
- {n:"MONTRICHARD",cl:["CIC"]},
- {n:"CONAN",cl:["CL DEPUSSAY"]},
- {n:"ST AMAND LONGPRE",cl:["CL DEPUISSAY"]},
- {n:"MONTRIEUX EN SOLOGNE",cl:["STILL DUFOUR F"]},
- {n:"4VINEUIL",cl:["DOCUMENTHOM"]},
- {n:"LA CROIX EN TOURAINE",cl:["ELM MOUGEOLLE Y"]}
-]}
-];
-
-const T_RABI = [
-{id:"RABI",jours:"",c:"#D5342B",communes:[
- {n:"PONTLEVOY",cl:["AGCO","GGE DMS"]},
- {n:"VERETZ",cl:["AGCO"]},
- {n:"TAVERS",cl:["AUTO MOTO PIECE"]},
- {n:"LA CHAUSSEE ST VICTOR",cl:["CE","LOM ECOUTER VOIR"]},
- {n:"BEAUGENCY",cl:["CIC PORTE DE CHAMBORD","FENWICK ROUSSE"]},
- {n:"MER",cl:["CIC"]},
- {n:"BLERE",cl:["CSAV TALA"]},
- {n:"BLOIS",cl:["DOY API"]},
- {n:"LE CONTROIS EN SOLOGNE",cl:["DR FLOREA"]},
- {n:"BAULE",cl:["FENWICK LECONTE JEREMY"]},
- {n:"FEINGS",cl:["FENWICK AUGIS MANUEL"]},
- {n:"ST GEORGES SUR CHER",cl:["FENWICK RABOTTIN"]},
- {n:"CLERY ST ANDRE",cl:["JUNG PASQUET"]},
- {n:"LAILLY EN VAL",cl:["JUNG PORTAL"]},
- {n:"MEUNG SUR LOIRE",cl:["JUNG (5ème Avenue)"]},
- {n:"ST AY",cl:["JUNG HERNANDEZ ALEXIS"]},
- {n:"LES MONTILS",cl:["KONE CASSIOT"]}
-]}
-];
-
-const DEPOTS = [
-  {id:'ORLEANS', label:'Orléans', tournees:T_ORLEANS},
-  {id:'CHARTRES', label:'Chartres', tournees:T_CHARTRES},
-  {id:'MONTARGIS', label:'Montargis', tournees:T_MONTARGIS},
-  {id:'NIEVRE58', label:'Nièvre (58)', tournees:T_NIEVRE58},
-  {id:'VIERZON', label:'Cher (18)', tournees:T_VIERZON},
-  {id:'CHATEAUROUX', label:'Châteauroux (36)', tournees:T_CHATEAUROUX},
-  {id:'BLOIS', label:'Blois (41)', tournees:T_BLOIS},
-  {id:'RABI', label:'RABI (H37/91)', tournees:T_RABI},
-];
+let DEPOTS = [];
+function normalizeDepots(depots){
+  // tolère l'ancien format (cl: string[]) en plus du nouveau (cl: {nom,alias}[]) — que la source
+  // soit Firestore, le cache local ou le data.json embarqué.
+  (depots||[]).forEach(d=>(d.tournees||[]).forEach(t=>(t.communes||[]).forEach(c=>{
+    c.cl=(c.cl||[]).map(cl=>typeof cl==='string'?{nom:cl,alias:[]}:{nom:cl.nom,alias:cl.alias||[]});
+  })));
+  return depots;
+}
+async function loadFromFirestore(){
+  const depotsSnap = await getDocs(query(collection(fbDb,'depots'), orderBy('order')));
+  const depots = [];
+  for(const depotDoc of depotsSnap.docs){
+    const tSnap = await getDocs(query(collection(fbDb,'depots',depotDoc.id,'tournees'), orderBy('order')));
+    const tournees = tSnap.docs.map(td=>({id:td.id, ...td.data()}));
+    depots.push({id:depotDoc.id, label:depotDoc.data().label||depotDoc.id, tournees});
+  }
+  return depots;
+}
+async function loadData(){
+  try{
+    await signInAnonymously(fbAuth).catch(()=>{});
+    const depots = await loadFromFirestore();
+    if(!depots.length)throw new Error('base vide');
+    DEPOTS = normalizeDepots(depots);
+    try{localStorage.setItem('depotsCache', JSON.stringify(DEPOTS));}catch(e){}
+  }catch(e){
+    console.warn('Firestore indisponible, secours local', e);
+    let cached=null;
+    try{cached=JSON.parse(localStorage.getItem('depotsCache')||'null');}catch(e2){}
+    if(cached&&cached.length){DEPOTS=normalizeDepots(cached);}
+    else{
+      const res=await fetch('data/data.json');
+      if(!res.ok)throw new Error('HTTP '+res.status);
+      const json=await res.json();
+      DEPOTS=normalizeDepots(json.depots);
+    }
+  }
+}
 
 /* ============ ÉTAT ============ */
 const app=document.getElementById('app'), nav=document.getElementById('nav'), depotNav=document.getElementById('depotNav');
-let mode='fiches', selT=0, selDepot='ORLEANS';
-let deck=[], deckIdx=0, deckOk=0, deckRedo=[], fcFilter='ALL', flipped=false;
-let quiz=[], qIdx=0, qScore=0, qAnswered=false;
+let mode='scan', selDepot='ORLEANS', tourView='list', selTourId=null;
+const DEPOT_COLORS=['#6C4FA1','#D5342B','#2F8F5B','#3E6FB5','#C29A00','#B03060','#1F8A8C','#574083'];
 function curDepot(){return DEPOTS.find(d=>d.id===selDepot)||DEPOTS[0];}
 function curT(){return curDepot().tournees;}
+function applyDepotMarquee(){
+  depotNav.querySelectorAll('.lbl').forEach(el=>{
+    el.classList.remove('mq');
+    const mask=el.parentElement;
+    const overflow=el.scrollWidth-mask.clientWidth;
+    if(overflow>1){
+      el.style.setProperty('--mq-dist',(-overflow-2)+'px');
+      el.classList.add('mq');
+    }
+  });
+}
 function renderDepotNav(){
-  depotNav.innerHTML=DEPOTS.map(d=>`<button class="${d.id===selDepot?'on':''}" onclick="pickDepot('${d.id}')">${d.label}<small>${d.tournees.length} tournée${d.tournees.length>1?'s':''}</small></button>`).join('');
+  depotNav.innerHTML=DEPOTS.map((d,i)=>`<button class="depot-chip ${d.id===selDepot?'on':''}" onclick="pickDepot('${d.id}')">
+    <span class="badge" style="background:${DEPOT_COLORS[i%DEPOT_COLORS.length]}">${esc(d.id.slice(0,2))}</span>
+    <span class="lbl-mask"><span class="lbl">${esc(d.label)}</span></span>
+  </button>`).join('');
   const sub=document.getElementById('hdSub');
-  if(sub)sub.textContent=`Dispatch colis · communes & clients · ${curDepot().label} · ${curT().length} tournée${curT().length>1?'s':''}`;
+  if(sub)sub.textContent=`${curDepot().label} · ${curT().length} tournée${curT().length>1?'s':''}`;
+  // texte qui ne rentre pas dans le badge : on le fait défiler plutôt que de le couper avec "…"
+  applyDepotMarquee();
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(applyDepotMarquee);
 }
 window.pickDepot=id=>{
   if(id===selDepot)return;
-  selDepot=id; selT=0; fcFilter='ALL'; deck=[];deckIdx=0;deckOk=0;deckRedo=[];flipped=false;
-  quiz=[];qIdx=0;qScore=0;qAnswered=false;
+  selDepot=id; tourView='list'; selTourId=null;
   rebuildIndex();
   renderDepotNav();
   render();
   window.scrollTo({top:0});
 };
 
-const MODES=[['scan','📷 Scan'],['fiches','Fiches'],['logic','Logique'],['flash','Flashcards'],['quiz','Quiz'],['search','Recherche']];
-function renderNav(){nav.innerHTML=MODES.map(([k,l])=>`<button class="${mode===k?'on':''}" onclick="setMode('${k}')">${l}</button>`).join('');}
+const ICONS={
+  scan:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-2h6l2 2h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13" r="3.2"/></svg>',
+  search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.5-4.5"/></svg>',
+  tours:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4.5" width="6" height="6" rx="1.3"/><rect x="14.5" y="4.5" width="6" height="6" rx="1.3"/><rect x="3.5" y="14.5" width="6" height="6" rx="1.3"/><rect x="14.5" y="14.5" width="6" height="6" rx="1.3"/></svg>'
+};
+const MODES=[['scan','Scan'],['search','Recherche'],['tours','Tournées']];
+function renderNav(){nav.innerHTML=MODES.map(([k,l])=>`<button class="${mode===k?'on':''}" onclick="setMode('${k}')">${ICONS[k]}<span>${l}</span></button>`).join('');}
 function setMode(m){mode=m;renderNav();render();}
 window.setMode=setMode;
 
@@ -975,11 +344,6 @@ function inWeekendWindow(){
   const d=new Date(),day=d.getDay(),hour=d.getHours();
   return (day===5&&hour>=18)||day===6;
 }
-function tourWeekendStatus(t){
-  if(t.jours.includes('M + VM'))return 'mixte';
-  if(t.jours.includes('Vendredi'))return 'actif';
-  return 'termine';
-}
 function weekendBannerHTML(){
   if(!inWeekendWindow())return '';
   const sat=new Date().getDay()===6;
@@ -987,138 +351,6 @@ function weekendBannerHTML(){
     ?"Semaine clôturée : toutes les tournées (M et VM) sont terminées. Reprise et mise à jour des tournées lundi matin."
     :"Les tournées <b>M</b> (4501M→4505M, Pithiviers) sont terminées depuis jeudi soir. Seule <b>4507VM</b> (centre-ville) roule encore ce soir.";
   return `<div class="wkbar">🔄 <b>${sat?'Mode week-end':'Mode vendredi soir'}</b> — ${msg}</div>`;
-}
-function tourStatusBadge(t){
-  if(!inWeekendWindow())return '';
-  const st=tourWeekendStatus(t);
-  const map={actif:['EN COURS','#2F8F5B'],mixte:['PARTIELLE','#C29A00'],termine:['TERMINÉE JEUDI','#B03060']};
-  const [label,color]=map[st];
-  return `<span class="tstat" style="background:${color}">${label}</span>`;
-}
-
-/* ============ FICHES ============ */
-function tselHTML(sel,cb,withAll){
-  const wk=inWeekendWindow();
-  let h='<div class="tsel">';
-  if(withAll)h+=`<button style="border-color:#221E2B;${sel==='ALL'?'background:#221E2B':''}" class="${sel==='ALL'?'on':''}" onclick="${cb}('ALL')">TOUTES<small>7 tournées</small></button>`;
-  h+=curT().map((t,i)=>{const on=(sel===i||sel===t.id);
-    const st=wk?tourWeekendStatus(t):null;
-    const dim=st==='termine'?'opacity:.55;':'';
-    const wkCol={actif:'#2F8F5B',mixte:'#C29A00',termine:'#B03060'};
-    const statusSmall=wk?`<small style="color:${on?'rgba(255,255,255,.9)':wkCol[st]}">${st==='actif'?'● active':st==='mixte'?'● partielle':'● terminée'}</small>`:'';
-    return `<button style="border-color:${t.c};${on?'background:'+t.c:''}${dim}" class="${on?'on':''}" onclick="${cb}(${withAll?`'${t.id}'`:i})">${t.id}<small>${t.communes.length} communes</small>${statusSmall}</button>`;}).join('');
-  return h+'</div>';
-}
-function renderFiches(){
-  const t=curT()[selT];
-  let h=tselHTML(selT,'pickT',false);
-  h+=`<div class="pouch" style="border-color:${t.c}">
-    <div class="tour-head"><div class="num">${t.id}</div><div class="jours">${t.jours}${tourStatusBadge(t)}</div></div>`;
-  t.communes.forEach(c=>{
-    h+=`<div class="band">${esc(c.n)}</div><ul class="clients">${c.cl.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`;
-  });
-  h+='</div>';
-  app.innerHTML=h;
-}
-window.pickT=i=>{selT=i;render();window.scrollTo({top:0});};
-
-/* ============ FLASHCARDS ============ */
-function buildDeck(){
-  const pool=[];
-  curT().forEach(t=>{if(fcFilter!=='ALL'&&t.id!==fcFilter)return;
-    t.communes.forEach(c=>pool.push({t,c}));});
-  for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
-  deck=pool;deckIdx=0;deckOk=0;deckRedo=[];flipped=false;
-}
-window.fcPick=id=>{fcFilter=id;buildDeck();render();};
-window.fcFlip=()=>{flipped=!flipped;document.getElementById('fcard').classList.toggle('flip',flipped);};
-window.fcMark=ok=>{if(ok)deckOk++;else deckRedo.push(deck[deckIdx]);deckIdx++;flipped=false;render();};
-window.fcRedo=()=>{deck=deckRedo;deckRedo=[];deckIdx=0;deckOk=0;flipped=false;render();};
-window.fcRestart=()=>{buildDeck();render();};
-
-function renderFlash(){
-  if(!deck.length&&deckIdx===0)buildDeck();
-  let h=tselHTML(fcFilter,'fcPick',true);
-  if(deckIdx>=deck.length){
-    h+=`<div class="result"><div class="big">${deckOk} / ${deck.length}</div>
-      <p>communes maîtrisées${deckRedo.length?` · ${deckRedo.length} à revoir`:' · série terminée 💪'}</p>
-      ${deckRedo.length?`<button class="q-next" onclick="fcRedo()">Revoir les ${deckRedo.length} ratées</button><div style="height:8px"></div>`:''}
-      <button class="q-next" style="background:#221E2B" onclick="fcRestart()">Nouvelle série</button></div>`;
-    app.innerHTML=h;return;
-  }
-  const {t,c}=deck[deckIdx];
-  h+=`<div class="fc-meta"><span>Carte ${deckIdx+1} / ${deck.length}</span><span>✔ ${deckOk} · à revoir ${deckRedo.length}</span></div>
-  <div class="fc-zone"><div class="fcard ${flipped?'flip':''}" id="fcard" onclick="fcFlip()">
-    <div class="face"><div class="center">
-      ${chip(t)}
-      <div class="fc-commune">${esc(c.n)}</div>
-      <div class="fc-count">${c.cl.length} client${c.cl.length>1?'s':''} à retrouver</div>
-      <div class="fc-hint">Touche la carte pour révéler</div>
-    </div></div>
-    <div class="face back">
-      <div class="band">${esc(c.n)} — ${t.id}</div>
-      <ul class="clients">${c.cl.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
-    </div>
-  </div></div>
-  <div class="fc-controls">
-    <button class="b-ko" onclick="fcMark(false)">✗ À revoir</button>
-    <button class="b-ok" onclick="fcMark(true)">✓ Je savais</button>
-  </div>`;
-  app.innerHTML=h;
-}
-
-/* ============ QUIZ ============ */
-function uniqueClients(){
-  const map={};
-  curT().forEach(t=>t.communes.forEach(c=>c.cl.forEach(x=>{(map[x]=map[x]||[]).push({t,c});})));
-  return Object.entries(map).filter(([,v])=>v.length===1).map(([k,v])=>({cl:k,...v[0]}));
-}
-function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-function buildQuiz(){
-  const uc=uniqueClients(), allCommunes=[];curT().forEach(t=>t.communes.forEach(c=>allCommunes.push({t,c})));
-  quiz=[];qIdx=0;qScore=0;qAnswered=false;
-  const pool1=shuffle([...uc]).slice(0,5);   // client -> commune
-  pool1.forEach(u=>{
-    const wrong=shuffle(allCommunes.filter(x=>x.c.n!==u.c.n)).slice(0,3).map(x=>x.c.n);
-    quiz.push({q:`Dans quelle commune livre-t-on <b>${esc(u.cl)}</b> ?`,opts:shuffle([u.c.n,...wrong]),ans:u.c.n});
-  });
-  const pool2=shuffle([...allCommunes]).slice(0,5); // commune -> tournée
-  pool2.forEach(x=>{
-    const wrong=shuffle(curT().filter(t=>t.id!==x.t.id)).slice(0,3).map(t=>t.id);
-    quiz.push({q:`Sur quelle tournée se trouve <b>${esc(x.c.n)}</b> ?`,opts:shuffle([x.t.id,...wrong]),ans:x.t.id});
-  });
-  shuffle(quiz);
-}
-window.qAnswer=(el,opt)=>{
-  if(qAnswered)return;qAnswered=true;
-  const good=quiz[qIdx].ans;
-  if(opt===good)qScore++;
-  document.querySelectorAll('.opts button').forEach(b=>{
-    if(b.dataset.v===good)b.classList.add('good');
-    else if(b===el)b.classList.add('bad');
-  });
-  document.getElementById('qnext').style.display='block';
-};
-window.qNext=()=>{qIdx++;qAnswered=false;render();};
-window.qRestart=()=>{buildQuiz();render();};
-
-function renderQuiz(){
-  if(!quiz.length)buildQuiz();
-  if(qIdx>=quiz.length){
-    const pct=Math.round(qScore/quiz.length*100);
-    app.innerHTML=`<div class="result"><div class="big">${qScore} / ${quiz.length}</div>
-      <p>${pct>=80?'Solide, tu connais tes tournées 🔥':pct>=50?'Pas mal, encore un tour et c\'est acquis':'Repasse par les flashcards puis reviens'}</p>
-      <button class="q-next" onclick="qRestart()">Rejouer (10 nouvelles questions)</button></div>`;
-    return;
-  }
-  const q=quiz[qIdx];
-  app.innerHTML=`<div class="score-line">Score : ${qScore} ✔</div>
-  <div class="q-card">
-    <div class="q-num">Question ${qIdx+1} / ${quiz.length}</div>
-    <div class="q-text">${q.q}</div>
-    <div class="opts">${q.opts.map(o=>`<button data-v="${esc(o)}" onclick="qAnswer(this,'${o.replace(/'/g,"\\'")}')">${esc(o)}</button>`).join('')}</div>
-    <button class="q-next" id="qnext" style="display:none" onclick="qNext()">Question suivante →</button>
-  </div>`;
 }
 
 /* ============ RECHERCHE ============ */
@@ -1129,7 +361,7 @@ window.doSearch=v=>{
   const hits=[];
   curT().forEach(t=>t.communes.forEach(c=>{
     if(c.n.toLowerCase().includes(s))hits.push({t,c,cl:'— toute la commune —'});
-    c.cl.forEach(x=>{if(x.toLowerCase().includes(s))hits.push({t,c,cl:x});});
+    c.cl.forEach(x=>{if(x.nom.toLowerCase().includes(s))hits.push({t,c,cl:x.nom});});
   }));
   box.innerHTML=hits.length?hits.slice(0,40).map(h=>`<div class="hit">
     <div><div class="cl">${esc(h.cl)}</div><div class="loc">${esc(h.c.n)}</div></div>${chip(h.t)}
@@ -1137,55 +369,53 @@ window.doSearch=v=>{
 };
 function renderSearch(){
   app.innerHTML=`<h2 class="sec">Où va ce colis ?</h2>
-  <div class="hintbar">Ultra utile au taf : tape le nom du client sur l'étiquette → commune + tournée directement.</div>
+  <p class="hint-text">Ultra utile au taf : tape le nom du client sur l'étiquette → commune + tournée directement.</p>
   <div class="search"><input type="text" placeholder="Ex : Fenwick, Logilec, Gien, Nocibé…" oninput="doSearch(this.value)" autocomplete="off"></div>
   <div id="hits"><div class="empty">Tape au moins 2 lettres (client ou commune).</div></div>`;
 }
 
-/* ============ LOGIQUE (carte mentale) ============ */
-window.goFiche=i=>{selT=i;setMode('fiches');};
-function renderLogic(){
-  if(selDepot!=='ORLEANS'){
-    app.innerHTML=`<h2 class="sec">Logique</h2>
-    <div class="hintbar">La boussole des tournées est une vue pédagogique dessinée à la main, disponible uniquement pour le dépôt Orléans. Pour ${esc(curDepot().label)}, utilise les onglets Fiches ou Recherche.</div>`;
-    return;
-  }
-  const N=(i,x,y,dir)=>`<button class="cnode" style="left:${x}%;top:${y}%;background:${T_ORLEANS[i].c}" onclick="goFiche(${i})">${T_ORLEANS[i].id}<small>${dir}</small></button>`;
-  app.innerHTML=`
-  <h2 class="sec">L'horloge des tournées</h2>
-  <div class="hintbar">Tout tourne autour d'Orléans : 1 tournée = 1 secteur / 1 axe routier. Touche un secteur pour ouvrir sa fiche.</div>
-  <div class="compass">
-    <div class="ring"></div>
-    ${N(0,50,10,'Nord proche')}
-    ${N(5,82,26,'NE · Gâtinais')}
-    ${N(2,90,52,'Est · Loire')}
-    ${N(1,50,90,'Sud proche')}
-    ${N(4,10,52,'Ouest · Beaugency')}
-    ${N(3,18,26,'NO · Beauce 28')}
-    ${N(6,50,50,'Centre-ville')}
-  </div>
-
-  <h2 class="sec">Les 7 axes</h2>
-  <div class="axe"><span class="dir" style="color:${T_ORLEANS[0].c}">4501M · Nord proche —</span> la première couronne du dépôt : Fleury-les-Aubrais, Saran, Ormes, St Jean de Braye. Zones commerciales et industrielles.</div>
-  <div class="axe"><span class="dir" style="color:${T_ORLEANS[1].c}">4502M · Sud proche —</span> rive sud de la Loire : Olivet, La Source, St Jean le Blanc, St Pryvé, St Cyr… et descend en Sologne jusqu'à La Ferté St Aubin.</div>
-  <div class="axe"><span class="dir" style="color:${T_ORLEANS[2].c}">4503M · Est, vallée de la Loire —</span> un couloir le long du fleuve : Chécy → St Denis de l'Hôtel → Châteauneuf → Ouzouer → Gien. Repère : les packs bancaires de centre-bourg.</div>
-  <div class="axe"><span class="dir" style="color:${T_ORLEANS[3].c}">4504M · Nord-Ouest, la Beauce —</span> la longue distance vers le 28 : Artenay, Toury, Janville, Chartres, Châteaudun, Brou. Repère : presque tout est en (28) ou (41).</div>
-  <div class="axe"><span class="dir" style="color:${T_ORLEANS[4].c}">4505M · Ouest —</span> sortie ouest (St Jean de la Ruelle, Ingré, La Chapelle St Mesmin) puis l'axe Beaugency : Baule, Tavers, Cléry… et remonte dans le 41 (Oucques, Moisy).</div>
-  <div class="axe"><span class="dir" style="color:${T_ORLEANS[5].c}">Pithiviers · Nord-Est, le Gâtinais —</span> Neuville-aux-Bois, Pithiviers, Puiseaux, Sermaises. Beaucoup de techniciens SAV en campagne.</div>
-  <div class="axe"><span class="dir" style="color:${T_ORLEANS[6].c}">4507VM · Le centre de l'horloge —</span> hyper-centre d'Orléans uniquement. Seule tournée VM (jusqu'au vendredi soir) : banques, cabinets médicaux, opticiens — la zone la plus dense en pros.</div>
-
-  <h2 class="sec">Réflexes face à un colis</h2>
-  <div class="reflex"><b>Marque de machines + nom de personne</b> (Fenwick, Still, Jung, Kone, AGCO, Claas…) = <b>technicien SAV</b> livré à domicile. C'est pour ça que des petits villages (Moisy, Nibelle, Coulmiers…) sont sur les feuilles — 1 village = 1 technicien, souvent unique. Ces noms sont les meilleurs indices pour retrouver la tournée.</div>
-  <div class="reflex"><b>Pack bancaire</b> (BP, CE, CM, CIC, LCL, SG…) = <b>centre-bourg</b>. Gien, Châteauneuf, Chécy et Pithiviers ont quasiment le même pack. Si Martroi / Place d'Arc apparaît → 4507VM centre-ville.</div>
-  <div class="reflex"><b>CW / Nemo / Poilane + enseigne</b> (Leclerc, Intermarché, Super U, Carrefour…) = <b>grande surface</b> en zone commerciale. CW Intermarché existe presque partout : ce client seul ne suffit jamais, regarde la commune.</div>
-  <div class="reflex"><b>Suffixe des tournées</b> : M = du lundi soir au jeudi soir · VM = jusqu'au vendredi soir. Le numéro de département sur la feuille (28, 41, 45) te dit direct si on sort du Loiret.</div>`;
+/* ============ TOURNÉES ============ */
+function renderTournees(){
+  if(tourView==='detail'&&selTourId){renderTourDetail();return;}
+  const list=curT();
+  app.innerHTML=`<h2 class="sec">Tournées — ${esc(curDepot().label)}</h2>
+  <div class="tour-list">${list.map(t=>`
+    <button class="tour-card" onclick="openTour('${t.id}')">
+      <span class="tour-dot" style="background:${t.c}"></span>
+      <span class="tour-card-main">
+        <span class="tour-card-id">${esc(t.id)}</span>
+        <span class="tour-card-meta">${esc(t.jours||'')}</span>
+      </span>
+      <span class="tour-card-count">${t.communes.length} communes</span>
+    </button>`).join('')}
+  </div>`;
+}
+window.openTour=id=>{selTourId=id;tourView='detail';render();window.scrollTo({top:0});};
+window.backToTours=()=>{tourView='list';selTourId=null;render();window.scrollTo({top:0});};
+function renderTourDetail(){
+  const t=curT().find(x=>x.id===selTourId);
+  if(!t){tourView='list';renderTournees();return;}
+  let h=`<button class="back-btn" onclick="backToTours()">← Tournées</button>
+  <div class="tour-head-card" style="border-color:${t.c}">
+    <div class="tour-head-id" style="color:${t.c}">${esc(t.id)}</div>
+    <div class="tour-head-days">${esc(t.jours||'')}</div>
+  </div>`;
+  t.communes.forEach(c=>{
+    h+=`<div class="commune-block">
+      <div class="commune-title">${esc(c.n)}</div>
+      <div class="client-list">${c.cl.map(x=>`<div class="client-row">${esc(x.nom)}</div>`).join('')}</div>
+    </div>`;
+  });
+  app.innerHTML=h;
 }
 
 /* ============ SCAN ÉTIQUETTE (OCR local, open-source Tesseract.js — pas de clé API, pas de photo envoyée à un serveur) ============ */
 function renderScan(){
   app.innerHTML=`<h2 class="sec">Scanner une étiquette</h2>
-  <div class="hintbar">Cadre bien le <b>nom du destinataire</b> (+ la ville si visible). La lecture se fait directement dans le téléphone (OCR gratuit, aucune clé API), puis elle est matchée avec ta base. Spécial piège « Orléans » : c'est le client qui décide la tournée.</div>
-  <label class="scan-btn">📷 Prendre l'étiquette en photo
+  <p class="hint-text">Cadre bien le <b>nom du destinataire</b> (+ la ville si visible).</p>
+  <label class="scan-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-2h6l2 2h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13" r="3.2"/></svg>
+    Prendre l'étiquette en photo
     <small>ou choisir une photo existante</small>
     <input type="file" accept="image/*" capture="environment" style="display:none" onchange="scanImg(this)">
   </label>
@@ -1201,7 +431,7 @@ window.scanImg=async inp=>{
     const res=matchEntry(text);
     showVerdict(res,url);
   }catch(e){
-    out.innerHTML=`<img class="preview" src="${url}"><div class="hintbar" style="margin-top:12px;background:#FBE7E5;border-color:#D5342B;color:#8F1F18">
+    out.innerHTML=`<img class="preview" src="${url}"><div class="alert-box" style="margin-top:12px;background:var(--red-soft);color:#8F241C">
       Échec de la lecture (${esc(String(e.message||e))}). Réessaie avec une photo plus nette et bien cadrée, ou tape le nom du client dans l'onglet Recherche.</div>`;
   }
   inp.value='';
@@ -1220,7 +450,7 @@ async function runOCR(file){
   return data.text||'';
 }
 function normTxt(s){
-  return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/[^A-Z0-9]+/g,' ').trim();
+  return (s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toUpperCase().replace(/[^A-Z0-9]+/g,' ').trim();
 }
 function stripParens(s){return (s||'').replace(/\([^)]*\)/g,' ');}
 function levenshtein(a,b){
@@ -1236,7 +466,7 @@ function flatEntries(){
   const arr=[];
   curT().forEach(t=>t.communes.forEach(c=>{
     arr.push({label:c.n,type:'commune',t,c});
-    c.cl.forEach(cl=>arr.push({label:cl,type:'client',t,c}));
+    c.cl.forEach(cl=>arr.push({label:cl.nom,alias:cl.alias||[],type:'client',t,c,client:cl}));
   }));
   return arr;
 }
@@ -1261,8 +491,15 @@ function scoreEntries(list,ocrWords){
   // en cas de score identique, on privilégie l'étiquette la plus longue/spécifique (plus d'évidence qu'un simple sigle générique)
   // les suffixes entre parenthèses ("(28)", "(centre-ville)"...) sont des repères internes à la base,
   // pas du texte qui apparaît tel quel sur une étiquette réelle : on les ignore pour le score.
-  return list.map(e=>{const {score,weight}=scoreLabel(normTxt(stripParens(e.label)).split(' '),ocrWords);return {e,score,weight};})
-    .sort((a,b)=>(b.score-a.score)||(b.weight-a.weight));
+  // on score aussi contre les alias appris (corrections précédentes) et on garde le meilleur score.
+  return list.map(e=>{
+    let best={score:0,weight:0};
+    [e.label,...(e.alias||[])].forEach(variant=>{
+      const r=scoreLabel(normTxt(stripParens(variant)).split(' '),ocrWords);
+      if(r.score>best.score)best=r;
+    });
+    return {e,score:best.score,weight:best.weight};
+  }).sort((a,b)=>(b.score-a.score)||(b.weight-a.weight));
 }
 function matchEntry(rawText){
   const lu=rawText.replace(/\s+/g,' ').trim().slice(0,140);
@@ -1303,20 +540,23 @@ function matchEntry(rawText){
     :alt.length?"Plusieurs correspondances possibles, vérifie la ville sur l'étiquette.":'';
   return {lu,client,commune:communeName,tournee,confiance,alternatives:alt,note};
 }
+let lastRawText='';
 function showVerdict(v,url){
+  lastRawText=v.lu||'';
   const out=document.getElementById('scan-out');
   const t=curT().find(x=>x.id===v.tournee);
   if(!t){
     out.innerHTML=`<img class="preview" src="${url}">
-    <div class="verdict"><div class="v-tour" style="background:#6E6879">INTROUVABLE<small>pas de correspondance</small></div>
+    <div class="verdict"><div class="v-tour" style="background:var(--grey-soft)">INTROUVABLE<small>pas de correspondance</small></div>
     <div class="v-body">
       <div class="v-row"><b>Lu</b> ${esc(v.lu||'—')}</div>
       <div class="v-row"><b>Note</b> ${esc(v.note||'Vérifie manuellement dans Recherche.')}</div>
-    </div></div>`;
+    </div></div>
+    <button class="linkbtn" style="margin-top:10px" onclick="openCorrect()">❌ Corriger — c'est un client connu</button>`;
     return;
   }
   out.innerHTML=`<img class="preview" src="${url}">
-  <div class="verdict" style="border-color:${t.c}">
+  <div class="verdict">
     <div class="v-tour" style="background:${t.c}">${t.id}<small>${esc(v.commune||'')}</small></div>
     <div class="v-body">
       <div class="v-row"><b>Client</b> ${esc(v.client||'—')}</div>
@@ -1325,23 +565,85 @@ function showVerdict(v,url){
       ${v.alternatives&&v.alternatives.length?`<div class="v-row"><b>Sinon</b> ${v.alternatives.map(esc).join(' · ')}</div>`:''}
       ${v.note?`<div class="v-row"><b>Note</b> ${esc(v.note)}</div>`:''}
     </div>
+  </div>
+  <button class="linkbtn" style="margin-top:10px" onclick="openCorrect()">❌ Ce n'est pas le bon client — corriger</button>`;
+}
+
+/* ============ CORRECTION (apprentissage) ============ */
+window.openCorrect=function(){
+  const rawText=lastRawText;
+  const out=document.getElementById('scan-out');
+  if(document.getElementById('corrBox'))document.getElementById('corrBox').remove();
+  const box=document.createElement('div');
+  box.className='verdict';
+  box.id='corrBox';
+  box.style.marginTop='12px';
+  box.innerHTML=`<div class="v-body">
+    <div class="v-row" style="border:none;padding-bottom:4px"><b>Corriger vers</b></div>
+    <input id="corrInput" placeholder="Tape le vrai nom du client…" style="width:100%;padding:11px;border-radius:12px;border:1.5px solid var(--line);font-size:15px;margin-bottom:8px">
+    <div id="corrHits"></div>
   </div>`;
+  out.appendChild(box);
+  document.getElementById('corrInput').focus();
+  document.getElementById('corrInput').addEventListener('input',e=>{
+    const s=e.target.value.trim().toLowerCase();
+    const hitsEl=document.getElementById('corrHits');
+    if(s.length<2){hitsEl.innerHTML='';return;}
+    const hits=ENTRIES.filter(en=>en.type==='client'&&en.label.toLowerCase().includes(s)).slice(0,15);
+    hitsEl.innerHTML=hits.length?hits.map((h,i)=>`<div class="hit" style="cursor:pointer" data-i="${i}"><div><div class="cl">${esc(h.label)}</div><div class="loc">${esc(h.c.n)}</div></div>${chip(h.t)}</div>`).join(''):'<div class="empty">Aucun résultat.</div>';
+    hitsEl.querySelectorAll('.hit').forEach((el,i)=>el.onclick=()=>confirmCorrect(hits[i],rawText));
+  });
+};
+async function confirmCorrect(entry,rawText){
+  const box=document.getElementById('corrBox');
+  box.innerHTML='<div class="loading"><span class="spin"></span><br>Enregistrement…</div>';
+  try{
+    await saveAlias(entry,rawText);
+    const img=document.querySelector('#scan-out .preview');
+    showVerdict({lu:rawText,client:entry.client.nom,commune:entry.c.n,tournee:entry.t.id,confiance:'haute',alternatives:[],
+      note:"Corrigé — l'app reconnaîtra directement ce client la prochaine fois."}, img?img.src:'');
+  }catch(e){
+    box.innerHTML=`<div class="v-body"><div class="v-row" style="color:var(--red)">Échec de l'enregistrement : ${esc(String(e.message||e))}</div></div>`;
+  }
+}
+async function saveAlias(entry,rawText){
+  const alias=rawText.replace(/\s+/g,' ').trim().slice(0,140);
+  if(!alias)return;
+  const tRef=doc(fbDb,'depots',selDepot,'tournees',entry.t.id);
+  await runTransaction(fbDb, async(tx)=>{
+    const snap=await tx.get(tRef);
+    if(!snap.exists())throw new Error('tournée introuvable côté base');
+    const data=snap.data();
+    const communes=(data.communes||[]).map(c=>({...c,cl:(c.cl||[]).map(cl=>({...cl}))}));
+    const ci=communes.findIndex(c=>c.n===entry.c.n);
+    if(ci===-1)throw new Error('commune introuvable côté base');
+    const li=communes[ci].cl.findIndex(cl=>cl.nom===entry.client.nom);
+    if(li===-1)throw new Error('client introuvable côté base');
+    const curAlias=communes[ci].cl[li].alias||[];
+    if(!curAlias.includes(alias))communes[ci].cl[li].alias=[...curAlias,alias];
+    tx.update(tRef,{communes});
+  });
+  entry.client.alias=entry.client.alias||[];
+  if(!entry.client.alias.includes(alias))entry.client.alias.push(alias);
+  try{localStorage.setItem('depotsCache', JSON.stringify(DEPOTS));}catch(e){}
 }
 
 /* ============ RENDER ============ */
 function render(){
   if(mode==='scan')renderScan();
-  else if(mode==='fiches')renderFiches();
-  else if(mode==='logic')renderLogic();
-  else if(mode==='flash')renderFlash();
-  else if(mode==='quiz')renderQuiz();
+  else if(mode==='tours')renderTournees();
   else renderSearch();
   const b=weekendBannerHTML();
   if(b)app.insertAdjacentHTML('afterbegin',b);
 }
-rebuildIndex();
-renderDepotNav();
-renderNav();render();
+loadData().then(()=>{
+  rebuildIndex();
+  renderDepotNav();
+  renderNav();render();
+}).catch(e=>{
+  app.innerHTML=`<div class="alert-box" style="background:var(--red-soft);color:#8F241C">
+    Impossible de charger la base (data/data.json). ${esc(String(e.message||e))}</div>`;
+});
 </script>
 </body>
 </html>

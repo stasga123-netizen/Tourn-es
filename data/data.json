@@ -1,0 +1,4989 @@
+{
+  "depots": [
+    {
+      "id": "ORLEANS",
+      "label": "Orléans",
+      "tournees": [
+        {
+          "id": "4501M",
+          "jours": "Lundi soir → Jeudi soir",
+          "c": "#D5342B",
+          "communes": [
+            {
+              "n": "FLEURY LES AUBRAIS",
+              "cl": [
+                "CW Leclerc",
+                "CW Intermarché",
+                "EDF",
+                "Honda",
+                "JC Decaux",
+                "Logilec (ACC / RES / CONS)",
+                "Nemo Leclerc",
+                "Orange",
+                "Poilane Leclerc",
+                "Pain Belledone Leclerc",
+                "SNCF"
+              ]
+            },
+            {
+              "n": "ORLÉANS",
+              "cl": [
+                "CDC Hab Go",
+                "Labo Casgrens Lefort",
+                "MSA Beauce Cœur de Loire",
+                "PE Région Centre",
+                "SG DCR",
+                "SNCF"
+              ]
+            },
+            {
+              "n": "ORMES",
+              "cl": [
+                "Biofarmo",
+                "Logilec Drive",
+                "Quadrilaser",
+                "SG Gras Savoye 10H"
+              ]
+            },
+            {
+              "n": "SARAN",
+              "cl": [
+                "AI Accès Industrie",
+                "Carrefour",
+                "CW Intermarché",
+                "Ex Malakoff Humanis",
+                "Feu Vert Mag",
+                "Gen Opt",
+                "K Carrefour",
+                "Nemo Carrefour"
+              ]
+            },
+            {
+              "n": "ST JEAN DE BRAYE",
+              "cl": [
+                "AMAP MH",
+                "Laboratoire Dental Côme"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "4502M",
+          "jours": "Lundi soir → Jeudi soir",
+          "c": "#E07020",
+          "communes": [
+            {
+              "n": "LA FERTÉ ST AUBIN",
+              "cl": [
+                "Dr Becquet",
+                "Sagitta Phie de Sologne",
+                "Votre Épicerie Bio",
+                "Urban Bellanger",
+                "Urban Guynand"
+              ]
+            },
+            {
+              "n": "OLIVET",
+              "cl": [
+                "AG Palat",
+                "CHR Orléans",
+                "CIC",
+                "CW Leclerc",
+                "Darty Mag Int",
+                "Dr Dard",
+                "Enedis",
+                "Équip Jardin Stock",
+                "Groupama Siège",
+                "HD PP Équip Jardin",
+                "Honda Asphalte",
+                "Les Comptoirs de la Bio",
+                "Logilec (ACC / RES / CONS)",
+                "Malakoff Humanis",
+                "Nemo Leclerc",
+                "So Bio",
+                "Pap de Stock Pièce Auto",
+                "Poilane Leclerc",
+                "URSSAF"
+              ]
+            },
+            {
+              "n": "ORLÉANS (La Source / Sud)",
+              "cl": [
+                "Biz Aublive Kenny",
+                "BRGM",
+                "Ctr Dent Ramsey La Source",
+                "CHR Orléans La Source",
+                "CW U Express",
+                "Gen Opt Orléans Sud",
+                "Hob Rakoto Pierre Yves",
+                "Jung Dusonchet B",
+                "SG Loomis",
+                "Nemo Décathlon",
+                "HD AT Dupont 13H"
+              ]
+            },
+            {
+              "n": "ST CYR EN VAL",
+              "cl": [
+                "Dr Dias",
+                "ML St Cyr",
+                "Vitalaire"
+              ]
+            },
+            {
+              "n": "ST HILAIRE ST MESMIN",
+              "cl": [
+                "AGCO Gge Alluard",
+                "Urban Chaline"
+              ]
+            },
+            {
+              "n": "ST JEAN LE BLANC",
+              "cl": [
+                "CW Intermarché",
+                "Fenwick Pingot P",
+                "Poilane Intermarché",
+                "Jungheinrich Charbonnier",
+                "ELM Leblanc"
+              ]
+            },
+            {
+              "n": "ST PRYVÉ ST MESMIN",
+              "cl": [
+                "CW Super U",
+                "Équip Jardin",
+                "Fenwick Blanche A",
+                "HD PP Équip Jardin",
+                "CM St Pryvé"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "4503M",
+          "jours": "Lundi soir → Jeudi soir",
+          "c": "#2F8F5B",
+          "communes": [
+            {
+              "n": "ARRABLOY",
+              "cl": [
+                "Fenwick Essity OP FR"
+              ]
+            },
+            {
+              "n": "BONNÉE LES BORDES",
+              "cl": [
+                "CW Intermarché"
+              ]
+            },
+            {
+              "n": "BRAY ST AIGNAN",
+              "cl": [
+                "Still Villard J Paul"
+              ]
+            },
+            {
+              "n": "CHÂTEAUNEUF-SUR-LOIRE",
+              "cl": [
+                "BP",
+                "CE",
+                "CM",
+                "CW Super U",
+                "Dr Cerina / Hautefeuille",
+                "De Mary Olivier",
+                "Groupama",
+                "LCL",
+                "SG Les Halles",
+                "SG"
+              ]
+            },
+            {
+              "n": "CHÉCY",
+              "cl": [
+                "Biocoop",
+                "BP",
+                "CE",
+                "CIC Belle Rives",
+                "CM",
+                "CW Leclerc",
+                "Dr Wagner",
+                "Équip Jardin",
+                "Gen Opt",
+                "Logilec 45 ACC / RES",
+                "LOM / Écouter Voir",
+                "Nemo 45 Leclerc",
+                "Nocibé",
+                "SG"
+              ]
+            },
+            {
+              "n": "DAMPIERRE EN BURLY",
+              "cl": [
+                "Dr Mos Dampierre"
+              ]
+            },
+            {
+              "n": "FLEURY LES AUBRAIS",
+              "cl": [
+                "CIC"
+              ]
+            },
+            {
+              "n": "GIEN",
+              "cl": [
+                "BP",
+                "CE",
+                "CIC",
+                "LCL",
+                "CM",
+                "SG",
+                "Dr Benisti",
+                "Dr Mos Gien",
+                "Dr Villejean",
+                "Dr Pagbe Ndobo Pauline",
+                "Groupama",
+                "LOM / Écouter Voir",
+                "SAV Darty Box",
+                "SCM Pralem et Fiocre",
+                "T Da Costa",
+                "TSG Antenne de Gien"
+              ]
+            },
+            {
+              "n": "LORRIS",
+              "cl": [
+                "Intermarché",
+                "Nemo 45 Leclerc",
+                "Visual Optique"
+              ]
+            },
+            {
+              "n": "OUZOUER-SUR-LOIRE",
+              "cl": [
+                "CW Intermarché"
+              ]
+            },
+            {
+              "n": "ORLÉANS",
+              "cl": [
+                "Botanic"
+              ]
+            },
+            {
+              "n": "SANDILLON",
+              "cl": [
+                "CW Super U"
+              ]
+            },
+            {
+              "n": "ST BENOÎT-SUR-LOIRE",
+              "cl": [
+                "Centre Pièce Auto"
+              ]
+            },
+            {
+              "n": "ST GONDON",
+              "cl": [
+                "AGCO Étam 45"
+              ]
+            },
+            {
+              "n": "ST DENIS DE L'HÔTEL",
+              "cl": [
+                "DCW Avr Auto"
+              ]
+            },
+            {
+              "n": "ST PÈRE-SUR-LOIRE",
+              "cl": [
+                "CW Super U",
+                "Nemo 45 Sup",
+                "Speedy"
+              ]
+            },
+            {
+              "n": "VIENNE EN VAL",
+              "cl": [
+                "CW Intermarché"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "4504M",
+          "jours": "Lundi soir → Jeudi soir",
+          "c": "#B03060",
+          "communes": [
+            {
+              "n": "ARTENAY",
+              "cl": [
+                "AGCO Allezy 09H"
+              ]
+            },
+            {
+              "n": "BAZOCHES EN DUNOIS (28)",
+              "cl": [
+                "AGCO 28"
+              ]
+            },
+            {
+              "n": "BEAUCE LA ROMAINE (41)",
+              "cl": [
+                "AGCO 41"
+              ]
+            },
+            {
+              "n": "BROU (28)",
+              "cl": [
+                "Cab Dent Dr Monaco",
+                "Dex Legaigneur F",
+                "SG Les Halles"
+              ]
+            },
+            {
+              "n": "CERCOTTES",
+              "cl": [
+                "Still Bourgerolle J"
+              ]
+            },
+            {
+              "n": "CLOYES-SUR-LE-LOIR (28)",
+              "cl": [
+                "CW Intermarché"
+              ]
+            },
+            {
+              "n": "CHARTRES (28)",
+              "cl": [
+                "Labo Marais2A",
+                "Scael",
+                "Orange"
+              ]
+            },
+            {
+              "n": "CHÂTEAUDUN (28)",
+              "cl": [
+                "AGCO Delavallée",
+                "Cab Dent Dr Bazgu",
+                "CIC",
+                "CW Intermarché",
+                "CW Leclerc",
+                "Dentego",
+                "HD PP Ets Lemoult",
+                "Nemo Décathlon",
+                "Nemo Intermarché",
+                "Nemo Leclerc",
+                "Nocibé",
+                "SG",
+                "Logilec Accueil",
+                "Logilec Réserve",
+                "SNCF Gare"
+              ]
+            },
+            {
+              "n": "DROUÉ (41)",
+              "cl": [
+                "CL Depussay"
+              ]
+            },
+            {
+              "n": "CHEVILLY",
+              "cl": [
+                "Cab Dent Dr Moulis"
+              ]
+            },
+            {
+              "n": "INGRÉ",
+              "cl": [
+                "Miele Thomas"
+              ]
+            },
+            {
+              "n": "JANVILLE (28)",
+              "cl": [
+                "AGCO Ets Allezy"
+              ]
+            },
+            {
+              "n": "LA BAZOCHE GOUET (28)",
+              "cl": [
+                "CW Intermarché"
+              ]
+            },
+            {
+              "n": "LES VILLAGES VOVÉENS (28)",
+              "cl": [
+                "AGCO Durety SA",
+                "CW Intermarché",
+                "Poilane Intermarché",
+                "Nemo Intermarché",
+                "SNCF Gare"
+              ]
+            },
+            {
+              "n": "LA CHAPELLE DU NOYER (28)",
+              "cl": [
+                "CL Depussay"
+              ]
+            },
+            {
+              "n": "MIGNIÈRES (28)",
+              "cl": [
+                "Iron Mountain France"
+              ]
+            },
+            {
+              "n": "OUZOUER LE MARCHÉ",
+              "cl": [
+                "CW Intermarché"
+              ]
+            },
+            {
+              "n": "ST DENIS LES PONTS (28)",
+              "cl": [
+                "Gen Opt",
+                "Nemo Leclerc"
+              ]
+            },
+            {
+              "n": "ST PELLERIN (28)",
+              "cl": [
+                "SNCF Gare"
+              ]
+            },
+            {
+              "n": "TOURY (28)",
+              "cl": [
+                "Sagitta Phie"
+              ]
+            },
+            {
+              "n": "TERMINIERS",
+              "cl": [
+                "CL Depussay"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "4505M",
+          "jours": "Lundi soir → Jeudi soir",
+          "c": "#3E6FB5",
+          "communes": [
+            {
+              "n": "BACCON",
+              "cl": [
+                "Still Dubois Jordan"
+              ]
+            },
+            {
+              "n": "BAULE",
+              "cl": [
+                "CW Hyper U"
+              ]
+            },
+            {
+              "n": "BREVAINVILLE",
+              "cl": [
+                "Darty Falguier"
+              ]
+            },
+            {
+              "n": "CLÉRY ST ANDRÉ",
+              "cl": [
+                "CW Intermarché"
+              ]
+            },
+            {
+              "n": "COULMIERS",
+              "cl": [
+                "Still Dela Aurélien"
+              ]
+            },
+            {
+              "n": "VIEVY LE RAYÉ",
+              "cl": [
+                "Jung Delbarre G / Ecoman"
+              ]
+            },
+            {
+              "n": "ÉPIEDS EN BEAUCE",
+              "cl": [
+                "CSAV J Spirkovitch"
+              ]
+            },
+            {
+              "n": "INGRÉ",
+              "cl": [
+                "CM",
+                "Fenwick Ferreira O",
+                "Labodent",
+                "Miel Thomas"
+              ]
+            },
+            {
+              "n": "HUISSEAU SUR MAUVES",
+              "cl": [
+                "Jung Time N"
+              ]
+            },
+            {
+              "n": "LA CHAPELLE ST MESMIN",
+              "cl": [
+                "AI Accès Industrie",
+                "CIC",
+                "CW Intermarché",
+                "Urban Rabier Charles",
+                "Fenwick Philippeau L",
+                "Fenwick Chancerel F",
+                "Fenwick Le Goff T",
+                "TDC"
+              ]
+            },
+            {
+              "n": "MOISY",
+              "cl": [
+                "Still Kolacz D Coffre"
+              ]
+            },
+            {
+              "n": "ORLÉANS",
+              "cl": [
+                "CM Madeleine",
+                "CM Siège"
+              ]
+            },
+            {
+              "n": "ORMES",
+              "cl": [
+                "Kone 3367",
+                "Kone Boulard Cyril (dépôt Ormes)"
+              ]
+            },
+            {
+              "n": "OUCQUES",
+              "cl": [
+                "AGCO Ghestem"
+              ]
+            },
+            {
+              "n": "ST JEAN DE LA RUELLE",
+              "cl": [
+                "CE Siège",
+                "Gen Opt",
+                "LOM / Écouter Voir",
+                "Nemo 45 Auchan",
+                "Orkyn MJ",
+                "Somed",
+                "FCB Auchan Fujifilm"
+              ]
+            },
+            {
+              "n": "ST JEAN FROIDMENTEL",
+              "cl": [
+                "Jung Hacher CE"
+              ]
+            },
+            {
+              "n": "ST LAURENT NOUAN",
+              "cl": [
+                "CW Super U",
+                "La Folie en Vrac"
+              ]
+            },
+            {
+              "n": "TAVERS",
+              "cl": [
+                "Biomonde",
+                "CW Leclerc",
+                "Gen Opt",
+                "Logilec",
+                "Nemo Leclerc"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "PITHIVIERS",
+          "jours": "Secteur Pithiviers (M + VM)",
+          "c": "#C29A00",
+          "communes": [
+            {
+              "n": "NEUVILLE AUX BOIS",
+              "cl": [
+                "CW Super U",
+                "Kleber Malecot",
+                "Fenwick Goueffon C Sanchez",
+                "Nemo 45 Super U",
+                "Still Esnault M",
+                "Pro Archives Système"
+              ]
+            },
+            {
+              "n": "NIBELLE",
+              "cl": [
+                "Fenwick Santos C"
+              ]
+            },
+            {
+              "n": "REBRÉCHIEN",
+              "cl": [
+                "Hob Ladune F Caisson"
+              ]
+            },
+            {
+              "n": "SERMAISES",
+              "cl": [
+                "Kone Tanquerel Marc",
+                "Still Raffalli A"
+              ]
+            },
+            {
+              "n": "ST LOUP DES VIGNES",
+              "cl": [
+                "Fenwick Deschamps J"
+              ]
+            },
+            {
+              "n": "PITHIVIERS",
+              "cl": [
+                "CH",
+                "CIC",
+                "Claas Depussay",
+                "CPAM",
+                "CW Leclerc",
+                "Darty Mag Fra",
+                "FCB Hannequin Com",
+                "Fenwick Barre F",
+                "Gen Opt",
+                "Logilec (ACC / RES / CONS)",
+                "LOM / Écouter Voir",
+                "Nemo Décathlon",
+                "Nemo 45 Leclerc",
+                "ML Peter Chanu",
+                "So Bio",
+                "Dr Tudoran"
+              ]
+            },
+            {
+              "n": "PITHIVIERS LE VIEIL",
+              "cl": [
+                "AGCO 45 (MS 9H)",
+                "CW Intermarché",
+                "HP DD Loisir Services"
+              ]
+            },
+            {
+              "n": "PUISEAUX",
+              "cl": [
+                "T Da Costa"
+              ]
+            },
+            {
+              "n": "SARAN (VM)",
+              "cl": [
+                "GMF Assurance",
+                "Man Cichy Manut 45",
+                "Gen Opt"
+              ]
+            },
+            {
+              "n": "TERMINIERS (VM)",
+              "cl": [
+                "Claas Depussay"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "4507VM",
+          "jours": "Lundi soir → Vendredi soir",
+          "c": "#574083",
+          "communes": [
+            {
+              "n": "ORLÉANS (centre-ville)",
+              "cl": [
+                "BCP",
+                "Cab Dent Mut",
+                "Carpa",
+                "Docteur Malka Yonataine",
+                "CCF Martroi",
+                "CCF St Marceau",
+                "CIC Loiret Berry Entreprises",
+                "CIC Dauphine",
+                "CIC Martroi",
+                "Crystal Clinic",
+                "CMD Orléans",
+                "CW Intermarché Orléans",
+                "DCT Burg",
+                "Dentego",
+                "Dr Jamain Arnaud",
+                "Dr Nozerac",
+                "EO Dr Delavierre",
+                "Gen Opt Place d'Arc",
+                "Grand Op République",
+                "Groupama Ets",
+                "Harmonie Mutuelle (HM)",
+                "Images Photo",
+                "K Carrefour Place d'Arc",
+                "Laboratoire Thomas",
+                "LCL Martroi",
+                "Les Comptoirs de la Bio",
+                "LOM / Écouter Voir Bannier",
+                "LOM / Écouter Bourgogne",
+                "Macif Sud",
+                "Nocibé",
+                "PW Fnac MJS",
+                "SG Sogecap",
+                "Ramsey Centre"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CHARTRES",
+      "label": "Chartres",
+      "tournees": [
+        {
+          "id": "TR172845-2",
+          "jours": "LUNDI SOIR au VENDREDI SOIR",
+          "c": "#D5342B",
+          "communes": [
+            {
+              "n": "AUNEAU",
+              "cl": [
+                "ML ARCHAMBAULT AUNEAU",
+                "SG",
+                "KONE PIRES DA SILVA J"
+              ]
+            },
+            {
+              "n": "BAILLEAU",
+              "cl": [
+                "FENWICK LE FERS C FL"
+              ]
+            },
+            {
+              "n": "BONNEVAL",
+              "cl": [
+                "TSG BOX 24 TOKHEIM",
+                "TSG LECARPENTIER 28"
+              ]
+            },
+            {
+              "n": "BOUGLAINVAL",
+              "cl": [
+                "FENWICK EGLOFF Q"
+              ]
+            },
+            {
+              "n": "BULLAINVILLE",
+              "cl": [
+                "FENWICK CHAPRON S"
+              ]
+            },
+            {
+              "n": "DANGEAU",
+              "cl": [
+                "FENWICK BLAZE FRANCOIS"
+              ]
+            },
+            {
+              "n": "EPERNON",
+              "cl": [
+                "CIC"
+              ]
+            },
+            {
+              "n": "GALLARDON",
+              "cl": [
+                "LABORATOIRE LECLET",
+                "FENWICK MARTIN JG",
+                "KONE GUILLET T"
+              ]
+            },
+            {
+              "n": "GELLAINVILLE",
+              "cl": [
+                "FENWICK LINDE PARC INDUS"
+              ]
+            },
+            {
+              "n": "GIDY",
+              "cl": [
+                "JUNG BUGE DANIEL GIDY"
+              ]
+            },
+            {
+              "n": "SANCHEVILLE",
+              "cl": [
+                "AGCO"
+              ]
+            },
+            {
+              "n": "HANCHES",
+              "cl": [
+                "POILANE HYPER U"
+              ]
+            },
+            {
+              "n": "LUCE",
+              "cl": [
+                "STILL YILMAZ OKAN"
+              ]
+            },
+            {
+              "n": "MAINTENON",
+              "cl": [
+                "POILANE INTERMARCHE"
+              ]
+            },
+            {
+              "n": "MIGNIERES",
+              "cl": [
+                "FENWICK LE VAILLANT T FL"
+              ]
+            },
+            {
+              "n": "NOGENT LE ROI",
+              "cl": [
+                "DARTY F DECAYEUX",
+                "POILANE CARREFOUR MARKET",
+                "SG"
+              ]
+            },
+            {
+              "n": "SARAN",
+              "cl": [
+                "CSAV C BRUNEAU SARAN",
+                "FENWICK GALLIN FLORIAN SARAN",
+                "MIELE THOMAS 45",
+                "STILL SARAN 3",
+                "STILL BIDON CR BOULAY SARAN"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "TR172845",
+          "jours": "LUNDI SOIR au VENDREDI SOIR",
+          "c": "#E07020",
+          "communes": [
+            {
+              "n": "AUNEAU",
+              "cl": [
+                "BP",
+                "CA",
+                "CE",
+                "CM",
+                "GCM"
+              ]
+            },
+            {
+              "n": "BAZOCHES EN DUNOIS",
+              "cl": [
+                "ML PONTHIEU"
+              ]
+            },
+            {
+              "n": "CHATENAY",
+              "cl": [
+                "FENWICK MARTINET O CHATENAY"
+              ]
+            },
+            {
+              "n": "FONTENAY SUR EURE",
+              "cl": [
+                "C LOPES"
+              ]
+            },
+            {
+              "n": "FRANCOURVILLE",
+              "cl": [
+                "JUNG CHEVALIER B"
+              ]
+            },
+            {
+              "n": "GELLAINVILLE",
+              "cl": [
+                "CM ACCUEIL"
+              ]
+            },
+            {
+              "n": "MOUTIERS",
+              "cl": [
+                "JUNG BRUNO BRUNETTI"
+              ]
+            },
+            {
+              "n": "ORGERES EN BEAUCE",
+              "cl": [
+                "CA",
+                "CM"
+              ]
+            },
+            {
+              "n": "PATAY",
+              "cl": [
+                "CE",
+                "CM"
+              ]
+            },
+            {
+              "n": "SAINVILLE",
+              "cl": [
+                "CA"
+              ]
+            },
+            {
+              "n": "SOURS",
+              "cl": [
+                "CA"
+              ]
+            },
+            {
+              "n": "ST PERAVY LA COLOMBE",
+              "cl": [
+                "HOB PAILLET"
+              ]
+            },
+            {
+              "n": "TOURNOISIS",
+              "cl": [
+                "AGCO PRO CULTURE"
+              ]
+            },
+            {
+              "n": "VOVES",
+              "cl": [
+                "CA",
+                "CE",
+                "CM",
+                "GCM"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "DREUX25M",
+          "jours": "MARDI MATIN au VENDREDI MATIN",
+          "c": "#2F8F5B",
+          "communes": [
+            {
+              "n": "ANET",
+              "cl": [
+                "CIC",
+                "CW ESPACE CULT LECLERC",
+                "CW LECLERC",
+                "ECHO NATURE",
+                "NEMO 28 LECLERC",
+                "LOGILEC ACCEUIL"
+              ]
+            },
+            {
+              "n": "BOULLAY THIERRY",
+              "cl": [
+                "CSAV S SEVILLE"
+              ]
+            },
+            {
+              "n": "BROUE",
+              "cl": [
+                "AGCO ETS GAUTIER"
+              ]
+            },
+            {
+              "n": "CHAMPHOL",
+              "cl": [
+                "CW INTERMARHE"
+              ]
+            },
+            {
+              "n": "CHARTRES",
+              "cl": [
+                "DARTY",
+                "EVERIAL",
+                "FLAGRANCE",
+                "S AUBERT 28 CHARTRES"
+              ]
+            },
+            {
+              "n": "CHERISY",
+              "cl": [
+                "CW INTERMARCHE",
+                "HD TM ESP MTC"
+              ]
+            },
+            {
+              "n": "CRECY COUVE",
+              "cl": [
+                "S SEVILLE 28"
+              ]
+            },
+            {
+              "n": "DREUX",
+              "cl": [
+                "AB HOUD DJAMEL",
+                "AD",
+                "BIOCOOP LES CORALINES",
+                "CIC",
+                "CW LECLERC",
+                "DARTY",
+                "DENTEGO",
+                "GEN OPT",
+                "K CARREFOUR DREUX",
+                "KONE BOX DREUX",
+                "LABORATOIRE APEX",
+                "LOM (VISAUDIO + VYV CARE)",
+                "NEMO DECATHLON",
+                "NOCIBE",
+                "SG",
+                "GARE SNCF",
+                "LABORATOIRE SMILE DENTAIRE",
+                "DR AKTAS",
+                "LOGILEC RESERVE",
+                "LOGILEC PICK UP",
+                "LOGILEC ACCEUIL"
+              ]
+            },
+            {
+              "n": "GALLARDON",
+              "cl": [
+                "POILANE CARREFOUR"
+              ]
+            },
+            {
+              "n": "GELLAINVILLE",
+              "cl": [
+                "MERCER EDIX"
+              ]
+            },
+            {
+              "n": "GOUSSAINVILLE",
+              "cl": [
+                "JUNG CORBEL PL"
+              ]
+            },
+            {
+              "n": "HANCHES",
+              "cl": [
+                "CW SUPER U",
+                "NEMO SUPER U"
+              ]
+            },
+            {
+              "n": "HOUDAN",
+              "cl": [
+                "BP",
+                "DR MARECHAL",
+                "ESCALE BIO"
+              ]
+            },
+            {
+              "n": "LAONS",
+              "cl": [
+                "ML BINET LAONS"
+              ]
+            },
+            {
+              "n": "LEVES",
+              "cl": [
+                "DR MONTOYA",
+                "DOC FOND DALIGRE M THERESE",
+                "JC DECAUX"
+              ]
+            },
+            {
+              "n": "LURAY",
+              "cl": [
+                "FENWICK HADDAJI RAMSY LURAY"
+              ]
+            },
+            {
+              "n": "MAINTENON",
+              "cl": [
+                "SNCF GARE",
+                "CW INTERMARCHE 28 MAINTENON"
+              ]
+            },
+            {
+              "n": "MAINVILLIERS",
+              "cl": [
+                "STILL DUMEUR P"
+              ]
+            },
+            {
+              "n": "MARVILLE LES BOIS",
+              "cl": [
+                "KONE DOUGLAS TRICA"
+              ]
+            },
+            {
+              "n": "MORANCEZ",
+              "cl": [
+                "CW INTERMARCHE"
+              ]
+            },
+            {
+              "n": "SOURS",
+              "cl": [
+                "CW COCCINELLE SOURS"
+              ]
+            },
+            {
+              "n": "ST LUBIN LES JONCHERETS",
+              "cl": [
+                "CW LECLERC"
+              ]
+            },
+            {
+              "n": "ST REMY SUR AVRE",
+              "cl": [
+                "ESPACE DENTAIRE DE L'AVRE"
+              ]
+            },
+            {
+              "n": "TREMBLAY LES VILLAGES",
+              "cl": [
+                "DR ROMPIERRE",
+                "JUNG LEROY T"
+              ]
+            },
+            {
+              "n": "VERNOUILLET",
+              "cl": [
+                "AD PIECES VALUES",
+                "CENTRE DES ARCHIVES",
+                "AGCO",
+                "CW HYPER U",
+                "DOY PARC AUTO PLUS",
+                "GEN OPT",
+                "NEMO 28 SUPER U",
+                "SAMA",
+                "SYMBIO Z"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "DREUX6M",
+          "jours": "VENDREDI SOIR",
+          "c": "#B03060",
+          "communes": [
+            {
+              "n": "ANET",
+              "cl": [
+                "CIC"
+              ]
+            },
+            {
+              "n": "BROUE",
+              "cl": [
+                "AGCO ETS GAUTIER"
+              ]
+            },
+            {
+              "n": "CRECY COUVE",
+              "cl": [
+                "S SEVILLE 28"
+              ]
+            },
+            {
+              "n": "CHARTRES",
+              "cl": [
+                "S AUBERT 28 CHARTRES"
+              ]
+            },
+            {
+              "n": "CHERISY",
+              "cl": [
+                "HD TM ESP MTC"
+              ]
+            },
+            {
+              "n": "DREUX",
+              "cl": [
+                "AD",
+                "AVERY BERKEL HOUD 119",
+                "BIOCOOP LES CORALINES",
+                "CIC",
+                "DENTEGO",
+                "DR AKARKACH",
+                "GEN OPT",
+                "KONE BOX DREUX",
+                "LABORATOIRE APEX",
+                "SG",
+                "LOM (VISAUDIO + VYV CARE)",
+                "NEMO DECATHLON"
+              ]
+            },
+            {
+              "n": "HOUDAN",
+              "cl": [
+                "DR MARECHAL",
+                "BP HOUDAN"
+              ]
+            },
+            {
+              "n": "IVRY LA BATAILLE",
+              "cl": [
+                "EHPAD LA VERTE COLLINE"
+              ]
+            },
+            {
+              "n": "LEVES",
+              "cl": [
+                "DR MONTOYA",
+                "JC DECAUX"
+              ]
+            },
+            {
+              "n": "LUCE",
+              "cl": [
+                "GEN OPT",
+                "LOM (VISAUDIO + VYV CARE)"
+              ]
+            },
+            {
+              "n": "LUISANT",
+              "cl": [
+                "BARRAULT",
+                "CIC"
+              ]
+            },
+            {
+              "n": "MAULETTE",
+              "cl": [
+                "DR STANCIU"
+              ]
+            },
+            {
+              "n": "MARVILLE LES BOIS",
+              "cl": [
+                "KONE DOUGLAS TRICA"
+              ]
+            },
+            {
+              "n": "NOGENT LE ROI",
+              "cl": [
+                "CARREFOUR MARKET POILANE",
+                "SG"
+              ]
+            },
+            {
+              "n": "TREMBLAY LES VILLAGES",
+              "cl": [
+                "DR RONDEPIERRE"
+              ]
+            },
+            {
+              "n": "VERNOUILLET",
+              "cl": [
+                "AGCO SAMA",
+                "DOY PARC AUTO PLUS",
+                "ETS SAMA",
+                "GEN OPT",
+                "SAMA VERNOUILLET",
+                "SYMBIO Z"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "DREUX15S",
+          "jours": "LUNDI SOIR au VENDREDI SOIR",
+          "c": "#3E6FB5",
+          "communes": [
+            {
+              "n": "ANET",
+              "cl": [
+                "BP",
+                "CA",
+                "CE"
+              ]
+            },
+            {
+              "n": "BU",
+              "cl": [
+                "CA"
+              ]
+            },
+            {
+              "n": "CHERISY",
+              "cl": [
+                "CA"
+              ]
+            },
+            {
+              "n": "DREUX",
+              "cl": [
+                "BP",
+                "BNP",
+                "CA",
+                "CA CENTRE D AFFAIRES",
+                "CE DREUX CENTRE",
+                "CE LES BATES",
+                "CM",
+                "GCM",
+                "LCL"
+              ]
+            },
+            {
+              "n": "VERNOUILLET",
+              "cl": [
+                "CA",
+                "CA LES CORVEES",
+                "CE",
+                "CM"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "VERNEUIL15S",
+          "jours": "LUNDI SOIR au VENDREDI SOIR",
+          "c": "#C29A00",
+          "communes": [
+            {
+              "n": "BREZOLLES",
+              "cl": [
+                "CA",
+                "CM"
+              ]
+            },
+            {
+              "n": "CHATEAUNEUF EN THYMERAIS",
+              "cl": [
+                "CA",
+                "CE",
+                "CM",
+                "GCM"
+              ]
+            },
+            {
+              "n": "LA FERTE VIDAME",
+              "cl": [
+                "CA",
+                "PSA LA FERTE VIDAME"
+              ]
+            },
+            {
+              "n": "NONANCOURT",
+              "cl": [
+                "BNP"
+              ]
+            },
+            {
+              "n": "SENONCHES",
+              "cl": [
+                "BP",
+                "CA",
+                "CE",
+                "CM",
+                "GCM"
+              ]
+            },
+            {
+              "n": "ST REMY SUR AVRE",
+              "cl": [
+                "ESPACE DENTAIRE DE L'AVRE"
+              ]
+            },
+            {
+              "n": "ST LUBIN DES JONCHERETS",
+              "cl": [
+                "CA",
+                "CE",
+                "CM"
+              ]
+            },
+            {
+              "n": "VERNEUIL SUR AVRE",
+              "cl": [
+                "CM"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "BROU15S",
+          "jours": "LUNDI SOIR au VENDREDI SOIR",
+          "c": "#574083",
+          "communes": [
+            {
+              "n": "ARROU",
+              "cl": [
+                "CA",
+                "CM"
+              ]
+            },
+            {
+              "n": "AUTHON DU PERCHE",
+              "cl": [
+                "CA",
+                "CM"
+              ]
+            },
+            {
+              "n": "BAILLEAU LE PIN",
+              "cl": [
+                "CA",
+                "CM"
+              ]
+            },
+            {
+              "n": "BARJOUVILLE",
+              "cl": [
+                "BP"
+              ]
+            },
+            {
+              "n": "BONNEVAL",
+              "cl": [
+                "BP",
+                "CA",
+                "CE",
+                "CM",
+                "GCM"
+              ]
+            },
+            {
+              "n": "BROU",
+              "cl": [
+                "BP",
+                "CA",
+                "CE",
+                "CM",
+                "GCM"
+              ]
+            },
+            {
+              "n": "DAMMARIE",
+              "cl": [
+                "CA"
+              ]
+            },
+            {
+              "n": "ILLIERS COMBRAY",
+              "cl": [
+                "CA",
+                "CE",
+                "CM"
+              ]
+            },
+            {
+              "n": "LA BAZOCHE GOUET",
+              "cl": [
+                "CA"
+              ]
+            },
+            {
+              "n": "LUIGNY",
+              "cl": [
+                "PRO ARCHIVES SYSTEME"
+              ]
+            },
+            {
+              "n": "THIVARS",
+              "cl": [
+                "CA"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "RAMBOUILLET15S",
+          "jours": "LUNDI SOIR au VENDREDI SOIR",
+          "c": "#1F8A8C",
+          "communes": [
+            {
+              "n": "EPERNON",
+              "cl": [
+                "BNP",
+                "BP",
+                "CA",
+                "CE",
+                "CM"
+              ]
+            },
+            {
+              "n": "GALLARDON",
+              "cl": [
+                "CA",
+                "CE",
+                "CM"
+              ]
+            },
+            {
+              "n": "MAINTENON",
+              "cl": [
+                "BP",
+                "CA",
+                "CE",
+                "CM",
+                "GCM",
+                "LCL"
+              ]
+            },
+            {
+              "n": "NOGENT LE ROI",
+              "cl": [
+                "CA",
+                "CE",
+                "CM",
+                "GCM"
+              ]
+            },
+            {
+              "n": "RAMBOUILLET",
+              "cl": [
+                "CM"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "CHARTRESEQ15S",
+          "jours": "LUNDI SOIR au VENDREDI SOIR",
+          "c": "#8E44AD",
+          "communes": [
+            {
+              "n": "CHARTRES",
+              "cl": [
+                "BDF CHARTRES",
+                "BP CHARTRES MADELEINE",
+                "BP EURE ET LOIR ENTREPRISES",
+                "CA CHARTRES LA MADELEINE",
+                "CA CHARTRES LES 3 PONTS",
+                "CAF EURE ET LOIR CHARTRES",
+                "CE CA MULTI MARCHES 28",
+                "CE CHARTRES CENTRE",
+                "CE CHARTRES LES PETITS CLOS",
+                "CE CHARTRES MADELEINE",
+                "CM CHARTRES MADELEINE",
+                "COGEDIS FIDEOR CHARTRES",
+                "CPAM EURE ET LOIR CHARTRES",
+                "DOC HOPITAUX CHARTRES",
+                "L PHOX CHARTRES STUDIO MARTINO",
+                "SG CHARTRES LA MADELEINE",
+                "URSSAF"
+              ]
+            },
+            {
+              "n": "LUCE",
+              "cl": [
+                "BP",
+                "CA",
+                "CE",
+                "CIC",
+                "CM",
+                "GCM",
+                "MGEN SD LUCE",
+                "SG CHARTRES LA MADELEINE"
+              ]
+            },
+            {
+              "n": "LUISANT",
+              "cl": [
+                "CA",
+                "CE",
+                "CIC",
+                "CM"
+              ]
+            },
+            {
+              "n": "MAINVILLIERS",
+              "cl": [
+                "CA",
+                "CE",
+                "CM"
+              ]
+            },
+            {
+              "n": "LEVES",
+              "cl": [
+                "CA",
+                "CE",
+                "CM"
+              ]
+            },
+            {
+              "n": "CHAMPHOL",
+              "cl": [
+                "CA"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "REMALARD15S",
+          "jours": "LUNDI SOIR au VENDREDI SOIR",
+          "c": "#B5651D",
+          "communes": [
+            {
+              "n": "COURVILLE SUR EURE",
+              "cl": [
+                "CA",
+                "CE",
+                "CM",
+                "GCM"
+              ]
+            },
+            {
+              "n": "LA LOUPE",
+              "cl": [
+                "BP",
+                "CA",
+                "CE",
+                "CM",
+                "GCM"
+              ]
+            },
+            {
+              "n": "LE THEIL SUR HUISNE",
+              "cl": [
+                "CE"
+              ]
+            },
+            {
+              "n": "LUCE",
+              "cl": [
+                "CE LUCE OUEST"
+              ]
+            },
+            {
+              "n": "NOGENT LE ROTROU",
+              "cl": [
+                "BP",
+                "BNP",
+                "CA",
+                "CA LES GAUCHETIERES",
+                "CE CENTRE",
+                "CM",
+                "GCM",
+                "LCL"
+              ]
+            },
+            {
+              "n": "REMALARD",
+              "cl": [
+                "CM",
+                "GCM"
+              ]
+            },
+            {
+              "n": "ST GEORGES SUR EURE",
+              "cl": [
+                "CA"
+              ]
+            },
+            {
+              "n": "THIRON GARDAIS",
+              "cl": [
+                "CA"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "AG2R15M",
+          "jours": "LUNDI SOIR au VENDREDI SOIR",
+          "c": "#2C6E49",
+          "communes": [
+            {
+              "n": "CHARTRES",
+              "cl": [
+                "CA SIEGE",
+                "CRCAM",
+                "FRAGRANCE",
+                "EVERIAL EDMONT POILLOT"
+              ]
+            },
+            {
+              "n": "GELLAINVILLE",
+              "cl": [
+                "MERCER EDIX"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "NOGENT26M",
+          "jours": "MARDI MATIN au SAMEDI MATIN",
+          "c": "#A63446",
+          "communes": [
+            {
+              "n": "AUTHON DU PERCHE",
+              "cl": [
+                "JUNG SIMON R AUTHON DU PERCHE"
+              ]
+            },
+            {
+              "n": "BELHOMERT",
+              "cl": [
+                "AGCO AGRIFARM 28 BELHOMERT"
+              ]
+            },
+            {
+              "n": "BAILLEU LE PIN",
+              "cl": [
+                "VADERSTAD",
+                "CW INTERMARCHE"
+              ]
+            },
+            {
+              "n": "BERD HUIS",
+              "cl": [
+                "CAB DENT LAPERCHE BERD HUIS"
+              ]
+            },
+            {
+              "n": "BROU",
+              "cl": [
+                "CW INTERMARCHE",
+                "CW SUPER U",
+                "NEMO INTERMARCHE",
+                "NEMO SUPER U",
+                "POILANE INTERMARCHE"
+              ]
+            },
+            {
+              "n": "CHAMPROND EN GATINE",
+              "cl": [
+                "STILL GASSER KEVIN CHAMPROND"
+              ]
+            },
+            {
+              "n": "CHUISNES",
+              "cl": [
+                "FENWICK GIRARD YOAN CHUISNES"
+              ]
+            },
+            {
+              "n": "COULONGES MLES SABLONS 61",
+              "cl": [
+                "CLAAS DEPUSSAY SM3 61"
+              ]
+            },
+            {
+              "n": "COURVILLE/EURE",
+              "cl": [
+                "AGCO 28",
+                "AGCO GHESTEM AGRI 28",
+                "CW SUPER U",
+                "DOC FOYER DE VIE"
+              ]
+            },
+            {
+              "n": "FONTENAY SUR EURE",
+              "cl": [
+                "CSAV C CARDOSO",
+                "HONDA BIKEPARC"
+              ]
+            },
+            {
+              "n": "ILLIERS COMBRAY",
+              "cl": [
+                "CW INTERMARCHE",
+                "NEMO INTERMARCHE",
+                "SNCF GARE"
+              ]
+            },
+            {
+              "n": "LA BAZOCHE GOUET",
+              "cl": [
+                "CLAAS DEPUSSAY"
+              ]
+            },
+            {
+              "n": "LA LOUPE",
+              "cl": [
+                "NEMO INTERMARCHE LA LOUPE",
+                "CW INTERMARCHE LA LOUPE"
+              ]
+            },
+            {
+              "n": "LANCEY",
+              "cl": [
+                "JUNG LE GALL AURELIEN LANCEY"
+              ]
+            },
+            {
+              "n": "LE COUDRAY",
+              "cl": [
+                "FENWICK MALCUIT L LE COUDRAY"
+              ]
+            },
+            {
+              "n": "LUCE",
+              "cl": [
+                "CAB DENT DR HAMON FILLON",
+                "CIC"
+              ]
+            },
+            {
+              "n": "MAGNY",
+              "cl": [
+                "FENWICK GILLET JOEY MAGNY"
+              ]
+            },
+            {
+              "n": "MORANCEZ",
+              "cl": [
+                "KONE DEPOT MORANCEZ"
+              ]
+            },
+            {
+              "n": "NOGENT LE ROTROU",
+              "cl": [
+                "CIC",
+                "LOM/ECOUTE VOIR",
+                "LABO GEORGES ARNAUD",
+                "SG"
+              ]
+            },
+            {
+              "n": "REMALARD",
+              "cl": [
+                "DR VILLENEUVE"
+              ]
+            },
+            {
+              "n": "SENONCHES",
+              "cl": [
+                "CW INTERMARCHE",
+                "DR TILLET CHRISTIAN",
+                "NEMO 28 INTERMARCHE"
+              ]
+            },
+            {
+              "n": "ST DENIS D AUTHOU",
+              "cl": [
+                "AGCO AGRI 28 ST DENIS"
+              ]
+            },
+            {
+              "n": "ST GEORGES SUR EURE",
+              "cl": [
+                "CW INTERMARCHE"
+              ]
+            },
+            {
+              "n": "THIMERT GATELLES",
+              "cl": [
+                "AGCO 28 THIMERT GATELLES"
+              ]
+            },
+            {
+              "n": "THIRON GARDAIS",
+              "cl": [
+                "DR SIMON CHRISTIAN"
+              ]
+            },
+            {
+              "n": "YEVRES",
+              "cl": [
+                "AGCO ETS DELAVALLEE"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "CHARTRES1M",
+          "jours": "LUNDI MATIN - Dispatch vendredi soir",
+          "c": "#4A6FA5",
+          "communes": [
+            {
+              "n": "CHARTRES",
+              "cl": [
+                "CA SIEGE",
+                "CRCAM",
+                "EVERIAL CHARTRES",
+                "FRAGRANCE",
+                "KM KONIKA 28",
+                "MSA CHARTRES"
+              ]
+            },
+            {
+              "n": "DREUX",
+              "cl": [
+                "DARTY MAG INT"
+              ]
+            },
+            {
+              "n": "GELLAINVILLE",
+              "cl": [
+                "MERCER EDIX"
+              ]
+            },
+            {
+              "n": "HANCHES",
+              "cl": [
+                "CEWE SUPER U"
+              ]
+            },
+            {
+              "n": "LUCE",
+              "cl": [
+                "HARMONIE MUTUELLE (HM)"
+              ]
+            },
+            {
+              "n": "LUISANT",
+              "cl": [
+                "LCL BRINKS"
+              ]
+            },
+            {
+              "n": "MAINVILLIERS",
+              "cl": [
+                "KM FACTORA 28"
+              ]
+            },
+            {
+              "n": "VERNOUILLET",
+              "cl": [
+                "CEWE HYPER U"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "CHARTRESEQ25M",
+          "jours": "LUNDI SOIR au JEUDI SOIR",
+          "c": "#8C6A3F",
+          "communes": [
+            {
+              "n": "BARJOUVILLE",
+              "cl": [
+                "GEN OPT BARJOUVILLE",
+                "NEMO 28 LECLERC BARJOUVILLE",
+                "NOCIBE BARJOUVILLE",
+                "SO BIO BARJOUVILLE",
+                "LOGILEC ACCEUIL",
+                "LOGILEC LOCKER",
+                "CEWE LECLERC BARJOUVILLE"
+              ]
+            },
+            {
+              "n": "CHARTRES",
+              "cl": [
+                "BNPP CHARTRES",
+                "CA CHARTRES ESPACE PROJET",
+                "CA CHARTRES LE CYGNE",
+                "CA CHARTRES LES HALLES",
+                "CARREFOUR CHARTRES",
+                "CCF CHARTRES",
+                "CE CA MULTI MARCHES",
+                "CE CHARTRES CENTRE",
+                "CE CHARTRES TASSIGNY",
+                "CIC CHARTRES METROPOLE",
+                "CIC EURE ET LOIR ENTREPRISES",
+                "CM CHARTRES",
+                "COGEDIS FIDEOR CHARTRES",
+                "CW INTERMARCHE GORD",
+                "DENTEGO CHARTRES",
+                "EVERIAL CHARTRES",
+                "FEU VERT MAG CHARTRES",
+                "GCM SITE DE GESTION CHARTRES",
+                "GEN OPT CHARTRES",
+                "GEN OPT CHARTRES LA MADELEI",
+                "GRAND OP CHARTRES",
+                "K CARREFOUR CHARTRES",
+                "LABORATOIRE MARAIS 2A",
+                "LCL CHARTRES",
+                "MON MARCHE BIO CHARTRES",
+                "MONOPRIX CHARTRES",
+                "MSA CHARTRES",
+                "NATUREO CHARTRES",
+                "NOCIBE CHARTRES MONOPRIX",
+                "PW FNAC CHARTRES",
+                "RESTAURANT MOULIN DE PONCEAU",
+                "SAV DARTY CHARTRES",
+                "SG CHARTRES",
+                "SG CHARTRES LA MADELEINE",
+                "SNCF GARE CHARTRES"
+              ]
+            },
+            {
+              "n": "GELLAINVILLE",
+              "cl": [
+                "CL DEPUSSAY"
+              ]
+            },
+            {
+              "n": "LE COUDRAY",
+              "cl": [
+                "DOC HOPITAUX"
+              ]
+            },
+            {
+              "n": "LE VAL LUISANT",
+              "cl": [
+                "HD PP EQUIP 28 LE VAL LUISANT"
+              ]
+            },
+            {
+              "n": "LUCE",
+              "cl": [
+                "CIC LUCE",
+                "ECOUTER VOIR LUCE ME V",
+                "FEU VERT MAG LUCE",
+                "GEN OPT LUCE",
+                "HM LUCE"
+              ]
+            },
+            {
+              "n": "LUISANT",
+              "cl": [
+                "BARRAULT CHARTRES",
+                "CIC LUISANT",
+                "LCL BRINKS LUISANT"
+              ]
+            },
+            {
+              "n": "MAINVILLIERS",
+              "cl": [
+                "NEMO DECATHLON",
+                "CW INTERMARCHE"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "CHARTRESEQ6M",
+          "jours": "VENDREDI SOIR",
+          "c": "#5C7A29",
+          "communes": [
+            {
+              "n": "CHARTRES",
+              "cl": [
+                "BNPP",
+                "BP",
+                "CA ESPACE PROJET",
+                "CA CHARTRES LE CYGNE",
+                "CA CHARTRES LES HALLES",
+                "CA SIEGE CHARTRES",
+                "CCF CHARTRES",
+                "CE CA MULTI MARCHES 28",
+                "CE CHARTRES CENTRE",
+                "CE CHARTRES TASSIGNY",
+                "CM",
+                "CIC CHARTRES METROPOLE",
+                "CIC EURE ET LOIR ENTREPRISES",
+                "CRCAM VAL DE FRANCE",
+                "GCM SITE DE GESTION",
+                "GEN OPT CHARTRES LA MADELEI",
+                "GEN OPTIQUE",
+                "GRAND OPTICAL",
+                "LABORATOIRE MARAIS 2A",
+                "LCL",
+                "MONOPRIX",
+                "ORANGE (uniquement samedi)",
+                "PHOTO WEB FNAC",
+                "SAV DARTY",
+                "SCAEL",
+                "SG CHARTRES",
+                "SG CHARTRES LA MADELEINE"
+              ]
+            },
+            {
+              "n": "BARJOUVILLE",
+              "cl": [
+                "GEN OPT",
+                "SO BIO"
+              ]
+            },
+            {
+              "n": "LE VAL LUISANT",
+              "cl": [
+                "HD PP EQUIP 28 LE VAL LUISANT"
+              ]
+            },
+            {
+              "n": "LUISANT",
+              "cl": [
+                "BARRAULT CHARTRES",
+                "CIC"
+              ]
+            },
+            {
+              "n": "LUCE",
+              "cl": [
+                "ECOUTER VOIR LUCE ME V",
+                "GEN OPT LUCE",
+                "SG"
+              ]
+            },
+            {
+              "n": "MAINVILLIERS",
+              "cl": [
+                "NEMO"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MONTARGIS",
+      "label": "Montargis",
+      "tournees": [
+        {
+          "id": "TR174545",
+          "jours": "LUNDI SOIR au VENDREDI SOIR",
+          "c": "#D5342B",
+          "communes": [
+            {
+              "n": "BELLEGARDE",
+              "cl": [
+                "CE",
+                "HD PP LOISIR SERV",
+                "LABORATOIRE CHAVANEAU"
+              ]
+            },
+            {
+              "n": "BOISCOMMUN",
+              "cl": [
+                "WL WALLERAND MANULOC"
+              ]
+            },
+            {
+              "n": "CHAMPIGNELLES",
+              "cl": [
+                "DR BUISSON"
+              ]
+            },
+            {
+              "n": "CHATILLON COLIGNY",
+              "cl": [
+                "CE",
+                "DR DEBEAUVAIS",
+                "GROUPAMA",
+                "SG"
+              ]
+            },
+            {
+              "n": "LORRIS",
+              "cl": [
+                "CE",
+                "GROUPAMA",
+                "SG"
+              ]
+            },
+            {
+              "n": "NOGENT SUR VERNISSON",
+              "cl": [
+                "CE",
+                "DR ISNARD",
+                "KONE GROS P NOGENT"
+              ]
+            },
+            {
+              "n": "NOYERS",
+              "cl": [
+                "FENWICK AMAZZINI F PERE",
+                "FENWICK SEBASTIEN BRUN"
+              ]
+            },
+            {
+              "n": "QUIERS SUR BEZONDE",
+              "cl": [
+                "J LOPES"
+              ]
+            },
+            {
+              "n": "STE GENEVIEVE DES BOIS",
+              "cl": [
+                "JUNG DELHOUME T"
+              ]
+            },
+            {
+              "n": "VIMORY",
+              "cl": [
+                "FENWICK HEBRARD O"
+              ]
+            },
+            {
+              "n": "VILLEMOUTIERS",
+              "cl": [
+                "N ANDRE"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "COURTENAY1M",
+          "jours": "VENDREDI SOIR",
+          "c": "#E07020",
+          "communes": [
+            {
+              "n": "AMILLY",
+              "cl": [
+                "LECLERC",
+                "DARTY MAG",
+                "CEGEDIM AMILLY"
+              ]
+            },
+            {
+              "n": "CHÂTEAU RENARD",
+              "cl": [
+                "AGCO BOUCHER"
+              ]
+            },
+            {
+              "n": "CORBEILLES",
+              "cl": [
+                "AGCO"
+              ]
+            },
+            {
+              "n": "MONTARGIS",
+              "cl": [
+                "DR DRESCA",
+                "MNH SIEGE"
+              ]
+            },
+            {
+              "n": "LADON",
+              "cl": [
+                "AGCO HUGUENY"
+              ]
+            },
+            {
+              "n": "PREFONTAINES",
+              "cl": [
+                "VADERSTAD"
+              ]
+            },
+            {
+              "n": "PRESSIGNY LES PINS",
+              "cl": [
+                "AGCO"
+              ]
+            },
+            {
+              "n": "ST HILAIRE SUR PUISEAUX",
+              "cl": [
+                "VADERSTAD"
+              ]
+            },
+            {
+              "n": "VILLEMANDEUR",
+              "cl": [
+                "ORANGE"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "COURTENAY1S",
+          "jours": "VENDREDI SOIR",
+          "c": "#2F8F5B",
+          "communes": [
+            {
+              "n": "AMILLY",
+              "cl": [
+                "CEGEDIM AMILLY"
+              ]
+            },
+            {
+              "n": "MONTARGIS",
+              "cl": [
+                "BNP",
+                "CPAM",
+                "CARPA",
+                "DR DRESCA",
+                "VYV DENTAIRE MONTARGIS",
+                "PALATINE NEXITY"
+              ]
+            },
+            {
+              "n": "PITHIVIERS",
+              "cl": [
+                "MALT FRANCO BELGE"
+              ]
+            },
+            {
+              "n": "VILLEMANDEUR",
+              "cl": [
+                "BNP"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "COURTENAY25M",
+          "jours": "LUNDI SOIR au JEUDI SOIR",
+          "c": "#B03060",
+          "communes": [
+            {
+              "n": "AMILLY",
+              "cl": [
+                "BP",
+                "CE",
+                "CEGEDIM",
+                "CM",
+                "COUVOIR",
+                "SAV DARTY + MAG",
+                "FEU VERT",
+                "GEN OPT",
+                "CW LECLERC",
+                "KODAK L LECLERC",
+                "LECLERC",
+                "LOM (VISAUDIO + VYV CARE)",
+                "NATUREO",
+                "NEMO DECATHLON",
+                "NOCIBE",
+                "SG"
+              ]
+            },
+            {
+              "n": "CHALETTE SUR LOING",
+              "cl": [
+                "BP",
+                "CE",
+                "CE VESINES",
+                "CW SUPER U",
+                "HYPER CASINO",
+                "NEMO 45 SUPER U",
+                "OPTIQUE VISUAL"
+              ]
+            },
+            {
+              "n": "CHÂTEAU LANDON",
+              "cl": [
+                "LE BIO PAYSAN"
+              ]
+            },
+            {
+              "n": "CHÂTEAU RENARD",
+              "cl": [
+                "AGCO BOUCHER",
+                "CE",
+                "GROUPAMA",
+                "SG"
+              ]
+            },
+            {
+              "n": "CHATILLON COLIGNY",
+              "cl": [
+                "NEMO 45 SUPER U"
+              ]
+            },
+            {
+              "n": "COURTENAY",
+              "cl": [
+                "BP",
+                "CE",
+                "DR SAMAMA MAX",
+                "GROUPAMA",
+                "HD PP CHAPUS",
+                "SG"
+              ]
+            },
+            {
+              "n": "CORBEILLES",
+              "cl": [
+                "AGCO"
+              ]
+            },
+            {
+              "n": "DORDIVES",
+              "cl": [
+                "CE"
+              ]
+            },
+            {
+              "n": "DOUCHY",
+              "cl": [
+                "STILL SROKA DAVID  DOUCHY"
+              ]
+            },
+            {
+              "n": "FERRIERES EN GATINAIS",
+              "cl": [
+                "CE",
+                "KONE THORIS L",
+                "FENWICK PETROVSKI D"
+              ]
+            },
+            {
+              "n": "MONTARGIS",
+              "cl": [
+                "BP",
+                "CE MONTARGIS CHAUSSEE",
+                "CE MONTARGIS DOREE",
+                "CENTRE DE SANTE DENTAIRE 3D",
+                "CIC",
+                "CAB DENT MUT",
+                "CPAM",
+                "CM",
+                "DR DRESCA",
+                "DR NICA",
+                "DR STANA",
+                "EPICERIE EFFERVESCENCE",
+                "GROUPAMA",
+                "LCL MONTARGIS DOREE",
+                "LOM",
+                "MNH SIEGE",
+                "NEMO 45 LECLERC",
+                "SG"
+              ]
+            },
+            {
+              "n": "LADON",
+              "cl": [
+                "AGCO HUGUENY"
+              ]
+            },
+            {
+              "n": "PREFONTAINES",
+              "cl": [
+                "VADERSTAD"
+              ]
+            },
+            {
+              "n": "PRESSIGNY LES PINS",
+              "cl": [
+                "AGCO"
+              ]
+            },
+            {
+              "n": "ST HILAIRE SUR PUISEAUX",
+              "cl": [
+                "VADERSTAD"
+              ]
+            },
+            {
+              "n": "TRIGUERES",
+              "cl": [
+                "DR KIMPE"
+              ]
+            },
+            {
+              "n": "VILLEMANDEUR",
+              "cl": [
+                "CE",
+                "CW INTERMARCHE",
+                "EQUIP JARDIN",
+                "ORANGE"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "COURTENAY25S",
+          "jours": "LUNDI SOIR au JEUDI SOIR",
+          "c": "#3E6FB5",
+          "communes": [
+            {
+              "n": "BEAUNE LA ROLANDE",
+              "cl": [
+                "CW SUPER U"
+              ]
+            },
+            {
+              "n": "CHATILLON COLIGNY",
+              "cl": [
+                "CW SUPER U"
+              ]
+            },
+            {
+              "n": "CORBEILLES",
+              "cl": [
+                "CW INTERMARCHE"
+              ]
+            },
+            {
+              "n": "MONTARGIS",
+              "cl": [
+                "BNP",
+                "CARPA",
+                "CW FRANCE LOISIRS",
+                "DR DRESCA",
+                "NOCIBE",
+                "VYV DENTAIRE MONTARGIS",
+                "PALATINE NEXITY"
+              ]
+            },
+            {
+              "n": "PITHIVIERS",
+              "cl": [
+                "MALT FRANCO BELGE"
+              ]
+            },
+            {
+              "n": "PUISEAUX",
+              "cl": [
+                "CW INTERMARCHE"
+              ]
+            },
+            {
+              "n": "VILLEMANDEUR",
+              "cl": [
+                "BNP"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "COURTENAY6M",
+          "jours": "VENDREDI SOIR",
+          "c": "#C29A00",
+          "communes": [
+            {
+              "n": "AMILLY",
+              "cl": [
+                "CM",
+                "DARTY",
+                "GEN OPT",
+                "LOM",
+                "NEMO DECATHLON",
+                "SG"
+              ]
+            },
+            {
+              "n": "CHALETTE SUR LOING",
+              "cl": [
+                "OPTIQUE VISUAL"
+              ]
+            },
+            {
+              "n": "CHÂTEAU LANDON",
+              "cl": [
+                "LE BIO PAYSAN"
+              ]
+            },
+            {
+              "n": "CHÂTEAU RENARD",
+              "cl": [
+                "SG"
+              ]
+            },
+            {
+              "n": "COURTENAY",
+              "cl": [
+                "DR SAMANA MAX",
+                "HD PP CHAPUS",
+                "SG"
+              ]
+            },
+            {
+              "n": "DOUCHY",
+              "cl": [
+                "STILL SROKA DAVID DOUCHY"
+              ]
+            },
+            {
+              "n": "FERRIERES EN GATINAIS",
+              "cl": [
+                "KONE THORIS L",
+                "FENWICK PETROVSKI D"
+              ]
+            },
+            {
+              "n": "MONTARGIS",
+              "cl": [
+                "CABINET DENTAIRE MUTUALISTE",
+                "CENTRE DE SANTE DENTAIRE 3D",
+                "CIC",
+                "CM",
+                "DR NICA",
+                "DR STANA",
+                "EPICERIE EFFERVESCENCE",
+                "LOM (VISAUDIO + VYV CARE)",
+                "SG"
+              ]
+            },
+            {
+              "n": "TRIGUERES",
+              "cl": [
+                "DR KIMPE"
+              ]
+            },
+            {
+              "n": "VILLEMANDEUR",
+              "cl": [
+                "EQUIP JARDIN"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "COURTENAY6S",
+          "jours": "VENDREDI SOIR",
+          "c": "#574083",
+          "communes": [
+            {
+              "n": "BRIARE",
+              "cl": [
+                "GROUPAMA",
+                "LCL"
+              ]
+            },
+            {
+              "n": "CHÂTEAU RENARD",
+              "cl": [
+                "GROUPAMA"
+              ]
+            },
+            {
+              "n": "CHATILLON COLIGNY",
+              "cl": [
+                "GROUPAMA"
+              ]
+            },
+            {
+              "n": "COURTENAY",
+              "cl": [
+                "GROUPAMA"
+              ]
+            },
+            {
+              "n": "GIEN",
+              "cl": [
+                "GROUPAMA",
+                "LCL"
+              ]
+            },
+            {
+              "n": "LORRIS",
+              "cl": [
+                "GROUPAMA"
+              ]
+            },
+            {
+              "n": "MONTARGIS",
+              "cl": [
+                "GROUPAMA"
+              ]
+            },
+            {
+              "n": "SULLY / LOIRE",
+              "cl": [
+                "GROUPAMA",
+                "LCL"
+              ]
+            },
+            {
+              "n": "MONTARGIS DOREE",
+              "cl": [
+                "LCL"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "NIEVRE58",
+      "label": "Nièvre (58)",
+      "tournees": [
+        {
+          "id": "COSNE25M",
+          "jours": "LUNDI SOIR au JEUDI SOIR",
+          "c": "#D5342B",
+          "communes": [
+            {
+              "n": "ARGENT SUR SAULDRE",
+              "cl": [
+                "CW SUPER U",
+                "CCF"
+              ]
+            },
+            {
+              "n": "AUBIGNY SUR NERE",
+              "cl": [
+                "BP",
+                "CE",
+                "CW INTERMARCHE",
+                "DR LEVERNIEUX MATON",
+                "DRS JOLY/TELLIER",
+                "CCF",
+                "HD PP BERNARDON",
+                "K CARREFOUR MKT"
+              ]
+            },
+            {
+              "n": "BEAULIEU SUR LOIRE",
+              "cl": [
+                "AGCO BE AGRI"
+              ]
+            },
+            {
+              "n": "BLANCAFORT",
+              "cl": [
+                "JUNG GENET MAXIME"
+              ]
+            },
+            {
+              "n": "BONNY SURE LOIRE",
+              "cl": [
+                "NEMO 45 SUP U"
+              ]
+            },
+            {
+              "n": "BOULLERET",
+              "cl": [
+                "RESTAURANT L ARDOISE"
+              ]
+            },
+            {
+              "n": "BRIARE",
+              "cl": [
+                "CE",
+                "GROUPAMA",
+                "NEMO 45 SUPER U",
+                "SG"
+              ]
+            },
+            {
+              "n": "CERDON",
+              "cl": [
+                "FENWICK BOURMAULT F CERDON"
+              ]
+            },
+            {
+              "n": "CHATILLON SUR LOIRE",
+              "cl": [
+                "CE",
+                "DR GUESNARD"
+              ]
+            },
+            {
+              "n": "CIEZ",
+              "cl": [
+                "EUROTYRE"
+              ]
+            },
+            {
+              "n": "COSNE SUR LOIRE",
+              "cl": [
+                "AD",
+                "AUTO COMPTOIR DE LA NIEVRE",
+                "B SUCCES",
+                "BNP",
+                "BP",
+                "CABINET RADIOLOGIE COSNE",
+                "CE",
+                "CIC",
+                "CM",
+                "DOC CH",
+                "SUPER U",
+                "DR BUCHET FREGEAI",
+                "FCB AUCHAN",
+                "HD PP ALABEURTHE",
+                "K CARREFOUR MKT",
+                "LCL",
+                "LE PHOTOGRAPHE",
+                "LOM (VISAUDIO+VYV CARE)",
+                "NEMO 58 AUCHAN",
+                "NEMO 58 CARR MARKET",
+                "SG",
+                "SNCF GARE",
+                "DR GUERRIER"
+              ]
+            },
+            {
+              "n": "COULLONS",
+              "cl": [
+                "CW INTERMARCHE"
+              ]
+            },
+            {
+              "n": "DONZY",
+              "cl": [
+                "CW INTERMARCHE"
+              ]
+            },
+            {
+              "n": "GIEN",
+              "cl": [
+                "AUCHAN",
+                "B SUCCES CC AUCHAN",
+                "CPAM",
+                "CW LECLERC",
+                "LECLERC LOGILEC",
+                "EQUIP JARDIN GIEN",
+                "HP PP EQUIP JARDIN",
+                "NEMO 45 AUCHAN",
+                "POINT S"
+              ]
+            },
+            {
+              "n": "LA CHARITE SUR LOIRE",
+              "cl": [
+                "ETS COIGNET PNEUS",
+                "SNCF GARE"
+              ]
+            },
+            {
+              "n": "LERE",
+              "cl": [
+                "DR BERGERON"
+              ]
+            },
+            {
+              "n": "OIZON",
+              "cl": [
+                "AGCO ETS PAUTRAT"
+              ]
+            },
+            {
+              "n": "POILLY LEZ GIEN",
+              "cl": [
+                "CW INTERMARCHE"
+              ]
+            },
+            {
+              "n": "POUILLY SUR LOIRE",
+              "cl": [
+                "CAB DENTAIRE DR GENESTE"
+              ]
+            },
+            {
+              "n": "ST SATUR",
+              "cl": [
+                "CE",
+                "DR LUPU"
+              ]
+            },
+            {
+              "n": "VAILLY SUR SAULDRE",
+              "cl": [
+                "AGCO ETS DIDIER"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "COSNE6M",
+          "jours": "VENDREDI SOIR",
+          "c": "#E07020",
+          "communes": [
+            {
+              "n": "ARGENTON SUR SAULDRE",
+              "cl": [
+                "CCF"
+              ]
+            },
+            {
+              "n": "AUBIGNY SUR NERE",
+              "cl": [
+                "BP",
+                "CIC",
+                "DR JOLY",
+                "DR LEVERNIEUX",
+                "CCF",
+                "HD PP BERNARDON"
+              ]
+            },
+            {
+              "n": "BEAULIEU SUR LOIRE",
+              "cl": [
+                "AGCO BE AGRI"
+              ]
+            },
+            {
+              "n": "BRIARE",
+              "cl": [
+                "CIC",
+                "LCL",
+                "SG"
+              ]
+            },
+            {
+              "n": "CHATILLON SUR LOIRE",
+              "cl": [
+                "DR GUENARD CHARLES"
+              ]
+            },
+            {
+              "n": "COSNE SUR LOIRE",
+              "cl": [
+                "AD",
+                "AUTO COMPTOIR",
+                "BNP",
+                "BP",
+                "CE",
+                "CIC",
+                "CM",
+                "DR BUCHET FREGEAI",
+                "HD PP ALABEURTHE",
+                "LOM ECOUTER VOIR",
+                "SG",
+                "SNCF GARE"
+              ]
+            },
+            {
+              "n": "GIEN",
+              "cl": [
+                "AUCHAN",
+                "HP PP EQUIP JARDIN",
+                "LECLERC LOGILEC",
+                "POINT S"
+              ]
+            },
+            {
+              "n": "LA CHARITE SUR LOIRE",
+              "cl": [
+                "ETS COIGNET PNEUS"
+              ]
+            },
+            {
+              "n": "POUILLY SUR LOIRE",
+              "cl": [
+                "CAB DENTAIRE DR GENESTE"
+              ]
+            },
+            {
+              "n": "ST GONDON",
+              "cl": [
+                "AGCO ETAM"
+              ]
+            },
+            {
+              "n": "ST SATUR",
+              "cl": [
+                "DR LUPU"
+              ]
+            },
+            {
+              "n": "VAILLY SUR SAULDRE",
+              "cl": [
+                "AGCO ETS DIDIER"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "COSNE6S",
+          "jours": "VENDREDI SOIR",
+          "c": "#2F8F5B",
+          "communes": [
+            {
+              "n": "CLAMECY",
+              "cl": [
+                "LCL"
+              ]
+            },
+            {
+              "n": "CHÂTEAU CHINON",
+              "cl": [
+                "LCL"
+              ]
+            },
+            {
+              "n": "COSNE COURS SUR LOIRE",
+              "cl": [
+                "LCL"
+              ]
+            },
+            {
+              "n": "DECIZE",
+              "cl": [
+                "LCL"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "DECIZE25M",
+          "jours": "LUNDI SOIR au JEUDI SOIR",
+          "c": "#B03060",
+          "communes": [
+            {
+              "n": "AUNAY EN BAZOIS",
+              "cl": [
+                "SV PRO"
+              ]
+            },
+            {
+              "n": "BAZOLLES",
+              "cl": [
+                "AGCO"
+              ]
+            },
+            {
+              "n": "CERCY LA TOUR",
+              "cl": [
+                "CABINET PITTILLONI LAMARQUE",
+                "SNCF GARE"
+              ]
+            },
+            {
+              "n": "CORBIGNY",
+              "cl": [
+                "CL DEPUSSAY"
+              ]
+            },
+            {
+              "n": "COULANGE LES NEVERS",
+              "cl": [
+                "CW ESPACE CULTUREL LECL",
+                "NEMO 58 LECLERC",
+                "NATURA PAIN BELLEDONNE"
+              ]
+            },
+            {
+              "n": "DECIZE",
+              "cl": [
+                "BP",
+                "CM",
+                "CW LECLERC",
+                "CW INTERMARCHE",
+                "DR GERAUD COUDERT",
+                "DUMAS COLINOT",
+                "GENDARMERIE",
+                "LABORATOIRE COLLONGE",
+                "NEMO 58 LECLERC",
+                "SG",
+                "SNCF GARE"
+              ]
+            },
+            {
+              "n": "LA MACHINE",
+              "cl": [
+                "BP (TUBE)",
+                "CW INTERMARCHE"
+              ]
+            },
+            {
+              "n": "ST BENIN D'AZY",
+              "cl": [
+                "CW INTERMARCHE"
+              ]
+            },
+            {
+              "n": "MOULIN ENGILBERT",
+              "cl": [
+                "DR ISSARD",
+                "AGCO ETS BUCHEZ"
+              ]
+            },
+            {
+              "n": "NEVERS",
+              "cl": [
+                "BNP",
+                "BNP TRT",
+                "BP NEVERS REMPARTS",
+                "BP NEVERS VAL DES LOGES",
+                "CDM NEVERS COLBERT",
+                "CE NEVERS CARNOT",
+                "CE NEVERS MONTAPINS",
+                "CIC",
+                "CM NEVERS BOUQUILLARD",
+                "CM NEVERS CARNOT",
+                "DR MARQUES DOMINIQUE",
+                "DR ROMAIN BEAUGE",
+                "DR VELLAY",
+                "GP AUTO",
+                "LCL NEVERS COQUILLE",
+                "LOM",
+                "MONOPRIX",
+                "NEMO 58 INTERMARCHE",
+                "NUGER",
+                "SG",
+                "SG NEVERS GRANDS CHAMPS",
+                "SAV DARTY NEVERS/BT"
+              ]
+            },
+            {
+              "n": "SAUVIGNY LES BOIS",
+              "cl": [
+                "SV PRO"
+              ]
+            },
+            {
+              "n": "ST ELOI",
+              "cl": [
+                "CL DEPUSSAY"
+              ]
+            },
+            {
+              "n": "VARENNES VAUZELLES",
+              "cl": [
+                "EXPERT JARDIN"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "DECIZE6M",
+          "jours": "VENDREDI SOIR",
+          "c": "#3E6FB5",
+          "communes": [
+            {
+              "n": "AUNAY EN BAZOIS",
+              "cl": [
+                "SV PRO"
+              ]
+            },
+            {
+              "n": "BAZOLLES",
+              "cl": [
+                "AGCO"
+              ]
+            },
+            {
+              "n": "CERCY LA TOUR",
+              "cl": [
+                "CABINET PITTILLONI LAMARQUE"
+              ]
+            },
+            {
+              "n": "DECIZE",
+              "cl": [
+                "CM",
+                "DR GERAUD COUDERT",
+                "DUMAS COLINOT",
+                "GENDARMERIE",
+                "LABORATOIRE COLLONGE",
+                "SG"
+              ]
+            },
+            {
+              "n": "MOULINS ENGILBERT",
+              "cl": [
+                "DR ISSARD",
+                "AGCO ETS BUCHEZ"
+              ]
+            },
+            {
+              "n": "NEVERS",
+              "cl": [
+                "BIOCOOP",
+                "BNP",
+                "BNP TRT",
+                "BP NEVERS REMPARTS",
+                "BP NEVERS VAL DES LOGES",
+                "CM NEVERS BOUQUILLARD",
+                "CM NEVERS CARNOT",
+                "CDM NEVERS COLBERT",
+                "CCF",
+                "CE NEVERS CARNOT",
+                "CIC",
+                "DR MARQUES DOMINIQUE",
+                "DR ROMAIN BEAUGE",
+                "DR VELLAY",
+                "GP AUTO",
+                "LOM",
+                "MONOPRIX",
+                "NUGER",
+                "SG",
+                "SG NEVERS GRANDS CHAMPS",
+                "SAV DARTY NEVERS/BT"
+              ]
+            },
+            {
+              "n": "SAUVIGNY LES BOIS",
+              "cl": [
+                "SV PRO"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "DECIZE1S",
+          "jours": "VENDREDI SOIR",
+          "c": "#C29A00",
+          "communes": [
+            {
+              "n": "DECIZE",
+              "cl": [
+                "BP",
+                "CE",
+                "LABO COLLONGE"
+              ]
+            },
+            {
+              "n": "DONZY",
+              "cl": [
+                "BP"
+              ]
+            },
+            {
+              "n": "GUERIGNY",
+              "cl": [
+                "CE"
+              ]
+            },
+            {
+              "n": "IMPHY",
+              "cl": [
+                "CE"
+              ]
+            },
+            {
+              "n": "LA MACHINE",
+              "cl": [
+                "BP"
+              ]
+            },
+            {
+              "n": "ST BENIN D AZY",
+              "cl": [
+                "DR REMY THIEBOT",
+                "IDX DRS REROLLE ST BENIN DAZY"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "DECIZE25S",
+          "jours": "DU LUNDI SOIR AU JEUDI SOIR",
+          "c": "#574083",
+          "communes": [
+            {
+              "n": "CHÂTEAU CHINON",
+              "cl": [
+                "CENTRE HOSPITALIER"
+              ]
+            },
+            {
+              "n": "CLAMECY",
+              "cl": [
+                "CENTRE HOSPITALIER",
+                "GAMM VERT"
+              ]
+            },
+            {
+              "n": "DECIZE",
+              "cl": [
+                "BP",
+                "CE",
+                "LCL"
+              ]
+            },
+            {
+              "n": "DONZY",
+              "cl": [
+                "BP",
+                "GAMM VERT"
+              ]
+            },
+            {
+              "n": "GUERINY",
+              "cl": [
+                "CE"
+              ]
+            },
+            {
+              "n": "IMPHY",
+              "cl": [
+                "CE",
+                "CW INTERMARCHE",
+                "LCL"
+              ]
+            },
+            {
+              "n": "LA CHARITE SUR LOIRE",
+              "cl": [
+                "CENTRE HOSPITAL SPE P LOO",
+                "CENTRE HOSPITAL H DUNANT"
+              ]
+            },
+            {
+              "n": "LA MACHINE",
+              "cl": [
+                "BP"
+              ]
+            },
+            {
+              "n": "LORMES",
+              "cl": [
+                "CENTRE HOSPITALIER"
+              ]
+            },
+            {
+              "n": "PREMERY",
+              "cl": [
+                "GAMM VERT"
+              ]
+            },
+            {
+              "n": "ST AMAND EN PUISAY",
+              "cl": [
+                "BP"
+              ]
+            },
+            {
+              "n": "ST BENIN D'AZY",
+              "cl": [
+                "DR REMY"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "NEVERS1S",
+          "jours": "VENDREDI SOIR",
+          "c": "#1F8A8C",
+          "communes": [
+            {
+              "n": "NEVERS",
+              "cl": [
+                "CARPA",
+                "CAF",
+                "CIC",
+                "DOC CRE HOSPI LAGGL",
+                "MGEN"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "NEVERS25S",
+          "jours": "DU LUNDI SOIR AU JEUDI SOIR",
+          "c": "#8E44AD",
+          "communes": [
+            {
+              "n": "MARZY",
+              "cl": [
+                "CW WELCOM",
+                "K CARREFOUR"
+              ]
+            },
+            {
+              "n": "NEVERS",
+              "cl": [
+                "CAF",
+                "CARPA",
+                "CENTRE IMAGERIE MEDICALE",
+                "CENTRE IMAGERIE MEDICALE NEV2",
+                "CW WELCOM NEVERS COLBERT",
+                "DOC CTRE HOSPI LAGG",
+                "MGEN SD"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "NEVORL25S",
+          "jours": "DU LUNDI SOIR AU JEUDI SOIR",
+          "c": "#B5651D",
+          "communes": [
+            {
+              "n": "LA CHARITE SUR LOIRE",
+              "cl": [
+                "BNP",
+                "BP",
+                "CE",
+                "DR BARRIOL",
+                "CW INTER LA CHARITE"
+              ]
+            },
+            {
+              "n": "BRIARE",
+              "cl": [
+                "PAP SD NEGOCE 45 BRIARE"
+              ]
+            },
+            {
+              "n": "VARENNES VAUZELLES",
+              "cl": [
+                "AD",
+                "KLEBER VARENNES",
+                "STK TSG 58 VARENNES TOKHEIM",
+                "MAN ALLIANCE 58 VARENNES",
+                "STK KM 0041 VARENNES TOKHEIM",
+                "P IVARS"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "NEVERS6S",
+          "jours": "VENDREDI SOIR",
+          "c": "#2C6E49",
+          "communes": [
+            {
+              "n": "NEVERS",
+              "cl": [
+                "CIC",
+                "LCL NEVERS COQUILLE"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "NEVORL1S",
+          "jours": "DU VENDREDI SOIR",
+          "c": "#A63446",
+          "communes": [
+            {
+              "n": "BRIARE",
+              "cl": [
+                "PAP SD NEGOCE 45 BRIARE"
+              ]
+            },
+            {
+              "n": "LA CHARITE SUR LOIRE",
+              "cl": [
+                "BNP",
+                "BP",
+                "CE",
+                "DR BARRIOL"
+              ]
+            },
+            {
+              "n": "VARENNES VAUZELLES",
+              "cl": [
+                "AD",
+                "CCM",
+                "MAN ALLIANCE 58 VARENNES",
+                "STK KM 0041 VARENNES 58",
+                "STK TSG 58 VARENNES",
+                "KLEBER VARENNES",
+                "P IVARS"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "SANCOINS25M",
+          "jours": "LUNDI SOIR au JEUDI SOIR",
+          "c": "#4A6FA5",
+          "communes": [
+            {
+              "n": "BEFFES",
+              "cl": [
+                "NEMO PROXIMARCHE"
+              ]
+            },
+            {
+              "n": "CHALLUY",
+              "cl": [
+                "CE"
+              ]
+            },
+            {
+              "n": "CHANTENAY ST IMBERT",
+              "cl": [
+                "SARL RESSAT"
+              ]
+            },
+            {
+              "n": "CHATEAUNEUF VAL DE BARGIS",
+              "cl": [
+                "AGCO ST HUBERT"
+              ]
+            },
+            {
+              "n": "COULANGE LES NEVERS",
+              "cl": [
+                "CE"
+              ]
+            },
+            {
+              "n": "FOURCHAMBAULT",
+              "cl": [
+                "BP",
+                "CE",
+                "CW INTERMARCHE",
+                "LABORATOIRE MILLERIOUX"
+              ]
+            },
+            {
+              "n": "GARCHIZY",
+              "cl": [
+                "ENEDIS"
+              ]
+            },
+            {
+              "n": "GUERIGNY",
+              "cl": [
+                "CW INTERMARCHE GUERIGNY"
+              ]
+            },
+            {
+              "n": "LA GUERCHE / LAUBOIS",
+              "cl": [
+                "CE"
+              ]
+            },
+            {
+              "n": "MARZY",
+              "cl": [
+                "NEMO DECATHLON",
+                "DARTY MAG",
+                "MA JOLIE PHOTO"
+              ]
+            },
+            {
+              "n": "NERONDES",
+              "cl": [
+                "CW INTERMARCHE"
+              ]
+            },
+            {
+              "n": "NEVERS",
+              "cl": [
+                "AUDIOPROX",
+                "BDF",
+                "B SUCCES",
+                "BIOCOOP",
+                "CW INTERMARCHE",
+                "DR SPIEKERMANN",
+                "FCB CAMARA",
+                "GEN OPT",
+                "GROUPAMA",
+                "CCF",
+                "JC DECAUX",
+                "MSA",
+                "ORANGE",
+                "SNCF GARE"
+              ]
+            },
+            {
+              "n": "SAGONNE",
+              "cl": [
+                "AGCO ETS JOUHANNEAU",
+                "STILL VALDAN REMI SAGONNE"
+              ]
+            },
+            {
+              "n": "SANCAIZE MAUCE",
+              "cl": [
+                "SNCF GARE"
+              ]
+            },
+            {
+              "n": "SANCOINS",
+              "cl": [
+                "BP",
+                "DR LALIQUE"
+              ]
+            },
+            {
+              "n": "ST PIERRE LE MOUTIER",
+              "cl": [
+                "CE",
+                "DR KOEKELCOREN"
+              ]
+            },
+            {
+              "n": "VARENNES VAUZELLES",
+              "cl": [
+                "B SUCCES",
+                "BP",
+                "CE",
+                "CM",
+                "CW INTERMARCHE",
+                "EUROTYRE",
+                "HD PP EXPERT JARDIN",
+                "HD PP ALABEURTHE",
+                "KM COPIEFAX",
+                "SNCF GARE"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "SANCOINS6M",
+          "jours": "VENDREDI SOIR",
+          "c": "#8C6A3F",
+          "communes": [
+            {
+              "n": "FOURCHAMBAULT",
+              "cl": [
+                "BP",
+                "CE",
+                "LABORATOIRE MILLERIOUX"
+              ]
+            },
+            {
+              "n": "CHANTENAY ST IMBERT",
+              "cl": [
+                "RESAT"
+              ]
+            },
+            {
+              "n": "CHATEAUNEUF VAL DE BARGIS",
+              "cl": [
+                "AGCO ST HUBERT"
+              ]
+            },
+            {
+              "n": "NEVERS",
+              "cl": [
+                "JC DECAUX",
+                "KONE DEPOT NEVERS"
+              ]
+            },
+            {
+              "n": "SAGONNE",
+              "cl": [
+                "AGCO ETS JOUHANNEAU",
+                "STILL VALDAN REMI SAGONNE"
+              ]
+            },
+            {
+              "n": "SANCOINS",
+              "cl": [
+                "DR LALIQUE"
+              ]
+            },
+            {
+              "n": "ST PIERRE LE MOUTIER",
+              "cl": [
+                "DR KOEKELCOREN"
+              ]
+            },
+            {
+              "n": "VARENNES VAUZELLES",
+              "cl": [
+                "BP",
+                "CM",
+                "HD PP EXPERT JARDIN",
+                "HD PP ALABEURTHE"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "SANCOINS1M",
+          "jours": "DISPATCH DU VENDREDI SOIR",
+          "c": "#5C7A29",
+          "communes": [
+            {
+              "n": "CHÂTEAU CHINON",
+              "cl": [
+                "CENTRE HOSPITALIER"
+              ]
+            },
+            {
+              "n": "CHATEAUNEUF VAL DE BARGIS",
+              "cl": [
+                "AGCO ST HUBERT"
+              ]
+            },
+            {
+              "n": "CLAMECY",
+              "cl": [
+                "CENTRE HOSPITALIER"
+              ]
+            },
+            {
+              "n": "GARCHIZY",
+              "cl": [
+                "ENEDIS"
+              ]
+            },
+            {
+              "n": "LA CHARITE SUR LOIRE",
+              "cl": [
+                "CENTRE HOSPITALIER SPE P LOO",
+                "CENTRE HOSPITALIER H DUNANT"
+              ]
+            },
+            {
+              "n": "LORMES",
+              "cl": [
+                "CENTRE HOSPITALIER"
+              ]
+            },
+            {
+              "n": "MARZY",
+              "cl": [
+                "DARTY MAG"
+              ]
+            },
+            {
+              "n": "NEVERS",
+              "cl": [
+                "BDF",
+                "DR SPIEKERMANN",
+                "MSA",
+                "GROUPAMA",
+                "ORANGE"
+              ]
+            },
+            {
+              "n": "VARENNES VAUZELLES",
+              "cl": [
+                "EUROTYRE",
+                "KM COPIEFAX"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "VIERZON",
+      "label": "Cher (18)",
+      "tournees": [
+        {
+          "id": "FRET18VIERZON",
+          "jours": "LUNDI SOIR au VENDREDI SOIR (1845 SOIR)",
+          "c": "#D5342B",
+          "communes": [
+            {
+              "n": "ST AMAND MONTROND",
+              "cl": [
+                "AD",
+                "AGCO",
+                "CCF",
+                "LABORATOIRE FORT",
+                "CIC",
+                "LOM / ECOUTER VOIR",
+                "CM",
+                "NEMO INTERMARCHE",
+                "CW INTERMARCHE",
+                "CW LECLERC",
+                "PAP",
+                "DARTY MAG FRA MONTRO"
+              ]
+            },
+            {
+              "n": "BOURGES",
+              "cl": [
+                "DR GIRAUD",
+                "DR LAFON",
+                "DR RANGUIN",
+                "DRS JOUVENAUD",
+                "DENTEGO",
+                "HM",
+                "CAB DENT FORT MANUEL",
+                "CABINET DR LANGLOIS",
+                "CCF",
+                "KONE",
+                "CIC PLUS",
+                "CL TERRA",
+                "LOM / ECOUTER VOIR",
+                "CM AURON",
+                "CM LES MARRONNIERS",
+                "MONOPRIX",
+                "SAV DARTY BOX",
+                "STK TSG",
+                "DR BLANC"
+              ]
+            },
+            {
+              "n": "VIERZON",
+              "cl": [
+                "AD",
+                "CAB DENT DR ROMANOVA",
+                "CCF",
+                "CIC",
+                "LCL",
+                "LOM / ECOUTER VOIR",
+                "CM",
+                "NEMO INTERMARCHE",
+                "NOCIBE",
+                "CW INTERMARCHE",
+                "PAP GP AUTO 2R",
+                "PAP GP AUTO RODRIGUES",
+                "SNCF",
+                "DARTY MAG FRA",
+                "SNCF UO TRACTION"
+              ]
+            },
+            {
+              "n": "CHALIVOY MILON",
+              "cl": [
+                "AGCO"
+              ]
+            },
+            {
+              "n": "AINAY LE CHÂTEAU",
+              "cl": [
+                "DR LOREST",
+                "BP",
+                "DOC CTRE HOSP"
+              ]
+            },
+            {
+              "n": "HENRICHEMONT",
+              "cl": [
+                "AGCO",
+                "CL TERRA"
+              ]
+            },
+            {
+              "n": "MENETOU SALON",
+              "cl": [
+                "AGCO",
+                "FENWICK JAMET"
+              ]
+            },
+            {
+              "n": "ORVAL",
+              "cl": [
+                "AGCO",
+                "HD PP PAUGE"
+              ]
+            },
+            {
+              "n": "QUANTILLY",
+              "cl": [
+                "ELM MAILLE B"
+              ]
+            },
+            {
+              "n": "ROMORANTIN",
+              "cl": [
+                "EQUIP JARDIN",
+                "BIO LOGIC",
+                "GEN OPT",
+                "GRPA",
+                "CA",
+                "HD PP EQUIP JARDIN",
+                "CARREFOUR",
+                "LCL",
+                "CIC",
+                "LOGILEC BRICO ACC",
+                "LOGILEC SAV/ RES",
+                "MONOPRIX",
+                "CM",
+                "CPAM",
+                "NEMO DECATHLON",
+                "PAP",
+                "POLE MEDICAL",
+                "CW LECLERC",
+                "DARTY MAG FRA",
+                "DDFIP"
+              ]
+            },
+            {
+              "n": "ST GERMAIN DU PUY",
+              "cl": [
+                "AGCO",
+                "GEN OPT",
+                "HD PP EQUIP J"
+              ]
+            },
+            {
+              "n": "LINIEZ",
+              "cl": [
+                "AGCO"
+              ]
+            },
+            {
+              "n": "STE SOLANGE",
+              "cl": [
+                "FENWICK GUAY"
+              ]
+            },
+            {
+              "n": "NOHANT VIC",
+              "cl": [
+                "AGCO"
+              ]
+            },
+            {
+              "n": "VALENCAY",
+              "cl": [
+                "AGCO"
+              ]
+            },
+            {
+              "n": "ISSOUDUN",
+              "cl": [
+                "FLAURAUD EUROTYRE",
+                "CCF",
+                "KODAK LECLERC",
+                "NOCIBE",
+                "CW INTERMARCHE",
+                "CW LECLERC"
+              ]
+            },
+            {
+              "n": "MARAY",
+              "cl": [
+                "AGCO"
+              ]
+            },
+            {
+              "n": "LA CHATRE",
+              "cl": [
+                "FLAURAUD PROFIL",
+                "HD PP DENORMAN DELBAR",
+                "CCF",
+                "CW SUPER U"
+              ]
+            },
+            {
+              "n": "LUCAY",
+              "cl": [
+                "APRO"
+              ]
+            },
+            {
+              "n": "ST DOULCHARD",
+              "cl": [
+                "GEN OPT",
+                "NEMO DECATHLON"
+              ]
+            },
+            {
+              "n": "MENNETOU",
+              "cl": [
+                "CA"
+              ]
+            },
+            {
+              "n": "SALBRIS",
+              "cl": [
+                "GRPA",
+                "CA",
+                "JUNG GENET MAXIME",
+                "SFG MOREUX J"
+              ]
+            },
+            {
+              "n": "ST FLORENT SUR CHER",
+              "cl": [
+                "HD PP PONTONNIER",
+                "CW SUPER U"
+              ]
+            },
+            {
+              "n": "ALLOGNY",
+              "cl": [
+                "JUNG MONICAULT S"
+              ]
+            },
+            {
+              "n": "BERRY BOUY",
+              "cl": [
+                "LABORATOIRE MILLEDENT"
+              ]
+            },
+            {
+              "n": "LAMOTTE BEUVRON",
+              "cl": [
+                "CIC"
+              ]
+            },
+            {
+              "n": "LE CHATELET",
+              "cl": [
+                "NEMO SUPER U",
+                "CW SUPER U"
+              ]
+            },
+            {
+              "n": "ARCAY",
+              "cl": [
+                "CONFO MALHERBE"
+              ]
+            },
+            {
+              "n": "CHATEAUMEILLANT",
+              "cl": [
+                "CW INTERMARCHE"
+              ]
+            },
+            {
+              "n": "DUN SUR AURON",
+              "cl": [
+                "CW SUPER U"
+              ]
+            },
+            {
+              "n": "CHABRIS",
+              "cl": [
+                "NEMO SUPER U",
+                "CW SUPER U"
+              ]
+            },
+            {
+              "n": "CHARTRES",
+              "cl": [
+                "NEMO S/ CHER UTILE"
+              ]
+            },
+            {
+              "n": "MEHUN",
+              "cl": [
+                "CW INTERMARCHE"
+              ]
+            },
+            {
+              "n": "SELLES SUR CHER",
+              "cl": [
+                "NEMO SUPER U"
+              ]
+            },
+            {
+              "n": "AIGURANDE",
+              "cl": [
+                "CW INTERMARCHE"
+              ]
+            },
+            {
+              "n": "THAUMIERS",
+              "cl": [
+                "POILANE CHATEAU DE LA FORET"
+              ]
+            },
+            {
+              "n": "LE MAGNY",
+              "cl": [
+                "CW INTERMARCHE"
+              ]
+            },
+            {
+              "n": "PRUNIERS",
+              "cl": [
+                "CW DRIVE LECLERC",
+                "CW SUPER U"
+              ]
+            },
+            {
+              "n": "NOUAN LE FUZELIER",
+              "cl": [
+                "SFG ADENOT M"
+              ]
+            },
+            {
+              "n": "CHATEAUROUX",
+              "cl": [
+                "SGS",
+                "URSSAF"
+              ]
+            },
+            {
+              "n": "VASSELAY",
+              "cl": [
+                "SOFAXIS"
+              ]
+            },
+            {
+              "n": "ALLOUIS",
+              "cl": [
+                "STILL GIRAUD LOIC"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "FRET18BOURGES",
+          "jours": "LUNDI SOIR au VENDREDI SOIR (183645 SOIR)",
+          "c": "#E07020",
+          "communes": [
+            {
+              "n": "ST DOULCHARD",
+              "cl": [
+                "AD",
+                "GENERAL OPTIQUE",
+                "BNP",
+                "HD AT ALBA",
+                "BP",
+                "HD MC NARCY",
+                "CAB DENT GAY NICAULT",
+                "CE",
+                "CIC",
+                "LOM ECOUTER VOIR",
+                "CM",
+                "CSAV",
+                "NEMO DECATHLON",
+                "NEMO LECLERC",
+                "NOCIBE",
+                "CW LECLERC",
+                "DR FLECK"
+              ]
+            },
+            {
+              "n": "BOURGES",
+              "cl": [
+                "ENEDIS MALLET",
+                "ADOC",
+                "ADOMA",
+                "AGCO",
+                "BDF",
+                "HARMONIE",
+                "KLEBER",
+                "CAB DENT BENABADJI",
+                "KM COPIEFAX",
+                "KM GAD SOLUTIONS AB (43 av prospective)",
+                "CAF DU CHER",
+                "KM KM CL + points associés (2 av prospective 48 rue Pasteur John Bost)",
+                "CARPA",
+                "KODAK CARREFOUR",
+                "CCF",
+                "LCL CAE CUJAS",
+                "CE CARREFOUR",
+                "LCL CHANCELLERIE",
+                "CE CHANCELLERIE",
+                "LCL CUJAS",
+                "LCL VAL AURON",
+                "CM ST GERMAIN",
+                "MAN ALLIANCE",
+                "CPAM DU CHER",
+                "MGEN",
+                "CRCAM CENTRE LOIRE",
+                "MSA",
+                "NEMO LECLERC",
+                "CW INTERMARCHE",
+                "NOCIBE MARAIS",
+                "CW LA POSTE",
+                "CW LECLERC",
+                "ORANGE",
+                "PEINTURE PIECES AUTO",
+                "PHOTO MORLET",
+                "PW FNAC",
+                "SAV DARTY",
+                "DARTY MAG INT ST GERMAIN DU PUY",
+                "SNCF GARE",
+                "DOY PEINTURES PIECES",
+                "SNCF UTM",
+                "ST IMAGE PHOTO",
+                "ELM LEGER",
+                "URSSAF"
+              ]
+            },
+            {
+              "n": "ST GERMAIN DU PUY",
+              "cl": [
+                "EQUIP JARDIN",
+                "AGCO",
+                "GENERAL OPTIQUE",
+                "BP",
+                "CE",
+                "CW INTERMARCHE"
+              ]
+            },
+            {
+              "n": "FUSSY",
+              "cl": [
+                "FENWICK",
+                "CCF"
+              ]
+            },
+            {
+              "n": "LA CHAPELLE ST URSIN",
+              "cl": [
+                "LABORATOIRE PIGET"
+              ]
+            },
+            {
+              "n": "ST AMAND MONTROND",
+              "cl": [
+                "LCL"
+              ]
+            },
+            {
+              "n": "VIERZON",
+              "cl": [
+                "LCL"
+              ]
+            },
+            {
+              "n": "AINAY LE CHÂTEAU",
+              "cl": [
+                "CW INTERMARCHE"
+              ]
+            },
+            {
+              "n": "AVORD",
+              "cl": [
+                "CW INTERMARCHE"
+              ]
+            },
+            {
+              "n": "CHATEAUNEUF SUR CHER",
+              "cl": [
+                "CW INTERMARCHE"
+              ]
+            },
+            {
+              "n": "HENRICHEMONT",
+              "cl": [
+                "CW INTERMARCHE"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CHATEAUROUX",
+      "label": "Châteauroux (36)",
+      "tournees": [
+        {
+          "id": "CHATEAUROUX15J",
+          "jours": "LUNDI SOIR au VENDREDI SOIR",
+          "c": "#D5342B",
+          "communes": [
+            {
+              "n": "LA FERTE ST AUBIN",
+              "cl": [
+                "CW SUPER U"
+              ]
+            },
+            {
+              "n": "LAMOTTE BEUVRON",
+              "cl": [
+                "CW INTERMARCHE"
+              ]
+            },
+            {
+              "n": "OLIVET",
+              "cl": [
+                "MUTUELLE DES MOTARDS (AMDM)"
+              ]
+            },
+            {
+              "n": "ORLEANS",
+              "cl": [
+                "XPATH CHU D ORLEANS"
+              ]
+            },
+            {
+              "n": "SALBRIS",
+              "cl": [
+                "CW SUPER U"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "FRET36DEOLS",
+          "jours": "LUNDI SOIR au VENDREDI SOIR (183645 SOIR)",
+          "c": "#E07020",
+          "communes": [
+            {
+              "n": "ARGENTON",
+              "cl": [
+                "AD"
+              ]
+            },
+            {
+              "n": "STE FAUSTE",
+              "cl": [
+                "FENWICK VIOLETTE D"
+              ]
+            },
+            {
+              "n": "ST MAUR",
+              "cl": [
+                "AD",
+                "FLAURAUD VULCO TRUCK",
+                "GL OPTIQUE",
+                "IDEAL PECHE",
+                "APROLIA",
+                "KM AB CENTRE",
+                "LOM ECOUTER VOIR",
+                "NEMO DECATHLON",
+                "CM"
+              ]
+            },
+            {
+              "n": "TRANZAULT",
+              "cl": [
+                "FENWICK BOURDEAUX C"
+              ]
+            },
+            {
+              "n": "AIGURANDE",
+              "cl": [
+                "AGCO"
+              ]
+            },
+            {
+              "n": "CHATEAUROUX",
+              "cl": [
+                "FLAURAUD PROFIL",
+                "GL OPTIQUE AUCHAN",
+                "GRPA",
+                "HD AT ETS PERIER",
+                "HD PP EQUIP JARDIN LE POINC",
+                "BDF",
+                "CAB DENT MUT",
+                "CAF",
+                "CARREFOUR",
+                "KONE",
+                "CCF",
+                "LABO DUMONTET",
+                "LABO SYNERGIE PROTHESE",
+                "CEWE COMMEDIA",
+                "LOM ECOUTER VOIR",
+                "CEWE INTERMARCHE",
+                "LOOMIS",
+                "MGEN",
+                "MSA BERRY TOURAINE",
+                "CIC",
+                "NEMO CARREFOUR",
+                "CM",
+                "NOCIBE X V. HUGO",
+                "ORANGE",
+                "CREDEP",
+                "DARTY MAG INT",
+                "PHOX PHOTO SPEED",
+                "DOC CTRE HOSPI",
+                "SAV DARTY ST MAUR",
+                "DR BRUGIERE",
+                "SGS (",
+                "DR KAZI TANI",
+                "DR SOOLTANGOS",
+                "SNCF GARE",
+                "ENEDIS ANVAUX",
+                "EQUIP JARDIN",
+                "FENWICK H VERISSIMO DOS SANTOS",
+                "THELEM ASSURANCE"
+              ]
+            },
+            {
+              "n": "BUZANCAIS",
+              "cl": [
+                "AGCO",
+                "CEWE INTERMARCHE",
+                "DOC CH ST ROCH",
+                "RESTAURANT PEREGRINATIONS"
+              ]
+            },
+            {
+              "n": "CHATILLON SUR INDRE",
+              "cl": [
+                "AGCO",
+                "CEWE INTERMARCHE"
+              ]
+            },
+            {
+              "n": "LE POINCONNET AUCHAN",
+              "cl": [
+                "FUJI"
+              ]
+            },
+            {
+              "n": "DEOLS",
+              "cl": [
+                "AGCO",
+                "KM CAMAIL E",
+                "KM COLLET P",
+                "KM TRICOCHE FA",
+                "CENTRE DENTAIRE OASIS",
+                "STILL AGHILAS BRAIK",
+                "STK KM 3021",
+                "FENWICK LAMATTE DEVERSON J",
+                "TSG DESVIGNES",
+                "TSG NGUYEN FOSSARD"
+              ]
+            },
+            {
+              "n": "LE POINCONNET",
+              "cl": [
+                "AGCO",
+                "MAN VIOUX DUBOIS",
+                "NEMO AUCHAN",
+                "NOCIBE AUCHAN",
+                "DR BOIGELOT",
+                "STILL BILLAUDOT"
+              ]
+            },
+            {
+              "n": "MONTIERCHAUME",
+              "cl": [
+                "AGCO",
+                "JUNG BONY ARNAUD"
+              ]
+            },
+            {
+              "n": "NEUVY ST SEPULCHRE",
+              "cl": [
+                "AGCO"
+              ]
+            },
+            {
+              "n": "RIVARENNES",
+              "cl": [
+                "AGCO",
+                "APROLIA"
+              ]
+            },
+            {
+              "n": "ARGENTON SUR CREUSE",
+              "cl": [
+                "HD PP ESP LOISIRS",
+                "CCF",
+                "LABO GAULMIN",
+                "SNCF GARE"
+              ]
+            },
+            {
+              "n": "ST HILAIRE SUR BENAIZE",
+              "cl": [
+                "AGCO"
+              ]
+            },
+            {
+              "n": "VALENCAY",
+              "cl": [
+                "AGCO ("
+              ]
+            },
+            {
+              "n": "SAINT MAUR",
+              "cl": [
+                "JUNG MOREAU LOUIS",
+                "CEWE (Bellevue et du Franc)LECLERC",
+                "PAP GP AUTO"
+              ]
+            },
+            {
+              "n": "PRISSAC",
+              "cl": [
+                "CAB DENT DR JEBELEANU"
+              ]
+            },
+            {
+              "n": "LUANT",
+              "cl": [
+                "KONE FARARD"
+              ]
+            },
+            {
+              "n": "ECUEILLE",
+              "cl": [
+                "CEWE INTERMARCHE"
+              ]
+            },
+            {
+              "n": "EGUZON",
+              "cl": [
+                "CEWE SUPER U"
+              ]
+            },
+            {
+              "n": "ST GAULTIER",
+              "cl": [
+                "M MAZIERE CONFO"
+              ]
+            },
+            {
+              "n": "ST BENOIT DU SAULT SUPER U",
+              "cl": [
+                "CEWE"
+              ]
+            },
+            {
+              "n": "ST MARCEL INTERMARCHE",
+              "cl": [
+                "CEWE"
+              ]
+            },
+            {
+              "n": "LA CHATRE",
+              "cl": [
+                "CIC"
+              ]
+            },
+            {
+              "n": "DIORS",
+              "cl": [
+                "CONFORAMA D BONIN"
+              ]
+            },
+            {
+              "n": "LACS",
+              "cl": [
+                "PAP GP AUTO"
+              ]
+            },
+            {
+              "n": "CHATILLON",
+              "cl": [
+                "DOC CTRE HOSPI"
+              ]
+            },
+            {
+              "n": "VILLEDIEU SUR INDRE",
+              "cl": [
+                "SAS AF AUTO PIECES"
+              ]
+            },
+            {
+              "n": "LA PEROUILLE",
+              "cl": [
+                "FENWICK LARGEMAIN R"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "BLOIS",
+      "label": "Blois (41)",
+      "tournees": [
+        {
+          "id": "FRET41BLOIS",
+          "jours": "LUNDI SOIR au VENDREDI SOIR (374145 SOIR)",
+          "c": "#D5342B",
+          "communes": [
+            {
+              "n": "BLOIS",
+              "cl": [
+                "AD (AD Romo AD St Ouen AD Vendome)",
+                "ADOC",
+                "AGCO",
+                "EUROFINS GALYS",
+                "FENWICK TALLANT KARL",
+                "FEU VERT MAG",
+                "GRPA ETS",
+                "GROUPAMA AG",
+                "AUTO PIECES GAMBETTA",
+                "BDF",
+                "HD DIGUET SPORT EVENT",
+                "CEWE ESPACE CULTUREL",
+                "CEWE INTERMARCHE",
+                "CEWE LECLERC",
+                "K CARREFOUR",
+                "KM FACTORIA",
+                "LABO CREATEETH",
+                "LOGILEC",
+                "LOGILEC SALAMANDRE",
+                "LOM ECOUTER VOIR",
+                "CIC CHATEAU",
+                "CIC JEU DE PAUME",
+                "CIC LOIR ET CHER ENTREPRISE",
+                "MGEN",
+                "MSA",
+                "OPTIMA OPTICIENS",
+                "ORANGE",
+                "CLINIQUE DES QUAIS",
+                "CLI VET PONT GABRIEL DR TAUPIN",
+                "CONSEIL DEPARTEMENTAL",
+                "CPAM",
+                "SOLOGNE ROUTAGE",
+                "DDFIP",
+                "DOCAPOST",
+                "T MANAGER",
+                "DR HAMZA ASMA",
+                "URSSAF"
+              ]
+            },
+            {
+              "n": "VENDOME",
+              "cl": [
+                "EQUIP AUTO",
+                "GENERALE OPTIQUE",
+                "HD PP VENDOMOISE",
+                "CEWE ESPACE CUL. LECLERC",
+                "CEWE INTERMARCHE",
+                "LOGILEC",
+                "CEWE LECLERC",
+                "LOM ECOUTER VOIR",
+                "NEMO LECLERC",
+                "CIC",
+                "PAP STUDIO AURORE ET LENA",
+                "POILANE INTERMARCHE",
+                "SPRINT LAB PHOTO",
+                "DR DEBALLON",
+                "VENDOMOIS PIECES AUTO"
+              ]
+            },
+            {
+              "n": "ST GERVAIS LA FORET",
+              "cl": [
+                "EQUIP JARDIN",
+                "HD PP EQUIP J",
+                "LOGILEC",
+                "CIC",
+                "VETERINAIRE DES PERRIERES"
+              ]
+            },
+            {
+              "n": "CHAMPIGNY EN BEAUCE",
+              "cl": [
+                "AGCO"
+              ]
+            },
+            {
+              "n": "BAUZY",
+              "cl": [
+                "FENWICK FONTAINE LAURENT"
+              ]
+            },
+            {
+              "n": "EPUISAY",
+              "cl": [
+                "AGCO"
+              ]
+            },
+            {
+              "n": "SAVIGNY BRAYE",
+              "cl": [
+                "AGCO (les 2)"
+              ]
+            },
+            {
+              "n": "MONT PRES CHAMBORD",
+              "cl": [
+                "FENWICK L MEURANT"
+              ]
+            },
+            {
+              "n": "ST AGIL",
+              "cl": [
+                "AGCO"
+              ]
+            },
+            {
+              "n": "RILLY SUR LOIR",
+              "cl": [
+                "FENWICK HILAIRE N"
+              ]
+            },
+            {
+              "n": "ST OUEN",
+              "cl": [
+                "AGCO"
+              ]
+            },
+            {
+              "n": "VILLEFRANCOEUR",
+              "cl": [
+                "AGCO"
+              ]
+            },
+            {
+              "n": "VINEUIL",
+              "cl": [
+                "FUJI AUCHAN",
+                "GENERALE OPTIQUE",
+                "NEMO AUCHAN",
+                "ELM POLLET FREDDY"
+              ]
+            },
+            {
+              "n": "VILLEROMAIN",
+              "cl": [
+                "AGCO"
+              ]
+            },
+            {
+              "n": "VILLIERS SUR LOIR",
+              "cl": [
+                "AGCO"
+              ]
+            },
+            {
+              "n": "NOYERS SUR CHER",
+              "cl": [
+                "APROLIA",
+                "CEWE INTERMARCHE"
+              ]
+            },
+            {
+              "n": "LA CHAUSSEE ST VICTOR",
+              "cl": [
+                "AMAP",
+                "KONE",
+                "ENEDIS"
+              ]
+            },
+            {
+              "n": "ST GERVAIS LA FORÊT",
+              "cl": [
+                "HD AT SUD LOIRE AUTO"
+              ]
+            },
+            {
+              "n": "LA CHAUSSEE ENTREPRISE",
+              "cl": [
+                "BP"
+              ]
+            },
+            {
+              "n": "ST GERVAIS",
+              "cl": [
+                "HD MC H"
+              ]
+            },
+            {
+              "n": "VILLEBAROU",
+              "cl": [
+                "B SUCCES",
+                "NEMO CORA",
+                "NEMO DECATHLON",
+                "TSK STG"
+              ]
+            },
+            {
+              "n": "MONTHOU SUR CHER",
+              "cl": [
+                "HD PP AEB"
+              ]
+            },
+            {
+              "n": "AMBOISE",
+              "cl": [
+                "CABINET DENTAIRE DR VAUCARD",
+                "HD PP EQUIP JARDIN",
+                "LABO TISSIER",
+                "LAPV",
+                "LOM ECOUTER VOIR",
+                "CIC"
+              ]
+            },
+            {
+              "n": "ROMORANTIN",
+              "cl": [
+                "CARREFOUR"
+              ]
+            },
+            {
+              "n": "HUISSEAU EN BEAUCE",
+              "cl": [
+                "HOBAR HERVOUET C"
+              ]
+            },
+            {
+              "n": "LUNAY",
+              "cl": [
+                "JUNG MINIERE MICHEL"
+              ]
+            },
+            {
+              "n": "CHAILLES INTERMARCHE",
+              "cl": [
+                "CEWE",
+                "NEMO"
+              ]
+            },
+            {
+              "n": "VILLENEUVE",
+              "cl": [
+                "JUNG DE BRITO L"
+              ]
+            },
+            {
+              "n": "CONTRES",
+              "cl": [
+                "CEWE SUPER U",
+                "CIC"
+              ]
+            },
+            {
+              "n": "HERBAULT",
+              "cl": [
+                "CEWE INTERMACHE",
+                "SFG BENARD A"
+              ]
+            },
+            {
+              "n": "MER",
+              "cl": [
+                "CEWE SUPER U"
+              ]
+            },
+            {
+              "n": "MONDOUBLEAU",
+              "cl": [
+                "CEWE SUPER U",
+                "NEMO SUPER U"
+              ]
+            },
+            {
+              "n": "VALLOIRE SUR CISSE",
+              "cl": [
+                "KONE CLEMENT"
+              ]
+            },
+            {
+              "n": "MONTOIRE SUR LE LOIR",
+              "cl": [
+                "CEWE INTERMARCHE",
+                "CEWE SUPER U",
+                "CIC"
+              ]
+            },
+            {
+              "n": "SELLES SUR CHER",
+              "cl": [
+                "CEWE SUPER U",
+                "CIC"
+              ]
+            },
+            {
+              "n": "ST AIGNAN SUPER U",
+              "cl": [
+                "CEWE"
+              ]
+            },
+            {
+              "n": "VEUZAIN SUR LOIRE INTERMARCHE",
+              "cl": [
+                "CEWE"
+              ]
+            },
+            {
+              "n": "MONTLOUIS",
+              "cl": [
+                "LOM ECOUTER VOIR"
+              ]
+            },
+            {
+              "n": "ST AIGNAN",
+              "cl": [
+                "LOM ECOUTER VOIR",
+                "CIC"
+              ]
+            },
+            {
+              "n": "MONTRICHARD",
+              "cl": [
+                "CIC"
+              ]
+            },
+            {
+              "n": "CONAN",
+              "cl": [
+                "CL DEPUSSAY"
+              ]
+            },
+            {
+              "n": "ST AMAND LONGPRE",
+              "cl": [
+                "CL DEPUISSAY"
+              ]
+            },
+            {
+              "n": "MONTRIEUX EN SOLOGNE",
+              "cl": [
+                "STILL DUFOUR F"
+              ]
+            },
+            {
+              "n": "4VINEUIL",
+              "cl": [
+                "DOCUMENTHOM"
+              ]
+            },
+            {
+              "n": "LA CROIX EN TOURAINE",
+              "cl": [
+                "ELM MOUGEOLLE Y"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "RABI",
+      "label": "RABI (H37/91)",
+      "tournees": [
+        {
+          "id": "RABI",
+          "jours": "",
+          "c": "#D5342B",
+          "communes": [
+            {
+              "n": "PONTLEVOY",
+              "cl": [
+                "AGCO",
+                "GGE DMS"
+              ]
+            },
+            {
+              "n": "VERETZ",
+              "cl": [
+                "AGCO"
+              ]
+            },
+            {
+              "n": "TAVERS",
+              "cl": [
+                "AUTO MOTO PIECE"
+              ]
+            },
+            {
+              "n": "LA CHAUSSEE ST VICTOR",
+              "cl": [
+                "CE",
+                "LOM ECOUTER VOIR"
+              ]
+            },
+            {
+              "n": "BEAUGENCY",
+              "cl": [
+                "CIC PORTE DE CHAMBORD",
+                "FENWICK ROUSSE"
+              ]
+            },
+            {
+              "n": "MER",
+              "cl": [
+                "CIC"
+              ]
+            },
+            {
+              "n": "BLERE",
+              "cl": [
+                "CSAV TALA"
+              ]
+            },
+            {
+              "n": "BLOIS",
+              "cl": [
+                "DOY API"
+              ]
+            },
+            {
+              "n": "LE CONTROIS EN SOLOGNE",
+              "cl": [
+                "DR FLOREA"
+              ]
+            },
+            {
+              "n": "BAULE",
+              "cl": [
+                "FENWICK LECONTE JEREMY"
+              ]
+            },
+            {
+              "n": "FEINGS",
+              "cl": [
+                "FENWICK AUGIS MANUEL"
+              ]
+            },
+            {
+              "n": "ST GEORGES SUR CHER",
+              "cl": [
+                "FENWICK RABOTTIN"
+              ]
+            },
+            {
+              "n": "CLERY ST ANDRE",
+              "cl": [
+                "JUNG PASQUET"
+              ]
+            },
+            {
+              "n": "LAILLY EN VAL",
+              "cl": [
+                "JUNG PORTAL"
+              ]
+            },
+            {
+              "n": "MEUNG SUR LOIRE",
+              "cl": [
+                "JUNG (5ème Avenue)"
+              ]
+            },
+            {
+              "n": "ST AY",
+              "cl": [
+                "JUNG HERNANDEZ ALEXIS"
+              ]
+            },
+            {
+              "n": "LES MONTILS",
+              "cl": [
+                "KONE CASSIOT"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
