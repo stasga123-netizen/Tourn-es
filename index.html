@@ -421,15 +421,72 @@ function renderScan(){
   </label>
   <div id="scan-out"></div>`;
 }
+function loadImageEl(url){
+  return new Promise((resolve,reject)=>{
+    const img=new Image();
+    img.onload=()=>resolve(img);
+    img.onerror=()=>reject(new Error("Impossible de lire l'image"));
+    img.src=url;
+  });
+}
+// contraste : on éclaircit/assombrit l'image jusqu'à utiliser toute la plage de gris (étend l'histogramme),
+// ça aide beaucoup l'OCR sur des photos ternes/mal éclairées (néons de dépôt, reflets...)
+function enhanceCanvas(ctx,w,h){
+  const id=ctx.getImageData(0,0,w,h), d=id.data;
+  for(let i=0;i<d.length;i+=4){
+    const g=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];
+    d[i]=d[i+1]=d[i+2]=g;
+  }
+  let min=255,max=0;
+  for(let i=0;i<d.length;i+=4){if(d[i]<min)min=d[i];if(d[i]>max)max=d[i];}
+  const range=Math.max(1,max-min);
+  for(let i=0;i<d.length;i+=4){
+    const v=Math.min(255,Math.max(0,(d[i]-min)*255/range));
+    d[i]=d[i+1]=d[i+2]=v;
+  }
+  ctx.putImageData(id,0,0);
+}
+// prépare une version pivotée + nettoyée de la photo, redimensionnée (Tesseract n'a pas besoin
+// de la pleine résolution d'une photo de téléphone, et ça va nettement plus vite en 800-1600px)
+function prepCanvas(img,angleDeg,maxDim){
+  maxDim=maxDim||2000;
+  let w=img.naturalWidth, h=img.naturalHeight;
+  const scale=Math.min(1,maxDim/Math.max(w,h));
+  w=Math.round(w*scale); h=Math.round(h*scale);
+  const swapped=(angleDeg===90||angleDeg===270);
+  const canvas=document.createElement('canvas');
+  canvas.width=swapped?h:w; canvas.height=swapped?w:h;
+  const ctx=canvas.getContext('2d');
+  ctx.translate(canvas.width/2,canvas.height/2);
+  ctx.rotate(angleDeg*Math.PI/180);
+  ctx.drawImage(img,-w/2,-h/2,w,h);
+  ctx.setTransform(1,0,0,1,0,0);
+  enhanceCanvas(ctx,canvas.width,canvas.height);
+  return canvas;
+}
 window.scanImg=async inp=>{
   const f=inp.files&&inp.files[0];if(!f)return;
   const out=document.getElementById('scan-out');
   const url=URL.createObjectURL(f);
   out.innerHTML=`<img class="preview" src="${url}"><div class="loading"><span class="spin"></span><br><span id="scan-progress">Lecture de l'étiquette…</span></div>`;
   try{
-    const text=await runOCR(f);
-    const res=matchEntry(text);
-    showVerdict(res,url);
+    const img=await loadImageEl(url);
+    const angles=[0,90,180,270];
+    // un match se juge sur score ET substance : un sigle générique ("CE", "BP"...) peut matcher à
+    // 100% par pur hasard sur du bruit OCR à la mauvaise orientation, mais avec un weight ridicule —
+    // sans pondérer par le weight, ce faux positif battrait un vrai match juste un peu imparfait.
+    const rankOf=r=>(r.score||0)*Math.min(r.weight||0,20);
+    let best=null;
+    for(let i=0;i<angles.length;i++){
+      const prog=document.getElementById('scan-progress');
+      if(prog)prog.textContent=i===0?"Lecture de l'étiquette…":`Toujours pas sûr, on essaie une autre orientation (${i+1}/4)…`;
+      const canvas=prepCanvas(img,angles[i]);
+      const text=await runOCR(canvas);
+      const res=matchEntry(text);
+      if(!best||rankOf(res)>rankOf(best))best=res;
+      if(best.confiance==='haute'&&best.weight>=10)break;
+    }
+    showVerdict(best,url);
   }catch(e){
     out.innerHTML=`<img class="preview" src="${url}"><div class="alert-box" style="margin-top:12px;background:var(--red-soft);color:#8F241C">
       Échec de la lecture (${esc(String(e.message||e))}). Réessaie avec une photo plus nette et bien cadrée, ou tape le nom du client dans l'onglet Recherche.</div>`;
@@ -438,9 +495,9 @@ window.scanImg=async inp=>{
 };
 const OCR_STATUS_FR={'loading tesseract core':'Chargement du moteur OCR','initializing tesseract':'Initialisation',
   'loading language traineddata':'Téléchargement du modèle FR','initializing api':'Préparation','recognizing text':'Lecture du texte'};
-async function runOCR(file){
+async function runOCR(imgSource){
   if(typeof Tesseract==='undefined')throw new Error('moteur OCR indisponible (hors-ligne au premier lancement ?)');
-  const {data}=await Tesseract.recognize(file,'fra',{
+  const {data}=await Tesseract.recognize(imgSource,'fra',{
     logger:m=>{
       const el=document.getElementById('scan-progress');
       if(el&&m.status&&typeof m.progress==='number')
@@ -503,22 +560,27 @@ function scoreEntries(list,ocrWords){
 }
 function matchEntry(rawText){
   const lu=rawText.replace(/\s+/g,' ').trim().slice(0,140);
-  const ocrWords=normTxt(rawText).split(' ').filter(w=>w.length>1);
+  // sur une étiquette TCS, tout ce qui précède "DESTINATAIRE" (expéditeur, date d'édition, code-barres/QR
+  // mal lus...) est du bruit pour le matching — seul le nom + la ville juste après nous intéressent.
+  const destMatch=rawText.match(/destin[a-z0-9]*/i);
+  const focusedText=destMatch?rawText.slice(destMatch.index+destMatch[0].length,destMatch.index+destMatch[0].length+200):rawText;
+  let ocrWords=normTxt(focusedText).split(' ').filter(w=>w.length>1);
+  if(destMatch&&ocrWords.length<2)ocrWords=normTxt(rawText).split(' ').filter(w=>w.length>1); // repère trouvé mais rien derrière (OCR tronqué) : on retombe sur tout le texte
   if(!ocrWords.length)
-    return {lu,client:null,commune:null,tournee:null,confiance:'basse',alternatives:[],note:"Aucun texte détecté, reprends la photo bien cadrée sur l'étiquette."};
+    return {lu,client:null,commune:null,tournee:null,confiance:'basse',alternatives:[],score:0,note:"Aucun texte détecté, reprends la photo bien cadrée sur l'étiquette."};
   const communes=scoreEntries(ENTRIES.filter(e=>e.type==='commune'),ocrWords);
   const clients=scoreEntries(ENTRIES.filter(e=>e.type==='client'),ocrWords);
   const bestCommune=communes[0], bestClient=clients[0];
   if((!bestCommune||bestCommune.score<0.45)&&(!bestClient||bestClient.score<0.45))
-    return {lu,client:null,commune:null,tournee:null,confiance:'basse',alternatives:[],note:"Aucune correspondance fiable trouvée dans la base."};
+    return {lu,client:null,commune:null,tournee:null,confiance:'basse',alternatives:[],score:Math.max(bestCommune?.score||0,bestClient?.score||0),note:"Aucune correspondance fiable trouvée dans la base."};
 
   // Réflexe métier : une commune explicite et fiable (non ambiguë entre tournées) fait autorité,
   // le client sert juste à préciser. Si la commune est un piège (ex: Orléans, présent sur plusieurs
   // tournées) ou peu fiable, c'est le client qui tranche à la place.
   const communeReliable=bestCommune&&bestCommune.score>0.72&&!communeAmbiguous(bestCommune.e.c.n);
-  let communeName,tournee,client,score,alt=[];
+  let communeName,tournee,client,score,weight,alt=[];
   if(communeReliable){
-    communeName=bestCommune.e.c.n;tournee=bestCommune.e.t.id;score=bestCommune.score;
+    communeName=bestCommune.e.c.n;tournee=bestCommune.e.t.id;score=bestCommune.score;weight=bestCommune.weight;
     // pour retrouver le client, on ignore les mots déjà "consommés" par le nom de la commune
     // (sinon un client du type "Dr Mos Gien" matcherait juste parce que "Gien" est déjà reconnu)
     const communeWords=new Set(normTxt(stripParens(communeName)).split(' '));
@@ -530,7 +592,7 @@ function matchEntry(rawText){
       .map(s=>`${s.e.t.id} · ${s.e.c.n}`);
   }else{
     const pick=bestClient&&bestClient.score>=0.45?bestClient:bestCommune;
-    communeName=pick.e.c.n;tournee=pick.e.t.id;score=pick.score;
+    communeName=pick.e.c.n;tournee=pick.e.t.id;score=pick.score;weight=pick.weight;
     client=pick.e.type==='client'?pick.e.label:null;
     alt=clients.concat(communes).filter(s=>s.e.c.n!==communeName&&s.score>=pick.score-0.2)
       .sort((a,b)=>b.score-a.score).slice(0,3).map(s=>`${s.e.t.id} · ${s.e.c.n}`);
@@ -538,7 +600,7 @@ function matchEntry(rawText){
   const confiance=score>0.82?'haute':score>0.6?'moyenne':'basse';
   const note=communeName.startsWith('ORLÉANS')?"« Orléans » existe sur plusieurs tournées : vérifie le nom du client ci-dessus."
     :alt.length?"Plusieurs correspondances possibles, vérifie la ville sur l'étiquette.":'';
-  return {lu,client,commune:communeName,tournee,confiance,alternatives:alt,note};
+  return {lu,client,commune:communeName,tournee,confiance,alternatives:alt,score,weight,note};
 }
 let lastRawText='';
 function showVerdict(v,url){
