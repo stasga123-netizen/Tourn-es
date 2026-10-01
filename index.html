@@ -11,6 +11,7 @@
 <link rel="apple-touch-icon" href="icon.png">
 <title>Tournées Orléans — Révision dispatch</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css">
 <style>
 :root{
   --bg:#F4F4F7; --card:#FFFFFF; --ink:#15131C; --grey:#6B7280; --grey-soft:#9AA0AE; --line:#EAEAEF;
@@ -102,6 +103,11 @@ h2.sec{font-weight:800;font-size:19px;letter-spacing:-.01em;margin:10px 0 12px}
 .scan-btn svg{width:30px;height:30px;color:var(--grey)}
 .scan-btn small{display:block;font-weight:500;font-size:12.5px;color:var(--grey)}
 .preview{width:100%;max-height:220px;object-fit:contain;border-radius:14px;border:1px solid var(--line);margin-top:12px;background:#fff}
+.crop-wrap{background:#000;border-radius:14px;overflow:hidden;max-height:60vh}
+.crop-wrap img{display:block;max-width:100%}
+.crop-actions{display:flex;gap:10px;margin-top:12px}
+.crop-actions button{flex:1;padding:13px;border-radius:12px;font-weight:700;font-size:14.5px;border:1.5px solid var(--line);background:var(--card);color:var(--ink)}
+.crop-actions button.primary{background:var(--ink);color:#fff;border:none}
 .loading{text-align:center;padding:26px 10px;color:var(--grey);font-weight:600;font-size:14px}
 .spin{display:inline-block;width:24px;height:24px;border:3px solid var(--line);border-top-color:var(--ink);border-radius:50%;
   animation:sp .8s linear infinite;margin-bottom:8px}
@@ -190,6 +196,7 @@ h2.sec{font-weight:800;font-size:19px;letter-spacing:-.01em;margin:10px 0 12px}
 <nav id="nav" class="bottom-nav"></nav>
 
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
 import {getFirestore, collection, query, orderBy, getDocs, runTransaction, doc} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
@@ -421,14 +428,6 @@ function renderScan(){
   </label>
   <div id="scan-out"></div>`;
 }
-function loadImageEl(url){
-  return new Promise((resolve,reject)=>{
-    const img=new Image();
-    img.onload=()=>resolve(img);
-    img.onerror=()=>reject(new Error("Impossible de lire l'image"));
-    img.src=url;
-  });
-}
 // contraste : on éclaircit/assombrit l'image jusqu'à utiliser toute la plage de gris (étend l'histogramme),
 // ça aide beaucoup l'OCR sur des photos ternes/mal éclairées (néons de dépôt, reflets...)
 function enhanceCanvas(ctx,w,h){
@@ -448,9 +447,9 @@ function enhanceCanvas(ctx,w,h){
 }
 // prépare une version pivotée + nettoyée de la photo, redimensionnée (Tesseract n'a pas besoin
 // de la pleine résolution d'une photo de téléphone, et ça va nettement plus vite en 800-1600px)
-function prepCanvas(img,angleDeg,maxDim){
+function prepCanvas(src,angleDeg,maxDim){
   maxDim=maxDim||2000;
-  let w=img.naturalWidth, h=img.naturalHeight;
+  let w=src.naturalWidth||src.width, h=src.naturalHeight||src.height;
   const scale=Math.min(1,maxDim/Math.max(w,h));
   w=Math.round(w*scale); h=Math.round(h*scale);
   const swapped=(angleDeg===90||angleDeg===270);
@@ -459,18 +458,45 @@ function prepCanvas(img,angleDeg,maxDim){
   const ctx=canvas.getContext('2d');
   ctx.translate(canvas.width/2,canvas.height/2);
   ctx.rotate(angleDeg*Math.PI/180);
-  ctx.drawImage(img,-w/2,-h/2,w,h);
+  ctx.drawImage(src,-w/2,-h/2,w,h);
   ctx.setTransform(1,0,0,1,0,0);
   enhanceCanvas(ctx,canvas.width,canvas.height);
   return canvas;
+}
+// recadrage manuel avant OCR : le problème n°1 observé en test réel n'était pas la rotation mais
+// une étiquette trop petite dans le cadre (donc peu de pixels de texte utiles) — laisser l'ouvrier
+// resserrer sur l'étiquette règle ça directement, sans dépendre d'une détection automatique fragile.
+function cropPhoto(url){
+  return new Promise(resolve=>{
+    const out=document.getElementById('scan-out');
+    out.innerHTML=`<p class="hint-text">Resserre le cadre sur l'étiquette, puis valide.</p>
+    <div class="crop-wrap"><img id="cropImg" src="${url}"></div>
+    <div class="crop-actions">
+      <button id="cropCancel">Reprendre la photo</button>
+      <button class="primary" id="cropOk">Valider le cadrage</button>
+    </div>`;
+    const imgEl=document.getElementById('cropImg');
+    let cropper;
+    const init=()=>{
+      cropper=new Cropper(imgEl,{viewMode:1,autoCropArea:0.92,background:false,dragMode:'crop',zoomable:true,scalable:false});
+    };
+    if(imgEl.complete)init();else imgEl.onload=init;
+    document.getElementById('cropCancel').onclick=()=>{if(cropper)cropper.destroy();resolve(null);};
+    document.getElementById('cropOk').onclick=()=>{
+      const canvas=cropper.getCroppedCanvas({maxWidth:2400,maxHeight:2400,imageSmoothingQuality:'high'});
+      cropper.destroy();
+      resolve(canvas);
+    };
+  });
 }
 window.scanImg=async inp=>{
   const f=inp.files&&inp.files[0];if(!f)return;
   const out=document.getElementById('scan-out');
   const url=URL.createObjectURL(f);
-  out.innerHTML=`<img class="preview" src="${url}"><div class="loading"><span class="spin"></span><br><span id="scan-progress">Lecture de l'étiquette…</span></div>`;
   try{
-    const img=await loadImageEl(url);
+    const cropped=await cropPhoto(url);
+    if(!cropped){renderScan();return;}
+    out.innerHTML=`<img class="preview" src="${url}"><div class="loading"><span class="spin"></span><br><span id="scan-progress">Lecture de l'étiquette…</span></div>`;
     const angles=[0,90,180,270];
     // un match se juge sur score ET substance : un sigle générique ("CE", "BP"...) peut matcher à
     // 100% par pur hasard sur du bruit OCR à la mauvaise orientation, mais avec un weight ridicule —
@@ -480,7 +506,7 @@ window.scanImg=async inp=>{
     for(let i=0;i<angles.length;i++){
       const prog=document.getElementById('scan-progress');
       if(prog)prog.textContent=i===0?"Lecture de l'étiquette…":`Toujours pas sûr, on essaie une autre orientation (${i+1}/4)…`;
-      const canvas=prepCanvas(img,angles[i]);
+      const canvas=prepCanvas(cropped,angles[i]);
       const text=await runOCR(canvas);
       const res=matchEntry(text);
       if(!best||rankOf(res)>rankOf(best))best=res;
