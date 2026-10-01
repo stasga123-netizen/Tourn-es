@@ -85,15 +85,24 @@ const auth = getAuth(fbApp);
 
 function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
 
+const AUTH_ERR_FR = {
+  'auth/invalid-credential': 'email ou mot de passe incorrect.',
+  'auth/invalid-email': "l'adresse email n'est pas valide.",
+  'auth/user-disabled': 'ce compte a été désactivé.',
+  'auth/too-many-requests': 'trop de tentatives — réessaie dans quelques minutes.',
+  'auth/network-request-failed': 'pas de connexion réseau, vérifie ta connexion.',
+  'auth/missing-password': 'entre un mot de passe.',
+};
 window.doLogin = async () => {
   const email = document.getElementById('email').value.trim();
   const pass = document.getElementById('pass').value;
   const err = document.getElementById('loginErr');
   err.textContent = '';
+  if (!email || !pass) { err.textContent = 'Entre ton email et ton mot de passe.'; return; }
   try {
     await signInWithEmailAndPassword(auth, email, pass);
   } catch (e) {
-    err.textContent = "Connexion refusée : " + (e.code === 'auth/invalid-credential' ? 'email ou mot de passe incorrect.' : (e.message || e));
+    err.textContent = "Connexion refusée : " + (AUTH_ERR_FR[e.code] || 'une erreur est survenue, réessaie.');
   }
 };
 window.doLogout = () => signOut(auth);
@@ -126,7 +135,11 @@ function renderApp() {
   if (dep) {
     h += '<div class="row">';
     h += dep.tournees.map(t => `<button class="pill ${t.id===selTourId?'on':''}" style="border-color:${t.c}" onclick="pickTour('${t.id}')">${esc(t.id)}</button>`).join('');
-    h += `<button class="pill" onclick="addTour()">+ Tournée</button></div>`;
+    h += `<button class="pill" onclick="addTour()">+ Tournée</button>`;
+    if (dep.tournees.length === 0) {
+      h += `<button class="pill danger" onclick="removeDepot()">Supprimer ce dépôt</button>`;
+    }
+    h += '</div>';
   }
 
   const t = curTournee();
@@ -183,35 +196,69 @@ window.pickDepot = (id) => { selDepotId = id; selTourId = null; renderApp(); };
 window.pickTour = (id) => { selTourId = id; renderApp(); };
 
 window.addDepot = async () => {
-  const id = prompt("ID du nouveau dépôt (ex. TOURS37, en majuscules, sans espace) :");
-  if (!id) return;
+  const raw = prompt("ID du nouveau dépôt (ex. TOURS37, en majuscules, sans espace) :");
+  if (!raw || !raw.trim()) return;
+  const id = raw.trim().toUpperCase();
+  if (DEPOTS.some(d => d.id === id)) {
+    if (!confirm(`Le dépôt "${id}" existe déjà. Écraser son nom ?`)) return;
+  }
   const label = prompt("Nom affiché (ex. Tours (37)) :", id) || id;
-  await setDoc(doc(db, 'depots', id.trim().toUpperCase()), {label, order: DEPOTS.length});
-  await loadDepots();
-  selDepotId = id.trim().toUpperCase(); selTourId = null;
-  renderApp();
+  try {
+    await setDoc(doc(db, 'depots', id), {label, order: DEPOTS.length});
+    await loadDepots();
+    selDepotId = id; selTourId = null;
+    renderApp();
+  } catch (e) {
+    alert("Échec de la création du dépôt : " + (e.message || e));
+  }
+};
+
+window.removeDepot = async () => {
+  const dep = curDepot(); if (!dep) return;
+  if (dep.tournees.length > 0) { alert('Supprime d\'abord toutes les tournées de ce dépôt.'); return; }
+  if (!confirm(`Supprimer le dépôt "${dep.label}" ? Irréversible.`)) return;
+  try {
+    await deleteDoc(doc(db, 'depots', dep.id));
+    await loadDepots();
+    selDepotId = DEPOTS[0]?.id || null; selTourId = null;
+    renderApp();
+  } catch (e) {
+    alert("Échec de la suppression : " + (e.message || e));
+  }
 };
 
 window.addTour = async () => {
   const dep = curDepot(); if (!dep) return;
-  const id = prompt("ID de la nouvelle tournée (ex. 4508M) :");
-  if (!id) return;
+  const raw = prompt("ID de la nouvelle tournée (ex. 4508M) :");
+  if (!raw || !raw.trim()) return;
+  const id = raw.trim();
+  if (dep.tournees.some(t => t.id === id)) {
+    if (!confirm(`La tournée "${id}" existe déjà dans ce dépôt et sera écrasée (communes/clients remis à zéro). Continuer ?`)) return;
+  }
   const jours = prompt("Jours (ex. Lundi soir → Jeudi soir) :", "") || "";
-  await setDoc(doc(db, 'depots', dep.id, 'tournees', id.trim()), {
-    jours, c: '#6C4FA1', communes: [], order: dep.tournees.length,
-  });
-  await loadDepots();
-  selDepotId = dep.id; selTourId = id.trim();
-  renderApp();
+  try {
+    await setDoc(doc(db, 'depots', dep.id, 'tournees', id), {
+      jours, c: '#6C4FA1', communes: [], order: dep.tournees.length,
+    });
+    await loadDepots();
+    selDepotId = dep.id; selTourId = id;
+    renderApp();
+  } catch (e) {
+    alert("Échec de la création de la tournée : " + (e.message || e));
+  }
 };
 
 window.removeTour = async () => {
   const t = curTournee(); const dep = curDepot();
   if (!t || !confirm(`Supprimer la tournée ${t.id} et toutes ses communes/clients ? Irréversible.`)) return;
-  await deleteDoc(doc(db, 'depots', dep.id, 'tournees', t.id));
-  await loadDepots();
-  selTourId = null;
-  renderApp();
+  try {
+    await deleteDoc(doc(db, 'depots', dep.id, 'tournees', t.id));
+    await loadDepots();
+    selTourId = null;
+    renderApp();
+  } catch (e) {
+    alert("Échec de la suppression : " + (e.message || e));
+  }
 };
 
 function withTour(fn) {
